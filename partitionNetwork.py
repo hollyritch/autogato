@@ -40,7 +40,7 @@ def readArguments():
         if os.path.exists("./Output") == False:
             os.makedirs("./Output")
         outputPickleFiles = "./Output"
-    if smallMoleculesBool == True:
+    if smallMoleculesBool == False:
         smallMoleculePath = ""
     return inputFilePath, maxThreads, cutOff, outputBool, outputPickleFiles, smallMoleculesBool, smallMoleculePath
 ########################################
