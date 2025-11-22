@@ -34,6 +34,8 @@ for k in tqdm(range(len(speciesList)), desc="Species"):
         print(species, xmlFile)
     # 2. Read Model
         xmlFilePath = speciesPath + xmlFile
+        if os.path.exists("./Results") == False:
+            os.makedirs("./Results")
         partitioningOutputFile = "./Results/partitioningOutput" + species + xmlFile+".txt"
         os.system("python partitionNetwork.py " + " -i " + xmlFilePath + " -c " + str(cutOffReactionNetworkSize) + " -t " + str(maxThreads) + " -o " + str(species) + " -s ./SmallMolecules/" + str(smallMoleculesPath) + " | tee " + str(partitioningOutputFile))
         pickleFileList = os.listdir("PickleFiles/" + str(species))
