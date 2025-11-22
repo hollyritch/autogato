@@ -1238,7 +1238,7 @@ def readArguments():
         elif newArgument == "-i" or "--input":
             inputPickleFile = sys.argv[k+1]
             inputBool = True
-        elif newArgument == "-b" or "--circuitBound":
+        elif newArgument == "-b" or newArgument=="--circuitBound":
             circuitBound = int(sys.argv[k+1])
             circuitBool = True
         elif newArgument == "-n" or newArgument == "-nonMetzler":
