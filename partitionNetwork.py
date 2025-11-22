@@ -85,29 +85,22 @@ else:
 
 # 4. Build network
 metabolicNetwork, vertexIDs = partitionNetworkHelper.buildNetwork(model=model)
-
+inhibitors = {}                             # not yet implemented
 # 4.1 Find/Determine/Define abundant molecules to inhibit to many crosslinkings between modules that are actually distant from each other
 
-if outputPickleFiles=="EColiCore":
-    abundantMolecules = {"M_adp_c", "M_h_c", "M_coa_c", "M_h2o_c", "M_nad_c", "M_nadh_c", "M_h_e", "M_pi_e", "M_pi_c", "M_co2_c", "M_amp_c", "M_co2_e", "M_o2_c", "M_q8h2_c", "M_q8_c", "M_nadp_c", "M_nadph_c", "M_h2o_e", "M_nh4_e", "M_o2_e", "M_nh4_c"}
-    unnecessaryMolecules = {"M_adp_c", "M_h2o_c", "M_co2_c", "M_h_c", "M_coa_c", "M_nad_c", "M_nadh_c", "M_h_e", "M_pi_e", "M_pi_c", "M_amp_c", "M_co2_e", "M_o2_c", "M_q8h2_c", "M_q8_c", "M_nadp_c", "M_nadph_c", "M_h2o_e", "M_nh4_e", "M_o2_e", "M_nh4_c"}        
-
-    # 3.2 Get inhibitors if necesary
-    
-    unnecessaryMolecules, abundantMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork, {})
+unnecessaryMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork, {})
 
 unnecessaryMoleculesIDSet = set()
 #partitionNetworkHelper.plotDegreeDistribution(metabolicNetwork)
 usefulNetwork = deepcopy(metabolicNetwork)                              
 highest = 0
 nodes = deepcopy(set(metabolicNetwork.nodes()))
-parameters["unnecessaryMolecules"] = unnecessaryMolecules
-parameters["abundantMolecules"] = abundantMolecules
-parameters["unnecessaryMolecules"] = unnecessaryMoleculesIDSet
+
 for m in unnecessaryMolecules:
     if m in vertexIDs:
         unnecessaryMoleculesIDSet.add(vertexIDs[m])
-
+parameters["unnecessaryMolecules"] = unnecessaryMolecules
+parameters["unnecessaryMoleculesIDs"] = unnecessaryMoleculesIDSet
 # 3.4 Remove unnecessary stuf‚
 metabolicNetwork.remove_nodes_from(unnecessaryMoleculesIDSet)                  # Network for constructing the submodules
 usefulNetwork.remove_nodes_from(unnecessaryMoleculesIDSet)                   # Network that will be analyzed in the end for elementary circuits

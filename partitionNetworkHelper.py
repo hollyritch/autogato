@@ -230,22 +230,17 @@ def createReactionNetwork(sCC:nx.DiGraph, reactions:set, inhibitors:dict):
 #############################
 
 
-def getAbundantMolecules(smallMoleculesSet:set, metabolicNetwork:nx.DiGraph, exclude:set):
-    abundantMolecules = set()
+def getAbundantMolecules(smallMoleculesSet:set, metabolicNetwork:nx.DiGraph):
     unneccessaryMolecules =set()
     for n in metabolicNetwork.nodes():
         node = metabolicNetwork.nodes[n]["Name"]
         if node.startswith("M_"):
             if node.endswith("_e"):
                 unneccessaryMolecules.add(node)
-                abundantMolecules.add(node)
             shortendNode = "_".join(node.split("_")[:-1])+"_"
-            if shortendNode in exclude:
-                abundantMolecules.add(node)
             if shortendNode in smallMoleculesSet:
                 unneccessaryMolecules.add(node)
-                abundantMolecules.add(node)
-    return unneccessaryMolecules, abundantMolecules
+    return unneccessaryMolecules
 #############################
 #############################
 
