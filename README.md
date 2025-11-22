@@ -67,5 +67,6 @@ Again you have multiple options:
 - -f or --fluffle
     Will enforce enumeration of fluffles. Be very carefull to do that. Memory consumption explodes very quickly. Default = False.
 - -c or --cores
-    Enumerates only cores. Recommended to apply first to larger networks. Consumes significantly less memory than normal mode.
+    Enumerates only cores. Recommended to apply first to larger networks. Consumes significantly less memory than normal mode. 
 - p or --parallel
+    If you want elementary circuits and assembly of larger equivalence classes parallelized, enforce -p. Default is false.
