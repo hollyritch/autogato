@@ -52,7 +52,7 @@ If the network decomposes into multiple strongly connected components, each of t
 
 Secondly, you partition the network by using the output from the first
 
-- python partitionAnalysis.py -x < XMLFile > -i <inputPickleFile> -s <Species>
+- python partitionAnalysis.py -x < XMLFile > -i < inputPickleFile > -s < Species >
 
 Again you have multiple options:
 
