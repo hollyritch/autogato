@@ -1,17 +1,9 @@
 # Packages 
 import networkx as nx
-import matplotlib.pyplot as plt
-import sys
 import numpy as np
-import gurobipy as gp
-from gurobipy import GRB
-import sympy as sp
-from sympy import * 
 import time 
 from tqdm import tqdm
 import concurrent.futures
-from copy import copy
-from copy import deepcopy
 
 
 # 1. Functions for computation of distance matrices and ILP solivng
@@ -96,56 +88,56 @@ def computeShortestPathMatrix(reactionNetwork:nx.DiGraph, noThreads:int):
 #############################
 
 
-def solveILP(G):
-    with gp.Env(empty=True) as env:
-        env.setParam('OutputFlag', 0)
-        env.start()
-        with gp.Model(env=env) as m:
-            values = [-1,1]
-            s = m.addVars(np.shape(G)[0], vtype=GRB.INTEGER, lb=-1, ub=1, name="s")
-            Y = m.addVars(np.shape(G)[0], 2, vtype=GRB.BINARY, name = "Y")
-            for i in range(np.shape(G)[0]):
-                m.addConstr(gp.quicksum(Y[i,j] for j in range(2)) == 1)
-                m.addConstr(s[i]==gp.quicksum(values[j] * Y[i,j] for j in range(2)))
-            m.setObjective(gp.quicksum((G[i][j]*s[i]*s[j]) for j in range(np.shape(G)[0]) for i in range(np.shape(G)[1])), GRB.MAXIMIZE)
-            #m.Params.PoolSearchMode = 2
-            m.optimize()
-            j=0
-            v = np.zeros((1,np.shape(G)[0]))
-            Q=m.getObjective().getValue()
-            if m.SolCount > 1 and Q>0:
-                k = 0
-                while True:
-                    m.setParam(GRB.Param.SolutionNumber, k)
-                    for z in m.getVars():
-                        if j>=np.shape(G)[0]:
-                            break
-                        v[0][j] = z.Xn
-                        j+=1
-                    oneVectorBool = True
-                    for i in range(np.shape(v)[1]):
-                        if v[0][i]!=1:
-                            oneVectorBool = False
-                            break
-                    if oneVectorBool == False:
-                        break
-            else:
-                for z in m.getVars():
-                    if j>=np.shape(G)[0]:
-                        break
-                    v[0][j] = z.Xn
-                    j+=1
-                Q=m.getObjective().getValue()
-    oneVectorBool = True
-    for i in range(np.shape(v)[1]):
-        if v[0][i] != 1:
-            oneVectorBool = False
-            break
-    if oneVectorBool == True and Q>0:
-        sys.exit("ERRRRORR!!!") 
-    return v, Q
-#############################
-#############################
+# def solveILP(G):
+#     with gp.Env(empty=True) as env:
+#         env.setParam('OutputFlag', 0)
+#         env.start()
+#         with gp.Model(env=env) as m:
+#             values = [-1,1]
+#             s = m.addVars(np.shape(G)[0], vtype=GRB.INTEGER, lb=-1, ub=1, name="s")
+#             Y = m.addVars(np.shape(G)[0], 2, vtype=GRB.BINARY, name = "Y")
+#             for i in range(np.shape(G)[0]):
+#                 m.addConstr(gp.quicksum(Y[i,j] for j in range(2)) == 1)
+#                 m.addConstr(s[i]==gp.quicksum(values[j] * Y[i,j] for j in range(2)))
+#             m.setObjective(gp.quicksum((G[i][j]*s[i]*s[j]) for j in range(np.shape(G)[0]) for i in range(np.shape(G)[1])), GRB.MAXIMIZE)
+#             #m.Params.PoolSearchMode = 2
+#             m.optimize()
+#             j=0
+#             v = np.zeros((1,np.shape(G)[0]))
+#             Q=m.getObjective().getValue()
+#             if m.SolCount > 1 and Q>0:
+#                 k = 0
+#                 while True:
+#                     m.setParam(GRB.Param.SolutionNumber, k)
+#                     for z in m.getVars():
+#                         if j>=np.shape(G)[0]:
+#                             break
+#                         v[0][j] = z.Xn
+#                         j+=1
+#                     oneVectorBool = True
+#                     for i in range(np.shape(v)[1]):
+#                         if v[0][i]!=1:
+#                             oneVectorBool = False
+#                             break
+#                     if oneVectorBool == False:
+#                         break
+#             else:
+#                 for z in m.getVars():
+#                     if j>=np.shape(G)[0]:
+#                         break
+#                     v[0][j] = z.Xn
+#                     j+=1
+#                 Q=m.getObjective().getValue()
+#     oneVectorBool = True
+#     for i in range(np.shape(v)[1]):
+#         if v[0][i] != 1:
+#             oneVectorBool = False
+#             break
+#     if oneVectorBool == True and Q>0:
+#         sys.exit("ERRRRORR!!!") 
+#     return v, Q
+# #############################
+# #############################
 
 
 def correctG(G):
