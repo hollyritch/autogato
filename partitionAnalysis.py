@@ -1235,27 +1235,27 @@ def readArguments():
         if newArgument == "-x" or "--xmlFile":
             inputXMLFilePath = sys.argv[k+1]
             xmlBool = True
-        if newArgument == "-i" or "--input":
+        elif newArgument == "-i" or "--input":
             inputPickleFile = sys.argv[k+1]
             inputBool = True
-        if newArgument == "-b" or "--circuitBound":
+        elif newArgument == "-b" or "--circuitBound":
             circuitBound = int(sys.argv[k+1])
             circuitBool = True
-        if newArgument == "-n" or newArgument == "-nonMetzler":
+        elif newArgument == "-n" or newArgument == "-nonMetzler":
             nonMetzlerString = sys.argv[k+1].lower()
             if nonMetzlerString == "false":
                 checkNonMetzler=False
-        if newArgument == "-t" or newArgument == "--noThreads":
+        elif newArgument == "-t" or newArgument == "--noThreads":
             noThreads = int(sys.argv[k+1])
             threadBool = True
-        if newArgument == "-e" or newArgument == "--equivClassBound":
+        elif newArgument == "-e" or newArgument == "--equivClassBound":
             equviClassBound = int(sys.argv[k+1])
             equivClassBoundBool = True
-        if newArgument == "-f" or newArgument == "--fluffles":
+        elif newArgument == "-f" or newArgument == "--fluffles":
             fluffleBool = True
-        if newArgument == "-c" or newArgument == "--cores":
+        elif newArgument == "-c" or newArgument == "--cores":
             coreBool = True
-        if newArgument == "-p" or newArgument == "--parallel":
+        elif newArgument == "-p" or newArgument == "--parallel":
             parallelBool = True
     if inputBool==False:
         sys.exit("Please specify input pickle file.")
