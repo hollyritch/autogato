@@ -1232,10 +1232,10 @@ def readArguments():
     parallelBool = False
     for k in range(len(sys.argv)):
         newArgument = sys.argv[k]
-        if newArgument == "-x" or "--xmlFile":
+        if newArgument == "-x" or newArgument=="--xmlFile":
             inputXMLFilePath = sys.argv[k+1]
             xmlBool = True
-        elif newArgument == "-i" or "--input":
+        elif newArgument == "-i" or newArgument=="--input":
             inputPickleFile = sys.argv[k+1]
             inputBool = True
         elif newArgument == "-b" or newArgument=="--circuitBound":
