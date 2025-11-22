@@ -285,7 +285,6 @@ def getIntersectingEquivClassesParallelCythonCores(frozenset equivClass, dict eq
             equivClassValues.setdefault("Predecessors", set()).add(cEqCl)
             equivClassValues["Leaf"] = False
             if elemE[cEqCl]["Autocatalytic"]==True:
-                speedCores.discard(equivClass)
                 equivClassValues["Core"]=False
         else:
             if autocatalytic == True:
