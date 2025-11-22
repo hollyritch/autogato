@@ -1,10 +1,8 @@
 import sys, os
 from tqdm import tqdm 
 
-cutOffElementaryCircuits = 30
-cutOffLargerCycles = 30
-fluffles = "False"
-bounded = "False"
+cutOffElementaryCircuits = 1000
+cutOffLargerCycles = 1000
 core = "True"
 parallel = "True"
 maxThreads = 12
@@ -15,7 +13,7 @@ speciesXMLDict = {}
 for k in tqdm(range(len(speciesList)), desc="Species"):
     species = speciesList[k]    
     print(species)
-    if species != "EColiDH5Alpha":
+    if species != "EColiCore":
         continue
     if species == ".DS_Store":
         continue
@@ -42,7 +40,7 @@ for k in tqdm(range(len(speciesList)), desc="Species"):
         analysisOutputFile = "./Results/analysisOutput" + species + xmlFile+ ".txt"
         for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):
             pickleFilePath = "PickleFiles/"+str(species) +  "/" + pickleFileList[j]
-            newOrder = "python partitionAnalysis.py " + " -x " + xmlFilePath + " -i " + pickleFilePath + " -b " + str(cutOffElementaryCircuits) + " -n True " + " -s " + str(species)+ " -t " + str(maxThreads) + " -e " + str(cutOffLargerCycles) + " -f " "-c "  + "-p"
+            newOrder = "python partitionAnalysis.py " + " -x " + xmlFilePath + " -i " + pickleFilePath + " -b " + str(cutOffElementaryCircuits) + " -n True " + " -s " + str(species)+ " -t " + str(maxThreads) + " -e " + str(cutOffLargerCycles) +  " -c "  + " -p"
             if not os.path.exists("./Results/"+str(species)):
                 os.makedirs("./Results/"+str(species))
             os.system('/usr/bin/time -f "Command: %C\nTime   : %E\nRAM(kb): %M\nStatus : %x\n" -o ./Results/'+str(species)+'/outputTimeRAM'+ str(j) + '.txt ' +newOrder)
