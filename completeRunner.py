@@ -40,7 +40,7 @@ for k in tqdm(range(len(speciesList)), desc="Species"):
         analysisOutputFile = "./Results/analysisOutput" + species + xmlFile+ ".txt"
         for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):
             pickleFilePath = "PickleFiles/"+str(species) +  "/" + pickleFileList[j]
-            newOrder = "python partitionAnalysis.py " + " -x " + xmlFilePath + " -i " + pickleFilePath + " -b " + str(cutOffElementaryCircuits) + " -n True " + " -s " + str(species)+ " -t " + str(maxThreads) + " -e " + str(cutOffLargerCycles) +  " -c "  + " -p"
+            newOrder = "python partitionAnalysis.py" + " -x " + xmlFilePath + " -i " + pickleFilePath + " -b " + str(cutOffElementaryCircuits) + " -n True " + " -s " + str(species)+ " -t " + str(maxThreads) + " -e " + str(cutOffLargerCycles) +  " -c "  + " -p"
             if not os.path.exists("./Results/"+str(species)):
                 os.makedirs("./Results/"+str(species))
             os.system('/usr/bin/time -f "Command: %C\nTime   : %E\nRAM(kb): %M\nStatus : %x\n" -o ./Results/'+str(species)+'/outputTimeRAM'+ str(j) + '.txt ' +newOrder)
