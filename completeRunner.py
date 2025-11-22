@@ -1,8 +1,8 @@
 import sys, os
 from tqdm import tqdm 
 
-cutOffElementaryCircuits = 40
-cutOffLargerCycles = 40
+cutOffElementaryCircuits = 50
+cutOffLargerCycles = 50
 maxThreads = 128
 cutOffReactionNetworkSize = 2
 path = "./XML-Files/"
@@ -39,7 +39,7 @@ for k in tqdm(range(len(speciesList)), desc="Species"):
         for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):
             pickleFilePath = "PickleFiles/"+str(species) +  "/" + pickleFileList[j]
             
-            newOrder = "python partitionAnalysis.py" + " -x " + xmlFilePath + " -i " + pickleFilePath + " -b " + str(cutOffElementaryCircuits) + " -n True " + " -s " + str(species)+ " -t " + str(maxThreads) + " -e " + str(cutOffLargerCycles) +  " -c"  + " -p"
+            newOrder = "python partitionAnalysis.py" + " -x " + xmlFilePath + " -i " + pickleFilePath + " -b " + str(cutOffElementaryCircuits) + " -n True " + " -s " + str(species)+ " -t " + str(maxThreads) + " -e " + str(cutOffLargerCycles) +  " -c"  + " -p" + " -d /scratch/richard/Autocatalysis/cycleData/"
             print(newOrder)
             if not os.path.exists("./Results/"+str(species)):
                 os.makedirs("./Results/"+str(species))

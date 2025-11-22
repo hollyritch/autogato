@@ -1231,6 +1231,7 @@ def readArguments():
     coreBool = False
     parallelBool = False
     speciesBool = False
+    cycleDataBool = False
     for k in range(len(sys.argv)):
         newArgument = sys.argv[k]
         if newArgument == "-x" or newArgument=="--xmlFile":
@@ -1261,6 +1262,9 @@ def readArguments():
         elif newArgument == "-s" or newArgument == "--Species":
             species = sys.argv[k+1]
             speciesBool = True
+        elif newArgument == "-o" or newArgument == "--ouput":
+            outputPath = sys.argv[k+1]
+            cycleDataBool = True
     if inputBool==False:
         sys.exit("Please specify input pickle file.")
     if xmlBool == False:
@@ -1273,7 +1277,9 @@ def readArguments():
         noThreads = 2
     if equivClassBoundBool == False:
         equviClassBound = 20
-    return inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, equviClassBound, fluffleBool, coreBool, parallelBool, species
+    if cycleDataBool == False:
+        outputPath="./cycleData/"
+    return inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, equviClassBound, fluffleBool, coreBool, parallelBool, species, outputPath
 #############################
 #############################
 
@@ -1659,7 +1665,7 @@ timeStamp = time.time()
 gc.enable()
 
 # 1. Define variables
-inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, cutoffLargerCycles, fluffleBool, coreBool, parallelBool, species = readArguments()
+inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, cutoffLargerCycles, fluffleBool, coreBool, parallelBool, species, cycleDataPath = readArguments()
 
 reader = libsbml.SBMLReader()
 document = reader.readSBML(inputXMLFilePath)
@@ -1712,18 +1718,16 @@ speedCores = set()
 noCore = set()
 maxRAM = 0
 
+if not os.path.exists(cycleDataPath):
+    os.makedirs(cycleDataPath)
+if not os.path.exists(cycleDataPath+species):
+    os.makedirs(cycleDataPath+species)
 
-if not os.path.exists("/scratch/richard/Autocatalysis/cycleData/"):
-    os.makedirs("/scratch/richard/Autocatalysis/cycleData/")
-if not os.path.exists("/scratch/richard/Autocatalysis/cycleData/"+species):
-    os.makedirs("/scratch/richard/Autocatalysis/cycleData/"+species)
-if not os.path.exists(allCircuitsPath+species):
-    os.makdirs(allCircuitsPath+species)
 treeCounter = int(inputPickleFile.split("partitionTree")[1].split(".pkl")[0])
 # writeStoichiometricMatrixOutput(parameters, allCircuitsPath+species +"/"+"stoichiometricMatrix"+str(treeCounter)+".txt")
-outputPickleFilePath = "/scratch/richard/Autocatalysis/cycleData/" + species + "/partitionTreeData" + str(treeCounter) + ".pkl"
+outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(treeCounter) + ".pkl"
 
-file = open("/scratch/richard/Autocatalysis/cycleData/"+ species +"/allCycles"+ str(treeCounter) +".txt", "w")
+file = open(cycleDataPath + species +"/allCycles"+ str(treeCounter) +".txt", "w")
 file.close()
 analysePartitionTree(parameters, partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter)
 parameters["cycleDict"] = cycleDict 
