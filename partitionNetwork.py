@@ -13,7 +13,7 @@ def readArguments():
     cutOffBool = False
     outputBool = False
     smallMoleculesBool = False
-    for k in range(sys.argv):
+    for k in range(len(sys.argv)):
         newArgument = sys.argv[k]
         if newArgument == "-i" or newArgument == "--input":
             inputFilePath = sys.argv[k+1]
