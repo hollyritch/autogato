@@ -25,13 +25,17 @@ for k in tqdm(range(len(speciesList)), desc="Species"):
         continue
     speciesPath = path+species+"/"
     xmlFileList =  os.listdir(speciesPath)
+    if species == "EColiCore":
+        smallMoleculesPath = "smallMoleculesEColiCore.txt"
+    else:
+        smallMoleculesPath = "smallMolecules.txt"
     for i in tqdm(range(len(xmlFileList)), leave = False, desc="XML-Files"):
         xmlFile =  xmlFileList[i]
         print(species, xmlFile)
     # 2. Read Model
         xmlFilePath = speciesPath + xmlFile
         partitioningOutputFile = "./Results/partitioningOutput" + species + xmlFile+".txt"
-        os.system("python partitionNetwork.py " + xmlFilePath + " " + str(cutOffReactionNetworkSize) + " " + str(maxThreads) + " " + str(species) + " | tee " + str(partitioningOutputFile))
+        os.system("python partitionNetwork.py " + " -i " + xmlFilePath + " -c " + str(cutOffReactionNetworkSize) + " -t " + str(maxThreads) + " -o " + str(species) + " -s ./SmallMolecules/" + str(smallMoleculesPath) + " | tee " + str(partitioningOutputFile))
         pickleFileList = os.listdir("PickleFiles/" + str(species))
         analysisOutputFile = "./Results/analysisOutput" + species + xmlFile+ ".txt"
         for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):

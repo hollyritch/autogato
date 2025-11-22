@@ -1,0 +1,21 @@
+M_adp_c 	ADP
+M_h2o_c		H2O 
+M_co2_c		CO2 
+M_h_c		H+ 
+M_coa_c		Coenzyme A 
+M_nad_c		NAD+
+M_nadh_c	NADH
+M_h_e		H+ 
+M_pi_e		PO4
+M_pi_c		PO4
+M_amp_c		AMP
+M_co2_e		CO2
+M_o2_c		CO2
+M_q8h2_c	Ubiquinol 
+M_q8_c		Ubiquinone
+M_nadp_c	NADP
+M_nadph_c	NADPH
+M_h2o_e		H2O
+M_nh4_e		NH4
+M_o2_e		O2
+M_nh4_c		NH4

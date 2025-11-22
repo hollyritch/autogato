@@ -1,0 +1,1523 @@
+M_12dgr2_ST_p	 	 	 	 	 					Membrane 1,2-diacylglycerol mixture
+M_12htacr_c	 	 	 	 	 	 	 	 	 	12-HT or M-VI, 12-hydroxy tacrolimus
+M_12htacr_e	 	 	 	 	 	 	 	 	 	12-HT or M-VI, 12-hydroxy tacrolimus
+M_12htacr_r	 	 	 	 	 	 	 	 	 	12-HT or M-VI, 12-hydroxy tacrolimus
+M_1331tacr_c	 	 	 	 	 	 	 	 	 	13,31-O-Didesmethyl-tacrolimus
+M_1331tacr_e	 	 	 	 	 	 	 	 	 	13,31-O-Didesmethyl-tacrolimus
+M_1331tacr_r	 	 	 	 	 	 	 	 	 	13,31-O-Didesmethyl-tacrolimus
+M_13dmt_c	 	 	 	 	 	 	 	 	 	13-O-desmethyl tacrolimus, 13-DMT or M-I
+M_13dmt_e	 	 	 	 	 	 	 	 	 	13-O-desmethyl tacrolimus, 13-DMT or M-I
+M_13dmt_r	 	 	 	 	 	 	 	 	 	13-O-desmethyl tacrolimus, 13-DMT or M-I
+M_14hmdz_c	 	 	 	 	 	 	 	 	 	1,4-Dihydroxy-midazolam
+M_14hmdz_e	 	 	 	 	 	 	 	 	 	1,4-Dihydroxy-midazolam
+M_14hmdz_r	 	 	 	 	 	 	 	 	 	1,4-Dihydroxy-midazolam
+M_1513tacr_c	 	 	 	 	 	 	 	 	 	13,15-O-didesmethyl tacrolimus
+M_1513tacr_e	 	 	 	 	 	 	 	 	 	13,15-O-didesmethyl tacrolimus
+M_1513tacr_r	 	 	 	 	 	 	 	 	 	13,15-O-didesmethyl tacrolimus
+M_1531tacr_c	 	 	 	 	 	 	 	 	 	15, 31-O-Didesmethyl-tacrolimus
+M_1531tacr_e	 	 	 	 	 	 	 	 	 	15, 31-O-Didesmethyl-tacrolimus
+M_1531tacr_r	 	 	 	 	 	 	 	 	 	15, 31-O-Didesmethyl-tacrolimus
+M_15dmt_c	 	 	 	 	 	 	 	 	 	15-DMT or M-III, 15-O-desmethyl tacrolimus
+M_15dmt_e	 	 	 	 	 	 	 	 	 	15-DMT or M-III, 15-O-desmethyl tacrolimus
+M_15dmt_r	 	 	 	 	 	 	 	 	 	15-DMT or M-III, 15-O-desmethyl tacrolimus
+M_1gCELLWALL2_c	 	 	 	 	 
+M_1gCELLWALL_c	 	 	 	 	 
+M_1gDNA2_c	 	 	 	 	 
+M_1gDNA_c	 	 	 	 	 
+M_1gLIPIDS2_c	 	 	 	 	 
+M_1gLIPIDS_c	 	 	 	 	 
+M_1gLIPIDSr_c	 	 	 	 	 
+M_1gMeasuredSolutes2_c	 	 	 	 	 
+M_1gMeasuredSolutes_c	 	 	 	 	 
+M_1gOtherSolutes2_c	 	 	 	 	 
+M_1gOtherSolutes_r_c	 	 	 	 	 
+M_1gPROTEIN2_c	 	 	 	 	 
+M_1gPROTEIN_c	 	 	 	 	 
+M_1gRNA2_c	 	 	 	 	 
+M_1gRNA_c	 	 	 	 	 
+M_1gUnmeasuredSolutes_c	 	 	 	 	 
+M_1hibup__S_c	 	 	 	 	 	 	 	 	 	1-hydroxy S-ibuprofen
+M_1hibup__S_e	 	 	 	 	 	 	 	 	 	1-hydroxy S-ibuprofen
+M_1hibup__S_r	 	 	 	 	 	 	 	 	 	1-hydroxy S-ibuprofen
+M_1hibupglu__S_c	 	 	 	 	 	 	 	 	1-hydroxy S-ibuprofen-glucuronide
+M_1hibupglu__S_e	 	 	 	 	 	 	 	 	1-hydroxy S-ibuprofen-glucuronide
+M_1hibupglu__S_r	 	 	 	 	 	 	 	 	1-hydroxy S-ibuprofen-glucuronide
+M_1hmdgluc_c	 	 	 	 	 	 	 	 	 	1'-OH-midazolam-glucuronide
+M_1hmdgluc_e	 	 	 	 	 	 	 	 	 	1'-OH-midazolam-glucuronide
+M_1hmdgluc_r	 	 	 	 	 	 	 	 	 	1'-OH-midazolam-glucuronide
+M_1ohmdz_c	 	 	 	 	 	 	 	 	 	1'-OH-midazolam
+M_1ohmdz_e	 	 	 	 	 	 	 	 	 	1'-OH-midazolam
+M_1ohmdz_r	 	 	 	 	 	 	 	 	 	1'-OH-midazolam
+M_23camp_c	 	 	 	 	 					2',3'-Cyclic AMP
+M_23camp_e	 	 	 	 	 					2',3'-Cyclic AMP
+M_23camp_p	 	 	 	 	 					2',3'-Cyclic AMP
+M_23ccmp_c	 	 	 	 	 					2',3'-Cyclic CMP
+M_23ccmp_e	 	 	 	 	 					2',3'-Cyclic CMP
+M_23ccmp_p	 	 	 	 	 					2',3'-Cyclic CMP
+M_23cgmp_c	 	 	 	 	 					2',3'-Cyclic GMP
+M_23cgmp_e	 	 	 	 	 					2',3'-Cyclic GMP
+M_23cgmp_p	 	 	 	 	 					2',3'-Cyclic GMP
+M_23cump_c	 	 	 	 	 					2',3'-Cyclic UMP
+M_23cump_e	 	 	 	 	 					2',3'-Cyclic UMP
+M_23cump_p	 	 	 	 	 					2',3'-Cyclic UMP
+M_2fe1s_c	 	 	 	 	 					[2Fe-1S] desulfurated iron-sulfur cluster
+M_2fe2s_c	 	 	 	 	 					[2Fe-2S] iron-sulfur cluster
+M_2fe2s_h	 	 	 	 	 					[2Fe-2S] iron-sulfur cluster
+M_2hatvacid_c	 	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-acid / ortho-hydroxy-atorvastatin acid
+M_2hatvacid_e	 	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-acid / ortho-hydroxy-atorvastatin acid
+M_2hatvacid_r	 	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-acid / ortho-hydroxy-atorvastatin acid
+M_2hatvacidgluc_c	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-acyl-glucuronide
+M_2hatvacidgluc_e	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-acyl-glucuronide
+M_2hatvacidgluc_r	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-acyl-glucuronide
+M_2hatvlac_c	 	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-lactone / ortho-hydroxy-atorvastatin lactone
+M_2hatvlac_e	 	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-lactone / ortho-hydroxy-atorvastatin lactone
+M_2hatvlac_r	 	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-lactone / ortho-hydroxy-atorvastatin lactone
+M_2hatvlacgluc_c	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-lactone-glucuronide
+M_2hatvlacgluc_e	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-lactone-glucuronide
+M_2hatvlacgluc_r	 	 	 	 	 	 	 	 	2-hydroxy-atorvastatin-lactone-glucuronide
+M_2hibup__R_c	 	 	 	 	 	 	 	 	 	2-hydroxy-R-ibuprofen
+M_2hibup__R_e	 	 	 	 	 	 	 	 	 	2-hydroxy-R-ibuprofen
+M_2hibup__R_r	 	 	 	 	 	 	 	 	 	2-hydroxy-R-ibuprofen
+M_2hibup__S_c	 	 	 	 	 	 	 	 	 	2-hydroxy-S-ibuprofen
+M_2hibup__S_e	 	 	 	 	 	 	 	 	 	2-hydroxy-S-ibuprofen
+M_2hibup__S_r	 	 	 	 	 	 	 	 	 	2-hydroxy-S-ibuprofen
+M_2hibupglu__S_c	 	 	 	 	 	 	 	 	2-hydroxy S-ibuprofen-glucuronide
+M_2hibupglu__S_e	 	 	 	 	 	 	 	 	2-hydroxy S-ibuprofen-glucuronide
+M_2hibupglu__S_r	 	 	 	 	 	 	 	 	2-hydroxy S-ibuprofen-glucuronide
+M_31dmt_c	 	 	 	 	 	 	 	 	 	31-DMT or M-II, 31-O-desmethyl tacrolimus
+M_31dmt_e	 	 	 	 	 	 	 	 	 	31-DMT or M-II, 31-O-desmethyl tacrolimus
+M_31dmt_r	 	 	 	 	 	 	 	 	 	31-DMT or M-II, 31-O-desmethyl tacrolimus
+M_35ccmp_c	 	 	 	 	 					3  5  Cyclic CMP C9H11N3O7P
+M_35cdamp_c	 	 	 	 	 					3  5  Cyclic dAMP C10H11N5O5P
+M_35cgmp_c	 	 	 	 	 					3',5'-Cyclic GMP
+M_35cgmp_e	 	 	 	 	 					3',5'-Cyclic GMP
+M_35cgmp_g	 	 	 	 	 					3',5'-Cyclic GMP
+M_35cgmp_n	 	 	 	 	 					3',5'-Cyclic GMP
+M_35cimp_c	 	 	 	 	 					3  5  Cyclic IMP C10H10N4O7P
+M_35dhpvs_c	 	 	 	 	 	 	 	 	 	3'-alpha,5'beta-dihydroxy-pravastatin / 3'-alpha5'beta6'beta-trihydroxy pravastatin
+M_35dhpvs_e	 	 	 	 	 	 	 	 	 	3'-alpha,5'beta-dihydroxy-pravastatin / 3'-alpha5'beta6'beta-trihydroxy pravastatin
+M_35dhpvs_r	 	 	 	 	 	 	 	 	 	3'-alpha,5'beta-dihydroxy-pravastatin / 3'-alpha5'beta6'beta-trihydroxy pravastatin
+M_35dsmv_c	 	 	 	 	 	 	 	 	 	3',5'-dihydrodiol-simvastatin-lactone form
+M_35dsmv_e	 	 	 	 	 	 	 	 	 	3',5'-dihydrodiol-simvastatin-lactone form
+M_35dsmv_r	 	 	 	 	 	 	 	 	 	3',5'-dihydrodiol-simvastatin-lactone form
+M_3amp_c	 	 	 	 	 					3  AMP C10H12N5O7P
+M_3amp_e	 	 	 	 	 					3  AMP C10H12N5O7P
+M_3amp_l	 	 	 	 	 					3  AMP C10H12N5O7P
+M_3amp_p	 	 	 	 	 					3  AMP C10H12N5O7P
+M_3cmp_c	 	 	 	 	 					3  CMP C9H12N3O8P
+M_3cmp_e	 	 	 	 	 					3  CMP C9H12N3O8P
+M_3cmp_p	 	 	 	 	 					3  CMP C9H12N3O8P
+M_3fe4s_c	 	 	 	 	 					[3Fe-4S] damaged iron-sulfur cluster
+M_3gmp_c	 	 	 	 	 					Guanosine 3  phosphate C10H12N5O8P
+M_3gmp_e	 	 	 	 	 					Guanosine 3  phosphate C10H12N5O8P
+M_3gmp_p	 	 	 	 	 					Guanosine 3  phosphate C10H12N5O8P
+M_3hibup__R_c	 	 	 	 	 	 	 	 	 	3-hydroxy R-ibuprofen
+M_3hibup__R_e	 	 	 	 	 	 	 	 	 	3-hydroxy R-ibuprofen
+M_3hibup__R_r	 	 	 	 	 	 	 	 	 	3-hydroxy R-ibuprofen
+M_3hibup__S_c	 	 	 	 	 	 	 	 	 	3-hydroxy S-ibuprofen
+M_3hibup__S_e	 	 	 	 	 	 	 	 	 	3-hydroxy S-ibuprofen
+M_3hibup__S_r	 	 	 	 	 	 	 	 	 	3-hydroxy S-ibuprofen
+M_3hibupglu__S_c	 	 	 	 	 	 	 	 	3-hydroxy S-ibuprofen-glucuronide
+M_3hibupglu__S_e	 	 	 	 	 	 	 	 	3-hydroxy S-ibuprofen-glucuronide
+M_3hibupglu__S_r	 	 	 	 	 	 	 	 	3-hydroxy S-ibuprofen-glucuronide
+M_3hlido_c	 	 	 	 	 					3-Hydroxylidocaine
+M_3hlvst_c	 	 	 	 	 	 	 	 	 	3''-hydroxy-lovastatin lactone form
+M_3hlvst_r	 	 	 	 	 	 	 	 	 	3''-hydroxy-lovastatin lactone form
+M_3hlvstacid_c	 	 	 	 	 	 	 	 	 	3''-hydroxy-lovastatin acid form
+M_3hlvstacid_e	 	 	 	 	 	 	 	 	 	3''-hydroxy-lovastatin acid form
+M_3hpvs_c	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin
+M_3hpvs_e	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin
+M_3hpvs_r	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin
+M_3hpvscoa_c	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-CoA
+M_3hpvscoa_m	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-CoA
+M_3hpvscoa_x	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-CoA
+M_3hpvstet_c	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-tetranor
+M_3hpvstet_e	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-tetranor
+M_3hpvstetcoa_c	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-tetranor-CoA
+M_3hpvstetcoa_m	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-tetranor-CoA
+M_3hpvstetcoa_x	 	 	 	 	 	 	 	 	 	3'-S-hydroxy-pravastatin-tetranor-CoA
+M_3hsmv_c	 	 	 	 	 	 	 	 	 	3'-hydroxy-simvastatin-lactone form
+M_3hsmv_r	 	 	 	 	 	 	 	 	 	3'-hydroxy-simvastatin-lactone form
+M_3hsmvacid_c	 	 	 	 	 	 	 	 	 	3'-hydroxy-simvastatin-acid form
+M_3hsmvacid_e	 	 	 	 	 	 	 	 	 	3'-hydroxy-simvastatin-acid form
+M_3ispvs_c	 	 	 	 	 	 	 	 	 	3-alpha-iso-pravastatin
+M_3ispvs_e	 	 	 	 	 	 	 	 	 	3-alpha-iso-pravastatin
+M_3ispvs_r	 	 	 	 	 	 	 	 	 	3-alpha-iso-pravastatin
+M_3ohacmp_c	 	 	 	 	 					3-hydroxy-acetaminophen
+M_3ohacmp_e	 	 	 	 	 					3-hydroxy-acetaminophen
+M_3ohacmp_r	 	 	 	 	 					3-hydroxy-acetaminophen
+M_3ump_c	 	 	 	 	 					3  UMP C9H11N2O9P
+M_3ump_e	 	 	 	 	 					3  UMP C9H11N2O9P
+M_3ump_p	 	 	 	 	 					3  UMP C9H11N2O9P
+M_4bhglz_c	 	 	 	 	 	 	 	 	 	4-beta-OH-gliclazide
+M_4bhglz_e	 	 	 	 	 	 	 	 	 	4-beta-OH-gliclazide
+M_4bhglz_r	 	 	 	 	 	 	 	 	 	4-beta-OH-gliclazide
+M_4fe4s_c	 	 	 	 	 					[4Fe-4S] iron-sulfur cluster
+M_4fe4s_h	 	 	 	 	 					[4Fe-4S] iron-sulfur cluster
+M_4hatvacid_c	 	 	 	 	 	 	 	 	 	4-hydroxy-atorvastatin-acid / para-hydroxy-atorvastatin acid
+M_4hatvacid_e	 	 	 	 	 	 	 	 	 	4-hydroxy-atorvastatin-acid / para-hydroxy-atorvastatin acid
+M_4hatvacid_r	 	 	 	 	 	 	 	 	 	4-hydroxy-atorvastatin-acid / para-hydroxy-atorvastatin acid
+M_4hatvlac_c	 	 	 	 	 	 	 	 	 	4-hydroxy-atorvastatin-lactone / para-hydroxy-atorvastatin lactone
+M_4hatvlac_e	 	 	 	 	 	 	 	 	 	4-hydroxy-atorvastatin-lactone / para-hydroxy-atorvastatin lactone
+M_4hatvlac_r	 	 	 	 	 	 	 	 	 	4-hydroxy-atorvastatin-lactone / para-hydroxy-atorvastatin lactone
+M_4hmdgluc_c	 	 	 	 	 					4-OH-midazolam-glucuronide
+M_4hmdgluc_e	 	 	 	 	 					4-OH-midazolam-glucuronide
+M_4hmdgluc_r	 	 	 	 	 					4-OH-midazolam-glucuronide
+M_4hmsial_c	 	 	 	 	 					4-Hydroxymethylsalicylate
+M_4ohmdz_c	 	 	 	 	 	 	 	 	 	4-OH-midazolam
+M_4ohmdz_e	 	 	 	 	 	 	 	 	 	4-OH-midazolam
+M_4ohmdz_r	 	 	 	 	 	 	 	 	 	4-OH-midazolam
+M_56dhpvs_c	 	 	 	 	 	 	 	 	 	3-keto-5,6,-dihydroxy-pravastatin
+M_56dhpvs_e	 	 	 	 	 	 	 	 	 	3-keto-5,6,-dihydroxy-pravastatin
+M_56dhpvs_r	 	 	 	 	 	 	 	 	 	3-keto-5,6,-dihydroxy-pravastatin
+M_56eppvs_c	 	 	 	 	 	 	 	 	 	5,6-epoxy-3-alpha-iso-pravastatin
+M_56eppvs_e	 	 	 	 	 	 	 	 	 	5,6-epoxy-3-alpha-iso-pravastatin
+M_56eppvs_r	 	 	 	 	 	 	 	 	 	5,6-epoxy-3-alpha-iso-pravastatin
+M_5flura_c	 	 	 	 	 					5-Fluorouracil
+M_5flura_e	 	 	 	 	 					5-Fluorouracil
+M_5flurimp_c	 	 	 	 	 					5-Fluorouridine monophosphate
+M_5homeprazole_c	 	 	 	 	 	 	 	 	5homeprazole c
+M_5homeprazole_e	 	 	 	 	 	 	 	 	5homeprazole c
+M_5ohfvs_c	 	 	 	 	 	 	 	 	 	5-hydroxy-fluvastatin
+M_5ohfvs_e	 	 	 	 	 	 	 	 	 	5-hydroxy-fluvastatin
+M_5ohfvs_r	 	 	 	 	 	 	 	 	 	5-hydroxy-fluvastatin
+M_5ohfvsglu_c	 	 	 	 	 	 	 	 	 	5-hydroxy-fluvastatin-glucuronide
+M_5ohfvsglu_e	 	 	 	 	 	 	 	 	 	5-hydroxy-fluvastatin-glucuronide
+M_5ohfvsglu_r	 	 	 	 	 	 	 	 	 	5-hydroxy-fluvastatin-glucuronide
+M_6ahglz_c	 	 	 	 	 	 	 	 	 	6-alpha-OH-gliclazide
+M_6ahglz_e	 	 	 	 	 	 	 	 	 	6-alpha-OH-gliclazide
+M_6ahglz_r	 	 	 	 	 	 	 	 	 	6-alpha-OH-gliclazide
+M_6ampenc_c	 	 	 	 	 					6 Aminopenicillanate C8H13N2O3S
+M_6apa_e	 	 	 	 	 					6 Aminopenicillanic acid C8H12N2O3S
+M_6apa_p	 	 	 	 	 					6 Aminopenicillanic acid C8H12N2O3S
+M_6bhglz_c	 	 	 	 	 	 	 	 	 	6-beta-OH-gliclazide
+M_6bhglz_e	 	 	 	 	 	 	 	 	 	6-beta-OH-gliclazide
+M_6bhglz_r	 	 	 	 	 	 	 	 	 	6-beta-OH-gliclazide
+M_6bhglzglc_c	 	 	 	 	 	 	 	 	 	6-beta-OH-gliclazide-glucuronide
+M_6bhglzglc_e	 	 	 	 	 	 	 	 	 	6-beta-OH-gliclazide-glucuronide
+M_6bhglzglc_r	 	 	 	 	 	 	 	 	 	6-beta-OH-gliclazide-glucuronide
+M_6csmv_c	 	 	 	 	 	 	 	 	 	6'-beta-carboxy-simvastatin-lactone form
+M_6csmv_r	 	 	 	 	 	 	 	 	 	6'-beta-carboxy-simvastatin-lactone form
+M_6csmvacid_c	 	 	 	 	 	 	 	 	 	6'-beta-carboxy-simvastatin-acid form
+M_6csmvacid_e	 	 	 	 	 	 	 	 	 	6'-beta-carboxy-simvastatin-acid form
+M_6epvs_c	 	 	 	 	 	 	 	 	 	6-epipravastatin
+M_6epvs_e	 	 	 	 	 	 	 	 	 	6-epipravastatin
+M_6hlvst_c	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-lovastatin lactone form
+M_6hlvst_e	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-lovastatin lactone form
+M_6hlvst_r	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-lovastatin lactone form
+M_6hlvstacid_c	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-lovastatin-acid form
+M_6hlvstacid_r	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-lovastatin-acid form
+M_6hmsmv_c	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-methyl-simvastatin-lactone form
+M_6hmsmv_r	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-methyl-simvastatin-lactone form
+M_6hmsmvacid_c	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-methyl-simvastatin-acid form
+M_6hmsmvacid_e	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy-methyl-simvastatin-acid form
+M_6hsmv_c	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy simvastatin lactone
+M_6hsmv_r	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy simvastatin lactone
+M_6hsmvacid_c	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy simvastatin acid
+M_6hsmvacid_e	 	 	 	 	 	 	 	 	 	6'-beta-hydroxy simvastatin acid
+M_6melvacid_c	 	 	 	 	 	 	 	 	 	6'-exomethylene-lovastatin-acid form
+M_6melvacid_e	 	 	 	 	 	 	 	 	 	6'-exomethylene-lovastatin-acid form
+M_6melvacid_r	 	 	 	 	 	 	 	 	 	6'-exomethylene-lovastatin-acid form
+M_6melvst_c	 	 	 	 	 	 	 	 	 	6'-exomethylene-lovastatin lactone form
+M_6melvst_e	 	 	 	 	 	 	 	 	 	6'-exomethylene-lovastatin lactone form
+M_6melvst_r	 	 	 	 	 	 	 	 	 	6'-exomethylene-lovastatin lactone form
+M_6msmv_r	 	 	 	 	 	 	 	 	 	6'-exomethylene-simvastatin-lactone form
+M_6ohfvs_c	 	 	 	 	 	 	 	 	 	6-hydroxy-fluvastatin
+M_6ohfvs_e	 	 	 	 	 	 	 	 	 	6-hydroxy-fluvastatin
+M_6ohfvs_r	 	 	 	 	 	 	 	 	 	6-hydroxy-fluvastatin
+M_6ohfvsglu_c	 	 	 	 	 	 	 	 	 	6-hydroxy-fluvastatin-glucuronide
+M_6ohfvsglu_e	 	 	 	 	 	 	 	 	 	6-hydroxy-fluvastatin-glucuronide
+M_6ohfvsglu_r	 	 	 	 	 	 	 	 	 	6-hydroxy-fluvastatin-glucuronide
+M_7ahglz_c	 	 	 	 	 	 	 	 	 	7-alpha-OH-gliclazide
+M_7ahglz_e	 	 	 	 	 	 	 	 	 	7-alpha-OH-gliclazide
+M_7ahglz_r	 	 	 	 	 	 	 	 	 	7-alpha-OH-gliclazide
+M_7bhglz_c	 	 	 	 	 	 	 	 	 	7-beta-OH-gliclazide
+M_7bhglz_e	 	 	 	 	 	 	 	 	 	7-beta-OH-gliclazide
+M_7bhglz_r	 	 	 	 	 	 	 	 	 	7-beta-OH-gliclazide
+M_7bhglzglc_c	 	 	 	 	 	 	 	 	 	7-beta-OH-gliclazide-glucuronide
+M_7bhglzglc_e	 	 	 	 	 	 	 	 	 	7-beta-OH-gliclazide-glucuronide
+M_7bhglzglc_r	 	 	 	 	 	 	 	 	 	7-beta-OH-gliclazide-glucuronide
+M_7hpvs_c	 	 	 	 	 	 	 	 	 	7-hydroxy-3-alpha-iso-pravastatin
+M_7hpvs_e	 	 	 	 	 	 	 	 	 	7-hydroxy-3-alpha-iso-pravastatin
+M_7hpvs_r	 	 	 	 	 	 	 	 	 	7-hydroxy-3-alpha-iso-pravastatin
+M_8oxdgmp_c	 	 	 	 	 					8-oxo-dGMP
+M_8oxdgtp_c	 	 	 	 	 					8-oxo-dGTP
+M_8oxgtp_c	 	 	 	 	 					8-oxo-GTP
+M_ACP_2_c	 	 	 	 	 					Acyl carrier protein
+M_ACP_c	 	 	 	 	 	 					Acyl carrier protein
+M_ACP_h	 	 	 	 	 	 					Acyl carrier protein
+M_ACP_m	 	 	 	 	 	 					Acyl carrier protein
+M_CE5049_c	 	 	 	 	 	 	 	 	 	One Carbon Unit
+M_CE2176_c	 	 	 	 	 					3-O-methyldopa
+M_CE2176_e	 	 	 	 	 					3-O-methyldopa
+M_CE2176_m	 	 	 	 	 					3-O-methyldopa
+M_CE5026_c	 	 	 	 	 					5-S-glutathionyl-L-DOPA
+M_CE5026_e	 	 	 	 	 					5-S-glutathionyl-L-DOPA
+M_CELLWALL_c	 	 	 	 	 					Cell wall
+M_CPS_LLA_c	 	 	 	 	 					Polysaccharide units Lactis specific
+M_HC00004_e	 	 	 	 	 					ApoA1
+M_HC00005_e	 	 	 	 	 					ApoB100
+M_HC00006_e	 	 	 	 	 					ApoC1
+M_HC00007_e	 	 	 	 	 					ApoC2
+M_HC00008_e	 	 	 	 	 					ApoC3	
+M_HC00009_e	 	 	 	 	 					ApoE
+M_HC00617_c	 	 	 	 	 					Ferricytochrome B5
+M_HC00619_c	 	 	 	 	 					Ferrocytochrome B5
+M_HC02172_c	 	 	 	 	 					Zinc
+M_HC02172_e	 	 	 	 	 					Zinc
+M_Hb_e	 	 	 	 	 	 					Hemoglobin
+M_Hb_l	 	 	 	 	 	 					Hemoglobin
+M_M00770_m	 	 	 	 	 					3-Demethylubiquinol-10
+M_M02467_c	 	 	 	 	 	 	 	 	 	Metformin
+M_M02467_e	 	 	 	 	 	 	 	 	 	Metformin
+M_OA_ST_p	 	 	 	 	 					OA ST[p]
+M_OA_STmin_p	 	 	 	 	 					OA STmin[p]
+M_PROTEIN_c	 	 	 	 	 					Protein
+M_PROT_LLA_c	 	 	 	 	 					Protein for biomass  Lactis specific  v1
+M_PROT_LLA_v3_c	 	 	 	 	 					Protein for biomass  lactis specific  v3
+M_R1coa_cho_c	 	 	 	 	 					R group 1 Coenzyme A
+M_R1coa_hs_c	 	 	 	 	 					R group 1 Coenzyme A homo sapiens
+M_R1coa_hs_r	 	 	 	 	 					R group 1 Coenzyme A homo sapiens
+M_R2coa_cho_c	 	 	 	 	 					R group 2 Coenzyme A
+M_R2coa_hs_c	 	 	 	 	 					R group 2 Coenzyme A homo sapiens
+M_R2coa_hs_r	 	 	 	 	 					R group 2 Coenzyme A homo sapiens
+M_R3coa_cho_c	 	 	 	 	 					R group 3 Coenzyme A
+M_R3coa_hs_c	 	 	 	 	 					R group 3 Coenzyme A homo sapiens
+M_R4coa_cho_c	 	 	 	 	 					R group 4 Coenzyme A
+M_R4coa_hs_c	 	 	 	 	 					R group 4 Coenzyme A homo sapiens
+M_R5coa_cho_c	 	 	 	 	 					R group 5 Coenzyme A
+M_R5coa_hs_c	 	 	 	 	 					R group 5 Coenzyme A homo sapiens
+M_R6coa_cho_c	 	 	 	 	 					R group 6 Coenzyme A
+M_R6coa_hs_c	 	 	 	 	 					R group 6 Coenzyme A homo sapiens
+M_RNA_LLA_c	 	 	 	 	 					RNA biosynthesis lactis 
+M_RNA_c	 	 	 	 	 						Ribonucleic acid
+M_Rtotal2_c	 	 	 	 	 					R total 2 position
+M_Rtotal2_e	 	 	 	 	 					R total 2 position
+M_Rtotal2coa_c	 	 	 	 	 					Rtotal2coa c
+M_Rtotal2coa_m	 	 	 	 	 					Rtotal2coa c	
+M_Rtotal2crn_c	 	 	 	 	 					Rtotal2crn c
+M_Rtotal2crn_m	 	 	 	 	 					Rtotal2crn c
+M_Rtotal3_c	 	 	 	 	 					R total 3 position
+M_Rtotal3_e	 	 	 	 	 					R total 3 position
+M_Rtotal3coa_c	 	 	 	 	 					Rtotal3coa c
+M_Rtotal3coa_m	 	 	 	 	 					Rtotal3coa c
+M_Rtotal3crn_c	 	 	 	 	 					Rtotal3crn c
+M_Rtotal3crn_m	 	 	 	 	 					Rtotal3crn c
+M_Rtotal_c	 	 	 	 	 					Rtotal c
+M_Rtotal_e	 	 	 	 	 					Rtotal c
+M_Rtotal_g	 	 	 	 	 					Rtotal c
+M_Rtotal_l	 	 	 	 	 					Rtotal c
+M_Rtotal_r	 	 	 	 	 					Rtotal c
+M_Rtotal_x	 	 	 	 	 					Rtotal c
+M_Rtotalcoa_c	 	 	 	 	 					Rtotalcoa c
+M_Rtotalcoa_m	 	 	 	 	 					Rtotalcoa c
+M_Rtotalcoa_x	 	 	 	 	 					Rtotalcoa c
+M_Rtotalcrn_c	 	 	 	 	 					Rtotalcrn c
+M_Rtotalcrn_m	 	 	 	 	 					Rtotalcrn c
+M_SOLPOOL_c	 	 	 	 	 					Solute Pools
+M_aacp_c	 	 	 	 	 					Apo[acp]
+M_acacp_c	 	 	 	 	 					Acetyl acyl-carrier protein
+M_accp_c	 	 	 	 	 					Apo-carboxylase
+M_accp_h	 	 	 	 	 					Apo-carboxylase
+M_accp_m	 	 	 	 	 					Apo-carboxylase
+M_acmp_c	 	 	 	 	 					Acetaminophen/paracetamol
+M_acmp_e	 	 	 	 	 					Acetaminophen/paracetamol
+M_acmp_r	 	 	 	 	 					Acetaminophen/paracetamol
+M_acmpglu_c	 	 	 	 	 					Acetaminophen glucuronide
+M_acmpglu_e	 	 	 	 	 					Acetaminophen glucuronide
+M_acmpglu_r	 	 	 	 	 					Acetaminophen glucuronide
+M_acmpglut_c	 	 	 	 	 					Acetaminophen-glutathione-conjugate
+M_acmpglut_e	 	 	 	 	 					Acetaminophen-glutathione-conjugate
+M_acmpglut_r	 	 	 	 	 					Acetaminophen-glutathione-conjugate
+M_acp_c	 	 	 	 	 						Acyl carrier Protein
+M_dopaqn_c	 	 	 	 	 					L-dopaquinone
+M_adp_c	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_e						 	 	 	 	 	ADP C10H12N5O10P2
+M_adp_f	 	 	 	 						 	ADP C10H12N5O10P2
+M_adp_g	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_h	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_l	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_m	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_n	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_r	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_v	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_adp_x	 	 	 	 	 	 					ADP C10H12N5O10P2
+M_aflatoxin_c	 	 	 	 	 	 	 	 	 	Aflatoxin c
+M_aflatoxin_e	 	 	 	 	 	 	 	 	 	Aflatoxin c
+M_ag_c	 	 	 	 	 	 					Silver
+M_ag_e	 	 	 	 	 	 					Silver
+M_ag_p	 	 	 	 	 	 					Silver
+M_allocy_c	 	 	 	 	 					Allocyanobilin (phycobilisome core)
+M_allocy_exc_c	 	 	 	 	 					Excited allocyanobilin (phycobilisome core)
+M_allop_c	 	 	 	 	 	 	 	 	 	Allopurinol
+M_allop_e	 	 	 	 	 	 	 	 	 	Allopurinol
+M_alpp_p	 	 	 	 	 					Applipoprotein
+M_am19cs_c	 	 	 	 	 	 	 	 	 	AM19 (cyclosporine)
+M_am19cs_e	 	 	 	 	 	 	 	 	 	AM19 (cyclosporine)
+M_am19cs_r	 	 	 	 	 	 	 	 	 	AM19 (cyclosporine)
+M_am1a4ncs_c	 	 	 	 	 	 	 	 	 	AM1A4N (cyclosporine)
+M_am1a4ncs_e	 	 	 	 	 	 	 	 	 	AM1A4N (cyclosporine)
+M_am1accs_c	 	 	 	 	 	 	 	 	 	AM1Ac (cyclosporine)
+M_am1accs_e	 	 	 	 	 	 	 	 	 	AM1Ac (cyclosporine)
+M_am1accs_r	 	 	 	 	 	 	 	 	 	AM1Ac (cyclosporine)
+M_am1acs_c	 	 	 	 	 	 	 	 	 	AM1A (cyclosporine)
+M_am1acs_e	 	 	 	 	 	 	 	 	 	AM1A (cyclosporine)
+M_am1acs_r	 	 	 	 	 	 	 	 	 	AM1A (cyclosporine)
+M_am1alcs_c	 	 	 	 	 	 	 	 	 	AM1AL (cyclosporine)
+M_am1alcs_e	 	 	 	 	 	 	 	 	 	AM1AL (cyclosporine)
+M_am1alcs_r	 	 	 	 	 	 	 	 	 	AM1AL (cyclosporine)
+M_am1c4n9cs_c	 	 	 	 	 	 	 	 	 	AM1c4N9 (cyclosporine)
+M_am1c4n9cs_e	 	 	 	 	 	 	 	 	 	AM1c4N9 (cyclosporine)
+M_am1c9cs_c	 	 	 	 	 	 	 	 	 	AM1c9 (cyclosporine)
+M_am1c9cs_e	 	 	 	 	 	 	 	 	 	AM1c9 (cyclosporine)
+M_am1c9cs_r	 	 	 	 	 	 	 	 	 	AM1c9 (cyclosporine)
+M_am1ccs_c	 	 	 	 	 	 	 	 	 	AM1c (cyclosporine)
+M_am1ccs_e	 	 	 	 	 	 	 	 	 	AM1c (cyclosporine)
+M_am1ccs_r	 	 	 	 	 	 	 	 	 	AM1c (cyclosporine)
+M_am1cglc_c	 	 	 	 	 	 	 	 	 	AM1c-glucuronide (cyclosporine)
+M_am1cglc_e	 	 	 	 	 	 	 	 	 	AM1c-glucuronide (cyclosporine)
+M_am1cglc_r	 	 	 	 	 	 	 	 	 	AM1c-glucuronide (cyclosporine)
+M_am1csa_c	 	 	 	 	 	 	 	 	 	AM1 (cyclosporine)
+M_am1csa_e	 	 	 	 	 	 	 	 	 	AM1 (cyclosporine)
+M_am1csa_r	 	 	 	 	 	 	 	 	 	AM1 (cyclosporine)
+M_am4n9cs_c	 	 	 	 	 	 	 	 	 	AM4N9 (cyclosporine)
+M_am4n9cs_e	 	 	 	 	 	 	 	 	 	AM4N9 (cyclosporine)
+M_am4n9cs_r	 	 	 	 	 	 	 	 	 	AM4N9 (cyclosporine)
+M_am4ncs_c	 	 	 	 	 	 	 	 	 	AM4N (cyclosporine)
+M_am4ncs_e	 	 	 	 	 	 	 	 	 	AM4N (cyclosporine)
+M_am4ncs_r	 	 	 	 	 	 	 	 	 	AM4N (cyclosporine)
+M_am9csa_c	 	 	 	 	 	 	 	 	 	AM9 (cyclosporine)
+M_am9csa_e	 	 	 	 	 	 	 	 	 	AM9 (cyclosporine)
+M_am9csa_r	 	 	 	 	 	 	 	 	 	AM9 (cyclosporine)
+M_amp_c	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_e	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_g	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_l	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_m	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_n	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_r	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amp_x	 	 	 	 	 	 	 	 	 		AMP C10H12N5O7P
+M_amylase_e	 	 	 	 	 					Mature Bacillus subtilis amylase C3040H4569N861O981S11
+M_apc_c	 	 	 	 	 	 					Ampicillin
+M_apc_e	 	 	 	 	 	 					Ampicillin
+M_apc_p	 	 	 	 	 	 					Ampicillin
+M_apoACP_c	 	 	 	 	 					Apoprotein [acyl carrier protein]
+M_apoACP_h	 	 	 	 	 					Apoprotein [acyl carrier protein]
+M_apoC_Lys_btn_c	 	 	 	 					Holocarboxylase (biotin covalent bound to Lys residue of apoC)
+M_apoC_Lys_btn_m	 	 	 	 					Holocarboxylase (biotin covalent bound to Lys residue of apoC)
+M_apoC_Lys_c	 	 	 	 	 					Apocarboxylase (Lys residue)
+M_apoC_Lys_m	 	 	 	 	 					Apocarboxylase (Lys residue)
+M_apoC_c	 	 	 	 	 					Apocarboxlase (no lys residue)
+M_apoC_h	 	 	 	 	 					Apocarboxlase (no lys residue)
+M_apoC_m	 	 	 	 	 					Apocarboxlase (no lys residue)
+M_apocarb_c	 	 	 	 	 					Apo carboxylase
+M_apocytc_h	 	 	 	 	 					Apocytochrome c
+M_apocytc_m	 	 	 	 	 					Apocytochrome c
+M_apofetn_h	 	 	 	 	 					Apoferritin
+M_apolpp_p	 	 	 	 	 					Braun apolipoprotein
+M_apotfen_h	 	 	 	 	 					Apotransferrin
+M_atp_c	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_e	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_f	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_g	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_h	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_l	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_m	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_n	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_r	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_v	 	 	 	 	 						ATP C10H12N5O13P3
+M_atp_x	 	 	 	 	 						ATP C10H12N5O13P3
+M_atvacid_c	 	 	 	 	 	 	 	 	 	Atorvastatin-acid
+M_atvacid_e	 	 	 	 	 	 	 	 	 	Atorvastatin-acid
+M_atvacid_r	 	 	 	 	 	 	 	 	 	Atorvastatin-acid
+M_atvacylgluc_r	 	 	 	 	 	 	 	 	 	Atorvastatin-acyl-glucuronide / G2
+M_atvethgluc_r	 	 	 	 	 	 	 	 	 	Atorvastatin-ether-glucuronide -G1
+M_atvlac_c	 	 	 	 	 	 	 	 	 	Atorvastatin-lactone
+M_atvlac_e	 	 	 	 	 	 	 	 	 	Atorvastatin-lactone
+M_atvlac_r	 	 	 	 	 	 	 	 	 	Atorvastatin-lactone
+M_atvlacgluc_r	 	 	 	 	 	 	 	 	 	Atorvastatin-lactone-ether-glucuronide / G3
+M_au_c	 	 	 	 	 						Gold-Au
+M_au_p	 	 	 	 	 						Gold-Au
+M_avite1_c	 	 	 	 	 					Alpha-Tocopherol
+M_avite1_e	 	 	 	 	 					Alpha-Tocopherol
+M_avite1_h	 	 	 	 	 					Alpha-Tocopherol
+M_avite2_c	 	 	 	 	 					Alpha-Tocotrienol
+M_avite2_e	 	 	 	 	 					Alpha-Tocotrienol
+M_b12_e	 	 	 	 	 	 					Vitamin B12
+M_band_c	 	 	 	 	 					Band membrane protein (universal, erythrocyte -> 2.1,3,4.1)
+M_bandmt_c	 	 	 	 	 					Band membrane protein (methylated, universal, erythrocyte -> 2.1,3,4.1)
+M_bccp_c	 	 	 	 	 					[Acetyl-CoA:carbon-dioxide ligase (ADP-forming)]
+M_bccpco2_c	 	 	 	 	 					[Acetyl-CoA:carbon-dioxide ligase (ADP-forming)]-CO2
+M_biocyt_c	 	 	 	 	 					Biocyt c
+M_biocyt_e	 	 	 	 	 					Biocyt c
+M_biocyt_h	 	 	 	 	 					Biocyt c
+M_biocyt_m	 	 	 	 	 					Biocyt c
+M_biocyt_n	 	 	 	 	 					Biocyt c
+M_biomass_c	 	 	 	 	 					Biomass: total
+M_biomass_carb_c	 	 	 	 					Biomass: carbohydrates
+M_biomass_dna_c	 	 	 	 	 					Biomass: DNA
+M_biomass_mem_lipids_c	 	 	 	 					Biomass: membrane lipids
+M_biomass_pigm_h	 	 	 	 					Biomass: chlorophylls and pigments
+M_biomass_pro_c	 	 	 	 	 					Biomass: proteins and amino acids
+M_biomass_rna_c	 	 	 	 	 					Biomass: RNA
+M_biomass_tag_c	 	 	 	 	 					Biomass: Triacylglycerides
+M_bm_carbs_c	 	 	 	 	 					Biomass metabolite: glycogen and carbohydrates
+M_bm_cofactors_c	 	 	 	 					Biomass metabolite: cofactors and ions
+M_bm_cw_c	 	 	 	 	 					Cell wall component of biomass
+M_bm_dna_c	 	 	 	 	 					DNA component of biomass
+M_bm_memlip_c	 	 	 	 	 					Lipid component of biomass
+M_bm_pigm_c	 	 	 	 	 					Pigment component of biomass
+M_bm_pro_c	 	 	 	 	 					Protein component of biomass
+M_bm_rna_c	 	 	 	 	 					RNA component of biomass
+M_btnCCP_c	 	 	 	 	 					Holo-[carboxylase]
+M_btnCCP_h	 	 	 	 	 					Holo-[carboxylase]
+M_btnCCP_m	 	 	 	 	 					Holo-[carboxylase]
+M_btn_c	 	 	 	 	 						Biotin
+M_btn_e	 	 	 	 	 						Biotin
+M_btn_h	 	 	 	 	 						Biotin
+M_btn_m	 	 	 	 	 						Biotin
+M_btn_n	 	 	 	 	 						Biotin
+M_btn_p	 	 	 	 	 						Biotin
+M_btnso_c	 	 	 	 	 					D-biotin d-sulfoxide
+M_ca2_c	 	 	 	 	 	 					Calcium
+M_ca2_e	 	 	 	 	 	 					Calcium
+M_ca2_m	 	 	 	 	 	 					Calcium
+M_ca2_p	 	 	 	 	 	 					Calcium
+M_camp_c	 	 	 	 	 					CAMP C10H11N5O6P
+M_camp_e	 	 	 	 	 					CAMP C10H11N5O6P
+M_camp_g	 	 	 	 	 					CAMP C10H11N5O6P
+M_camp_n	 	 	 	 	 					CAMP C10H11N5O6P
+M_caribup__R_c	 	 	 	 	 	 	 	 	 	R-carboxy ibuprofen
+M_caribup__R_e	 	 	 	 	 	 	 	 	 	R-carboxy ibuprofen
+M_caribup_s_c	 	 	 	 	 	 	 	 	 	S-carboxy ibuprofen
+M_caribup_s_e	 	 	 	 	 	 	 	 	 	S-carboxy ibuprofen
+M_caribup_s_r	 	 	 	 	 	 	 	 	 	S-carboxy ibuprofen
+M_caribupglu__S_c	 	 	 	 	 	 	 	 	S-carboxy ibuprofen glucuronide
+M_caribupglu__S_e	 	 	 	 	 	 	 	 	S-carboxy ibuprofen glucuronide
+M_caribupglu__S_r	 	 	 	 	 	 	 	 	S-carboxy ibuprofen glucuronide
+M_cd2_c	 	 	 	 	 	 					Cadmium
+M_cd2_e	 	 	 	 	 	 					Cadmium
+M_cd2_p	 	 	 	 	 	 					Cadmium
+M_cdp_c	 	 	 	 	 	 					CDP C9H12N3O11P2
+M_cdp_e	 	 	 	 	 	 					CDP C9H12N3O11P2
+M_cdp_m	 	 	 	 	 	 	 	 	 		CDP C9H12N3O11P2
+M_cdp_n	 	 	 	 	 	 	 	 	 		CDP C9H12N3O11P2
+M_chla_qy1_exc_c	 	 	 	 					Photosystem I excited chlorophyll A, Qy band (long wavelength)
+M_chla_qy2_exc_c	 	 	 	 					Photosystem II excited chlorophyll A, Qy band (long wavelength)
+M_chla_soret_exc_c	 	 	 	 					Excited chlorophyll A, Soret band (short wavelength)
+M_chlaemr_u	 	 	 	 	 					Chlorophyll a'
+M_chlb_u	 	 	 	 	 					Chlorophyll b
+M_chldb_h	 	 	 	 	 					Chlorophyllide b
+M_chldb_u	 	 	 	 	 					Chlorophyllide b
+M_chlld_c	 	 	 	 	 					Chlorophyllide a
+M_chlld_h	 	 	 	 	 					Chlorophyllide a
+M_chlld_u	 	 	 	 	 					Chlorophyllide a
+M_cl_c	 	 	 	 	 	 					Chloride
+M_cl_e	 	 	 	 	 	 					Chloride
+M_cl_h	 	 	 	 	 	 					Chloride
+M_cl_m	 	 	 	 	 	 					Chloride
+M_cl_p	 	 	 	 	 	 					Chloride
+M_cm_c	 	 	 	 	 	 					Chloramphenicol
+M_cm_e	 	 	 	 	 	 					Chloramphenicol
+M_cm_p	 	 	 	 	 	 					Chloramphenicol
+M_cmp_c	 	 	 	 	 						CMP C9H12N3O8P
+M_cmp_e	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_g	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_h	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_l	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_m	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_n	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_p	 	 	 	 		 					CMP C9H12N3O8P
+M_cmp_r	 	 	 	 		 					CMP C9H12N3O8P
+M_cn_c	 	 	 	 	 	 					Cyanide ion
+M_co1dam_c	 	 	 	 	 					Cob(I)yrinate a,c diamide
+M_co1dam_e	 	 	 	 	 					Cob(I)yrinate a,c diamide
+M_co2_c	 	 	 	 	 	 	 	 	 		CO2 CO2
+M_co2_e	 	 	 	 	 	 	 	 	 		CO2 CO2
+M_co2_g	 	 	 	 	 	 	 	 	 		CO2 CO2
+M_co2_m	 	 	 	 	 	 	 	 	 		CO2 CO2
+M_co2_r	 	 	 	 	 	 	 	 	 		CO2 CO2
+M_co2_x	 	 	 	 	 	 	 	 	 		CO2 CO2
+M_co2dam_c	 	 	 	 	 					Cob(II)yrinate a,c diamide
+M_co_c	 	 	 	 	 						Carbon monoxide
+M_co_e	 	 	 	 	 						Carbon monoxide
+M_co_h	 	 	 	 	 						Carbon monoxide
+M_co_p	 	 	 	 	 						Carbon monoxide
+M_coa2s_c	 	 	 	 	 					Coenzyme A disulfide
+M_coa_c	 	 	 	 		 					Coenzyme A
+M_coa_e	 	 	 	 		 					Coenzyme A
+M_coa_g	 	 	 	 		 					Coenzyme A
+M_coa_h	 	 	 	 		 					Coenzyme A
+M_coa_l	 	 	 	 		 					Coenzyme A
+M_coa_m	 	 	 	 		 					Coenzyme A
+M_coa_n	 	 	 	 		 					Coenzyme A
+M_coa_r	 	 	 	 		 					Coenzyme A
+M_coa_s	 	 	 	 		 					Coenzyme A
+M_coa_w	 	 	 	 		 					Coenzyme A
+M_coa_x	 	 	 	 	 	 					Coenzyme A
+M_cob_c	 	 	 	 		 					Coenzyme b
+M_cobalt2_c	 	 	 	 	 					Co2+
+M_cobalt2_e	 	 	 	 	 					Co2+
+M_cobalt2_p	 	 	 	 	 					Co2+
+M_cobya_c	 	 	 	 	 					Cobyrinate
+M_core2_g	 	 	 	 	 					Core2 g
+M_core3_g	 	 	 	 	 					Core3 g
+M_core4_e	 	 	 	 	 					Core4 g
+M_core4_g	 	 	 	 	 					Core4 g
+M_core5_c	 	 	 	 	 					Core5 g
+M_core5_e	 	 	 	 	 					Core5 g
+M_core5_g	 	 	 	 	 					Core5 g
+M_core6_g	 	 	 	 	 					Core6 g
+M_core6_l	 	 	 	 	 					Core6 g
+M_core7_c	 	 	 	 	 					Core7 g
+M_core7_e	 	 	 	 	 					Core7 g
+M_core7_g	 	 	 	 	 					Core7 g
+M_core8_c	 	 	 	 	 					Core8 g
+M_core8_e	 	 	 	 	 					Core8 g
+M_core8_g	 	 	 	 	 					Core8 g	
+M_core_lps_hp_c	 	 	 	 	 					Core lps hp
+M_coucoa_c	 	 	 	 	 					P coumaroyl CoA C30H38N7O18P3S1
+M_coucoa_m	 	 	 	 	 					P coumaroyl CoA C30H38N7O18P3S1
+M_coke_c	 	 	 	 	 					Cocaine
+M_coke_e	 	 	 	 	 					Cocaine
+M_coke_r	 	 	 	 	 					Cocaine
+M_com_c	 	 	 	 	 	 					Coenzyme m
+M_coumarin_c	 	 	 	 	 	 	 	 	 	Coumarin; 2H-1-Benzopyran-2-one
+M_coumarin_e	 	 	 	 	 	 	 	 	 	Coumarin; 2H-1-Benzopyran-2-one
+M_crglz_c	 	 	 	 	 	 	 	 	 	Carboxy-gliclazide
+M_crglz_e	 	 	 	 	 	 	 	 	 	Carboxy-gliclazide
+M_crglz_r	 	 	 	 	 	 	 	 	 	Carboxy-gliclazide
+M_crvs_c	 	 	 	 	 	 	 	 	 	Cerivastatin
+M_crvs_e	 	 	 	 	 	 	 	 	 	Cerivastatin
+M_crvs_r	 	 	 	 	 	 	 	 	 	Cerivastatin
+M_crvsm1_c	 	 	 	 	 	 	 	 	 	Cerivastatin-M1
+M_crvsm1_e	 	 	 	 	 	 	 	 	 	Cerivastatin-M1
+M_crvsm1_r	 	 	 	 	 	 	 	 	 	Cerivastatin-M1
+M_crvsm22_c	 	 	 	 	 	 	 	 	 	Cerivastatin-M22
+M_crvsm22_r	 	 	 	 	 	 	 	 	 	Cerivastatin-M22
+M_crvsm23_c	 	 	 	 	 	 	 	 	 	Cerivastatin-M23
+M_crvsm23_e	 	 	 	 	 	 	 	 	 	Cerivastatin-M23
+M_crvsm23_r	 	 	 	 	 	 	 	 	 	Cerivastatin-M23
+M_crvsm24_c	 	 	 	 	 	 	 	 	 	Cerivastatin-M24
+M_crvsm24_e	 	 	 	 	 	 	 	 	 	Cerivastatin-M24
+M_crvsm24_r	 	 	 	 	 	 	 	 	 	Cerivastatin-M24
+M_crvsm31_c	 	 	 	 	 	 	 	 	 	Cerivastatin-M31
+M_crvsm31_r	 	 	 	 	 	 	 	 	 	Cerivastatin-M31
+M_cs1_e	 	 	 	 	 						Cesium ion
+M_cs1_p	 	 	 	 	 						Cesium ion
+M_csa_c	 	 	 	 	 	 	 	 	 		Cyclosporine
+M_csa_e	 	 	 	 	 	 	 	 	 		Cyclosporine
+M_csa_r	 	 	 	 	 	 	 	 	 		Cyclosporine
+M_csasulp_c	 	 	 	 	 	 	 	 	 	Cyclosporine-sulphate
+M_csasulp_e	 	 	 	 	 	 	 	 	 	Cyclosporine-sulphate
+M_ctp_c	 	 	 	 	 	 	 	 	 		CTP C9H12N3O14P3
+M_ctp_e	 	 	 	 	 	 	 	 	 		CTP C9H12N3O14P3
+M_ctp_h	 	 	 	 	 						CTP C9H12N3O14P3
+M_ctp_m	 	 	 	 	 	 	 	 	 		CTP C9H12N3O14P3
+M_ctp_n	 	 	 	 	 	 	 	 	 		CTP C9H12N3O14P3
+M_cu2_c	 	 	 	 	 						Copper
+M_cu2_e	 	 	 	 	 						Copper
+M_cu2_p	 	 	 	 	 						Copper
+M_cu2_u	 	 	 	 	 						Copper
+M_cu_c	 	 	 	 	 						Cu+
+M_cu_e	 	 	 	 	 						Cu+
+M_cu_p	 	 	 	 	 						Cu+
+M_cvm1gluc_r	 	 	 	 	 					Cerivastatin-M1-glucuronide
+M_cvm23gluc_r	 	 	 	 	 					Cerivastatin-M23-glucuronide
+M_cytP450o_c	 	 	 	 	 					Oxidized flavoprotein (cytochrome P-450)
+M_cytP450o_h	 	 	 	 	 					Oxidized flavoprotein (cytochrome P-450)
+M_cytP450r_c	 	 	 	 	 					Reduced flavoprotein (cytochrome P-450)
+M_cytP450r_h	 	 	 	 	 					Reduced flavoprotein (cytochrome P-450)
+M_cytc_h	 	 	 	 	 					Cytochrome c
+M_cytc_m	 	 	 	 	 					Cytochrome c
+M_dadp_c	 	 	 	 	 	 	 	 	 	DADP C10H12N5O9P2
+M_dadp_h	 	 	 	 	 					DADP C10H12N5O9P2
+M_dadp_m	 	 	 	 	 	 	 	 	 	DADP C10H12N5O9P2
+M_dadp_n	 	 	 	 	 	 	 	 	 	DADP C10H12N5O9P2
+M_damp_c	 	 	 	 	 					DAMP C10H12N5O6P
+M_damp_e	 	 	 	 	 					DAMP C10H12N5O6P
+M_damp_h	 	 	 	 	 					DAMP C10H12N5O6P
+M_damp_l	 	 	 	 	 					DAMP C10H12N5O6P
+M_damp_m	 	 	 	 	 					DAMP C10H12N5O6P
+M_damp_p	 	 	 	 	 					DAMP C10H12N5O6P
+M_datp_c	 	 	 	 	 	 	 	 	 	DATP C10H12N5O12P3
+M_datp_m	 	 	 	 	 	 	 	 	 	DATP C10H12N5O12P3
+M_datp_n	 	 	 	 	 	 	 	 	 	DATP C10H12N5O12P3
+M_dcamp_c	 	 	 	 	 	 	 	 	 	N6-(1,2-Dicarboxyethyl)-AMP
+M_dcdp_c	 	 	 	 	 	 	 	 	 	DCDP C9H12N3O10P2
+M_dcdp_m	 	 	 	 	 	 	 	 	 	DCDP C9H12N3O10P2
+M_dcdp_n	 	 	 	 	 	 	 	 	 	DCDP C9H12N3O10P2
+M_dcmp_c	 	 	 	 	 					DCMP C9H12N3O7P
+M_dcmp_e	 	 	 	 	 					DCMP C9H12N3O7P
+M_dcmp_l	 	 	 	 	 					DCMP C9H12N3O7P
+M_dcmp_m	 	 	 	 	 					DCMP C9H12N3O7P
+M_dcmp_n	 	 	 	 	 					DCMP C9H12N3O7P
+M_dcmp_p	 	 	 	 	 					DCMP C9H12N3O7P
+M_dctp_c	 	 	 	 	 	 	 	 	 	DCTP C9H12N3O13P3
+M_dctp_m	 	 	 	 	 	 	 	 	 	DCTP C9H12N3O13P3
+M_dctp_n	 	 	 	 	 	 	 	 	 	DCTP C9H12N3O13P3
+M_deoxfvs_c	 	 	 	 	 	 	 	 	 	Deoxy-fluvastatin-dinor
+M_deoxfvs_e	 	 	 	 	 	 	 	 	 	Deoxy-fluvastatin-dinor
+M_deoxfvs_x	 	 	 	 	 	 	 	 	 	Deoxy-fluvastatin-dinor
+M_desfvs_c	 	 	 	 	 	 	 	 	 	N-desisopropyl-fluvastatin
+M_desfvs_e	 	 	 	 	 	 	 	 	 	N-desisopropyl-fluvastatin
+M_desfvs_r	 	 	 	 	 	 	 	 	 	N-desisopropyl-fluvastatin
+M_dgdp_c	 	 	 	 	 	 	 	 	 	DGDP C10H12N5O10P2
+M_dgdp_m	 	 	 	 	 	 	 	 	 	DGDP C10H12N5O10P2
+M_dgdp_n	 	 	 	 	 	 	 	 	 	DGDP C10H12N5O10P2
+M_dgmp_c	 	 	 	 	 					DGMP C10H12N5O7P
+M_dgmp_e	 	 	 	 	 					DGMP C10H12N5O7P
+M_dgmp_l	 	 	 	 	 					DGMP C10H12N5O7P
+M_dgmp_m	 	 	 	 	 					DGMP C10H12N5O7P
+M_dgmp_p	 	 	 	 	 					DGMP C10H12N5O7P
+M_dgmp_r	 	 	 	 	 					DGMP C10H12N5O7P
+M_dgtp_c	 	 	 	 	 	 	 	 	 	DGTP C10H12N5O13P3
+M_dgtp_e	 	 	 	 	 	 	 	 	 	DGTP C10H12N5O13P3
+M_dgtp_m	 	 	 	 	 	 	 	 	 	DGTP C10H12N5O13P3
+M_dgtp_n	 	 	 	 	 	 	 	 	 	DGTP C10H12N5O13P3
+M_dhglz_c	 	 	 	 	 	 	 	 	 	Dehydro-gliclazide
+M_dhglz_e	 	 	 	 	 	 	 	 	 	Dehydro-gliclazide
+M_didp_c	 	 	 	 	 					DIDP; 2'-deoxyinosine-5'-diphosphate(3-)
+M_didp_m	 	 	 	 	 					DIDP; 2'-deoxyinosine-5'-diphosphate(3-)
+M_didp_n	 	 	 	 	 					DIDP; 2'-deoxyinosine-5'-diphosphate(3-)
+M_dimp_c	 	 	 	 	 					DIMP C10H12N4O7P
+M_dimp_e	 	 	 	 	 					DIMP C10H12N4O7P
+M_dimp_p	 	 	 	 	 					DIMP C10H12N4O7P
+M_ditp_c	 	 	 	 	 					DITP(4-)
+M_ditp_e	 	 	 	 	 					DITP(4-)
+M_ditp_m	 	 	 	 	 					DITP(4-)
+M_ditp_n	 	 	 	 	 					DITP(4-)
+M_dna5mtc_c	 	 	 	 						DNA 5-methylcytosine
+M_dna5mtc_n	 	 	 	 	 					DNA 5-methylcytosine
+M_dna_c	 	 	 	 		 					DNA
+M_dna_n	 	 	 	 		 					DNA
+M_dnac_n	 	 	 	 	 					DNA cytosine
+M_dnacyt_c	 	 	 	 	 					DNA cytosine
+M_dnad_c	 	 	 	 	 					Deamino-NAD+
+M_dnad_h	 	 	 	 	 					Deamino-NAD+
+M_dnad_m	 	 	 	 	 					Deamino-NAD+
+M_dnad_n	 	 	 	 	 					Deamino-NAD+
+M_dopaqn_c	 	 	 	 	 					L-dopaquinone
+M_doxrbcn_e	 	 	 	 	 					Doxorubicin
+M_doxrbcn_p	 	 	 	 	 					Doxorubicin
+M_dsT_antigen_c	 	 	 	 	 					DsT antigen g
+M_dsT_antigen_e	 	 	 	 	 					DsT antigen g
+M_dsT_antigen_g	 	 	 	 	 					DsT antigen g
+M_dsbaox_p	 	 	 	 	 					Periplasmic protein disulfide isomerase I (oxidized)
+M_dsbard_p	 	 	 	 	 					Periplasmic protein disulfide isomerase I (reduced)
+M_dsbcox_p	 	 	 	 	 					Protein disulfide isomerase II (oxidized)
+M_dsbcox_r	 	 	 	 	 					Protein disulfide isomerase II (oxidized)
+M_dsbcrd_p	 	 	 	 	 					Protein disulfide isomerase II (reduced)
+M_dsbcrd_r	 	 	 	 	 					Protein disulfide isomerase II (reduced)
+M_dsbdox_c	 	 	 	 	 					Fused thiol:disulfide interchange protein (oxidized)
+M_dsbdrd_c	 	 	 	 	 					Fused thiol:disulfide interchange protein (reduced)
+M_dsbgox_p	 	 	 	 	 					Periplasmic disulfide isomerase/thiol-disulphide oxidase (oxidized)
+M_dsbgox_r	 	 	 	 	 					Periplasmic disulfide isomerase/thiol-disulphide oxidase (oxidized)
+M_dsbgrd_p	 	 	 	 	 					Periplasmic disulfide isomerase/thiol-disulphide oxidase (reduced)
+M_dsbgrd_r	 	 	 	 	 					Periplasmic disulfide isomerase/thiol-disulphide oxidase (reduced)
+M_dtdp_c	 	 	 	 	 	 	 	 	 	DTDP C10H13N2O11P2
+M_dtdp_e	 	 	 	 	 	 	 	 	 	DTDP C10H13N2O11P2
+M_dtdp_m	 	 	 	 	 	 	 	 	 	DTDP C10H13N2O11P2
+M_dtdp_n	 	 	 	 	 	 	 	 	 	DTDP C10H13N2O11P2
+M_dtmp_c	 	 	 	 	 					DTMP C10H13N2O8P
+M_dtmp_e	 	 	 	 	 					DTMP C10H13N2O8P
+M_dtmp_l	 	 	 	 	 					DTMP C10H13N2O8P
+M_dtmp_m	 	 	 	 	 					DTMP C10H13N2O8P
+M_dtmp_n	 	 	 	 	 					DTMP C10H13N2O8P
+M_dtmp_p	 	 	 	 	 					DTMP C10H13N2O8P
+M_dtocophe_c	 	 	 	 	 					Delta-Tocopherol	
+M_dtocophe_h	 	 	 	 	 					Delta-Tocopherol
+M_dttp_c	 	 	 	 	 					DTTP C10H13N2O14P3
+M_dttp_e	 	 	 	 	 					DTTP C10H13N2O14P3
+M_dttp_m	 	 	 	 	 					DTTP C10H13N2O14P3
+M_dttp_n	 	 	 	 	 					DTTP C10H13N2O14P3
+M_dudp_c	 	 	 	 	 					DUDP C9H11N2O11P2
+M_dudp_m	 	 	 	 	 					DUDP C9H11N2O11P2
+M_dudp_n	 	 	 	 	 					DUDP C9H11N2O11P2
+M_dump_c	 	 	 	 	 					DUMP C9H11N2O8P
+M_dump_e	 	 	 	 	 					DUMP C9H11N2O8P
+M_dump_m	 	 	 	 	 					DUMP C9H11N2O8P
+M_dump_n	 	 	 	 	 					DUMP C9H11N2O8P
+M_dump_p	 	 	 	 	 					DUMP C9H11N2O8P
+M_dutp_c	 	 	 	 	 					DUTP C9H11N2O14P3
+M_dutp_m	 	 	 	 	 					DUTP C9H11N2O14P3
+M_dutp_n	 	 	 	 	 					DUTP C9H11N2O14P3
+M_e680_u	 	 	 	 	 					Photons with 680nm wavelength
+M_e700_u	 	 	 	 	 					Photons with 700nm wavelength
+M_e_m	 	 	 	 	 						E   m	
+M_eaflatoxin_c	 	 	 	 	 					8,9 epxoy aflatoxin B1
+M_eaflatoxin_e	 	 	 	 	 					8,9 epxoy aflatoxin B1
+M_ebastine_c	 	 	 	 	 					Ebastine c
+M_ebastine_e	 	 	 	 	 					Ebastine c
+M_ebastine_r	 	 	 	 	 					Ebastine c
+M_ebastineoh_c	 	 	 	 	 	 	 	 	 	Hydroxylated ebastine
+M_ebastineoh_e	 	 	 	 	 	 	 	 	 	Hydroxylated ebastine
+M_ebastineoh_r	 	 	 	 	 	 	 	 	 	Hydroxylated ebastine
+M_elao_e	 	 	 	 	 					Anode (oxidized)
+M_elar_e	 	 	 	 	 					Anode  (reduced)
+M_elco_e	 	 	 	 	 					Cathode (Oxidized)		
+M_elcr_e	 	 	 	 	 					Cathode (reduced)
+M_elecacceptoxi_c	 	 	 	 	 				Oxidized electron acceptor
+M_elecacceptred_c	 	 	 	 	 				Reduced electron acceptor
+M_etfox_m	 	 	 	 	 					Electron transfer flavoprotein oxidized
+M_etfrd_m	 	 	 	 	 					Electron transfer flavoprotein reduced
+M_f390a_c	 	 	 	 	 					Coenzyme F390 (adenosine)
+M_f390g_c	 	 	 	 	 					Coenzyme F390 (guanosine)
+M_f420_0_c	 	 	 	 	 					Coenzyme ferredoxin 420-0
+M_f420_1_c	 	 	 	 	 					Coenzyme ferredoxin 420-1
+M_f420_2_c	 	 	 	 	 					Coenzyme ferredoxin 420-2 (oxidized)
+M_f420_2h2_c	 	 	 	 	 					Coenzyme ferredoxin 420-2 (reduced)
+M_f420_3_c	 	 	 	 	 					Coenzyme ferredoxin 420-3
+M_f420_4_c	 	 	 	 	 					Coenzyme ferredoxin 420-4
+M_f420_5_c	 	 	 	 	 					Coenzyme ferredoxin 420-5
+M_f420_6_c	 	 	 	 	 					Coenzyme ferredoxin 420-6
+M_f420_7_c	 	 	 	 	 					Coenzyme ferredoxin 420-7
+M_f430_c	 	 	 	 	 					Coenzyme F430
+M_f430p1_c	 	 	 	 	 					Coenzyme F390 precursor 1
+M_f430p2_c	 	 	 	 	 					Coenzyme F430 precursor 2
+M_f430p3_c	 	 	 	 	 					Coenzyme f430 precursor 3
+M_f_c	 	 	 	 	 						Fluoride
+M_f_e	 	 	 	 	 						Fluoride
+M_f_p	 	 	 	 	 						Fluoride
+M_epoxtac_c	 	 	 	 	 	 	 	 	 	31-O-Desmethyl,19-Hydroxy,37, 39-Epoxy-tacrolimus
+M_epoxtac_e	 	 	 	 	 	 	 	 	 	31-O-Desmethyl,19-Hydroxy,37, 39-Epoxy-tacrolimus
+M_epoxtac_r	 	 	 	 	 	 	 	 	 	31-O-Desmethyl,19-Hydroxy,37, 39-Epoxy-tacrolimus
+M_fad_c	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fad_e	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fad_h	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fad_m	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fad_p	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fad_r	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fad_x	 	 	 	 	 						Flavin adenine dinucleotide oxidized
+M_fadh2_c	 	 	 	 	 					Flavin adenine dinucleotide reduced
+M_fadh2_h	 	 	 	 	 					Flavin adenine dinucleotide reduced
+M_fadh2_m	 	 	 	 	 					Flavin adenine dinucleotide reduced
+M_fadh2_mm	 	 	 	 	 					Flavin adenine dinucleotide reduced
+M_fadh2_r	 	 	 	 	 					Flavin adenine dinucleotide reduced
+M_fadh2_x	 	 	 	 	 					Flavin adenine dinucleotide reduced
+M_fe2_c	 	 	 	 	 	 	 	 	 		Fe2+ mitochondria
+M_fe2_e	 	 	 	 	 	 	 	 	 		Fe2+ mitochondria
+M_fe2_m	 	 	 	 	 	 	 	 	 		Fe2+ mitochondria
+M_fe_c	 	 	 	 	 						Iron
+M_fe_e	 	 	 	 	 						Iron
+M_fe_p	 	 	 	 	 						Iron
+M_fmnRD_c	 	 	 	 	 					Flavin mononucleotide reduced C17H21N4O9P
+M_fmn_c	 	 	 	 	 						FMN C17H19N4O9P
+M_fmn_e	 	 	 	 	 						FMN C17H19N4O9P
+M_fmn_h	 	 	 	 	 						FMN C17H19N4O9P
+M_fmn_m	 	 	 	 	 						FMN C17H19N4O9P
+M_fmn_p	 	 	 	 	 						FMN C17H19N4O9P
+M_fmnh2_c	 	 	 	 	 					Reduced FMN
+M_fos_c	 	 	 	 	 						Fosfomycin
+M_fosbsh_c	 	 	 	 	 					Fosfomycin-bacillithiol
+M_fvs_c	 	 	 	 	 	 	 	 	 		Fluvastatin
+M_fvs_e	 	 	 	 	 	 	 	 	 		Fluvastatin
+M_fvs_r	 	 	 	 	 	 	 	 	 		Fluvastatin
+M_fvs_x	 	 	 	 	 	 	 	 	 		Fluvastatin
+M_fvscoa_c	 	 	 	 	 	 	 	 	 	Fluvastatin-CoA form
+M_fvscoa_x	 	 	 	 	 	 	 	 	 	Fluvastatin-CoA form
+M_fvsgluc_r	 	 	 	 	 	 	 	 	 	Fluvstatin-glucuronide
+M_fvstet_c	 	 	 	 	 	 	 	 	 	Des-isopropyl-dihydro-fluvastatin-tetranor
+M_fvstet_e	 	 	 	 	 	 	 	 	 	Des-isopropyl-dihydro-fluvastatin-tetranor
+M_fvstet_r	 	 	 	 	 	 	 	 	 	Des-isopropyl-dihydro-fluvastatin-tetranor
+M_fvstetglu_c	 	 	 	 	 	 	 	 	 	Des-isopropyl-dihydro-fluvastatin-tetranor-glucuronide
+M_fvstetglu_e	 	 	 	 	 	 	 	 	 	Des-isopropyl-dihydro-fluvastatin-tetranor-glucuronide
+M_fvstetglu_r	 	 	 	 	 	 	 	 	 	Des-isopropyl-dihydro-fluvastatin-tetranor-glucuronide
+M_gdp_c	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_e	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_g	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_h	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_m	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_n	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_p	 	 	 	 	 						GDP C10H12N5O11P2
+M_gdp_r	 	 	 	 	 						GDP C10H12N5O11P2
+M_glc3meacp_c	 	 	 	 	 	 	 	 	 	Glucuronide-conjugate of 3-methoxy-acetaminophen
+M_glc3meacp_e	 	 	 	 	 	 	 	 	 	Glucuronide-conjugate of 3-methoxy-acetaminophen
+M_glc3meacp_r	 	 	 	 	 	 	 	 	 	Glucuronide-conjugate of 3-methoxy-acetaminophen
+M_glz_c	 	 	 	 	 	 	 	 	 		Gliclazide
+M_glz_e	 	 	 	 	 	 	 	 	 		Gliclazide
+M_glz_r	 	 	 	 	 	 	 	 	 		Gliclazide
+M_gmp_c	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_e	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_g	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_l	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_m	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_n	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_p	 	 	 	 	 						GMP C10H12N5O8P
+M_gmp_r	 	 	 	 	 						GMP C10H12N5O8P
+M_gtacmp_c	 	 	 	 	 	 	 	 	 	Glucuronide-thiomethyl-acetaminophen conjugate
+M_gtacmp_e	 	 	 	 	 	 	 	 	 	Glucuronide-thiomethyl-acetaminophen conjugate
+M_gtacmp_r	 	 	 	 	 	 	 	 	 	Glucuronide-thiomethyl-acetaminophen conjugate
+M_gtocophe_c	 	 	 	 	 					Gamma-Tocopherol
+M_gtocophe_e	 	 	 	 	 					Gamma-Tocopherol
+M_gtocophe_h	 	 	 	 	 					Gamma-Tocopherol
+M_gtp_c	 	 	 	 	 						GTP C10H12N5O14P3
+M_gtp_e	 	 	 	 	 						GTP C10H12N5O14P3
+M_gtp_h	 	 	 	 	 						GTP C10H12N5O14P3
+M_gtp_m	 	 	 	 	 						GTP C10H12N5O14P3
+M_gtp_n	 	 	 	 	 						GTP C10H12N5O14P3
+M_gtp_p	 	 	 	 	 						GTP C10H12N5O14P3
+M_h2_c	 	 	 	 	 						Hydrogen
+M_h2_e	 	 	 	 	 						Hydrogen
+M_h2_h	 	 	 	 	 						Hydrogen
+M_h2_m	 	 	 	 	 						Hydrogen
+M_h2_p	 	 	 	 	 						Hydrogen
+M_h2co3_c	 	 	 	 	 					Carbonic acid
+M_h2co3_e	 	 	 	 	 					Carbonic acid
+M_h2co3_m	 	 	 	 	 					Carbonic acid
+M_h2co3_x	 	 	 	 	 					Carbonic acid
+M_h2o2_c	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_e	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_h	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_l	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_m	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_n	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_p	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_r	 	 	 	 	 					Hydrogen peroxide
+M_h2o2_x	 	 	 	 	 					Hydrogen peroxide
+M_h2o_c	 	 	 	 	 						H2O H2O
+M_h2o_cx	 	 	 	 	 					H2O H2O
+M_h2o_e	 	 	 	 	 						H2O H2O
+M_h2o_f	 	 	 	 	 						H2O H2O
+M_h2o_g	 	 	 	 	 						H2O H2O
+M_h2o_h	 	 	 	 	 						H2O H2O
+M_h2o_l	 	 	 	 	 						H2O H2O
+M_h2o_m	 	 	 	 	 						H2O H2O
+M_h2o_n	 	 	 	 	 						H2O H2O
+M_h2o_p	 	 	 	 	 						H2O H2O
+M_h2o_r	 	 	 	 	 						H2O H2O
+M_h2o_s	 	 	 	 	 						H2O H2O
+M_h2o_u	 	 	 	 	 						H2O H2O
+M_h2o_v	 	 	 	 	 						H2O H2O
+M_h2o_x	 	 	 	 	 						H2O H2O
+M_h2s_c	 	 	 	 	 						Hydrogen sulfide
+M_h2s_e	 	 	 	 	 						Hydrogen sulfide
+M_h2s_h	 	 	 	 	 						Hydrogen sulfide
+M_h2s_m	 	 	 	 	 						Hydrogen sulfide
+M_h2s_p	 	 	 	 	 						Hydrogen sulfide
+M_h_c	 	 	 	 	 						H+
+M_h_cx	 	 	 	 	 						H+
+M_h_e	 	 	 	 	 						H+
+M_h_f	 	 	 	 	 						H+
+M_h_g	 	 	 	 	 						H+
+M_h_h	 	 	 	 	 						H+
+M_h_i	 	 	 	 	 						H+
+M_h_im	 	 	 	 	 						H+
+M_h_l	 	 	 	 	 						H+
+M_h_m	 	 	 	 	 						H+
+M_h_n	 	 	 	 	 						H+
+M_h_p	 	 	 	 	 						H+
+M_h_r	 	 	 	 	 						H+
+M_h_s	 	 	 	 	 						H+
+M_h_u	 	 	 	 	 						H+
+M_h_v	 	 	 	 	 						H+
+M_h_x	 	 	 	 	 						H+
+M_hco3_c	 	 	 	 	 					Bicarbonate
+M_hco3_cx	 	 	 	 	 					Bicarbonate
+M_hco3_e	 	 	 	 	 					Bicarbonate
+M_hco3_h	 	 	 	 	 					Bicarbonate
+M_hco3_m	 	 	 	 	 					Bicarbonate
+M_hco3_n	 	 	 	 	 					Bicarbonate
+M_hco3_p	 	 	 	 	 					Bicarbonate
+M_hco3_x	 	 	 	 	 					Bicarbonate
+M_hcoumarin_c	 	 	 	 	 	 	 	 	 	Umbelliferone; 7-Hydroxy-2H-1-Benzopyran-2-one
+M_hcoumarin_e	 	 	 	 	 	 	 	 	 	Umbelliferone; 7-Hydroxy-2H-1-Benzopyran-2-one
+M_hemoglobin_e	 	 	 	 	 					Hemoglobin
+M_hg0_c	 	 	 	 	 						Mercury (uncharged)
+M_hg2_c	 	 	 	 	 						Mercury  charged 2  Hg
+M_hg2_e	 	 	 	 	 						Mercury  charged 2  Hg
+M_hg2_p	 	 	 	 	 						Mercury  charged 2  Hg
+M_hqn_c	 	 	 	 	 						Hydroquinone
+M_hqn_e	 	 	 	 	 						Hydroquinone
+M_i_c	 	 	 	 	 	 	 	 	 		I c
+M_i_e	 	 	 	 	 	 	 	 	 		I c
+M_ibup__R_c	 	 	 	 	 	 	 	 	 	Ibuprofen-R
+M_ibup__R_e	 	 	 	 	 	 	 	 	 	Ibuprofen-R
+M_ibup__R_r	 	 	 	 	 	 	 	 	 	Ibuprofen-R
+M_ibup__S_c	 	 	 	 	 	 	 	 	 	Ibuprofen-S
+M_ibup__S_e	 	 	 	 	 	 	 	 	 	Ibuprofen-S
+M_ibup__S_r	 	 	 	 	 	 	 	 	 	Ibuprofen-S
+M_ibupcoa__R_c	 	 	 	 	 	 	 	 	 	Ibuprofen-CoA-R form
+M_ibupcoa__S_c	 	 	 	 	 	 	 	 	 	Ibuprofen-CoA-S form
+M_ibupgluc_c	 	 	 	 	 	 	 	 	 	Ibuprofen acyl glucuronide
+M_ibupgluc_e	 	 	 	 	 	 	 	 	 	Ibuprofen acyl glucuronide
+M_ibupgluc_r	 	 	 	 	 	 	 	 	 	Ibuprofen acyl glucuronide
+M_idp_c	 	 	 	 	 	 	 	 	 		IDP C10H11N4O11P2
+M_idp_e	 	 	 	 	 	 	 	 	 		IDP C10H11N4O11P2
+M_idp_m	 	 	 	 	 						IDP C10H11N4O11P2
+M_idp_n	 	 	 	 	 	 	 	 	 		IDP C10H11N4O11P2
+M_igg_g	 	 	 	 	 						Igg[g]
+M_igg_hc_r	 	 	 	 	 					Igg hc[r]
+M_igg_lc_r	 	 	 	 	 					Igg lc[r]
+M_imp_c	 	 	 	 	 						IMP C10H11N4O8P
+M_imp_e	 	 	 	 	 						IMP C10H11N4O8P
+M_imp_h	 	 	 	 	 						IMP C10H11N4O8P
+M_imp_m	 	 	 	 	 						IMP C10H11N4O8P
+M_imp_p	 	 	 	 	 						IMP C10H11N4O8P
+M_imp_x	 	 	 	 	 						IMP C10H11N4O8P
+M_iodine_c	 	 	 	 	 	 	 	 	 	Iodine c
+M_itp_c	 	 	 	 	 						ITP C10H11N4O14P3
+M_itp_e	 	 	 	 	 						ITP C10H11N4O14P3
+M_itp_m	 	 	 	 	 						ITP C10H11N4O14P3	
+M_itp_n	 	 	 	 	 						ITP C10H11N4O14P3
+M_k_c	 	 	 	 	 						Potassium
+M_k_e	 	 	 	 	 						Potassium
+M_k_g	 	 	 	 	 						Potassium
+M_k_p	 	 	 	 	 						Potassium
+M_k_u	 	 	 	 	 						Potassium
+M_lst4exp_c	 	 	 	 	 	 	 	 	 	Losartan-E3174/ losartan-M6
+M_lst4exp_e	 	 	 	 	 	 	 	 	 	Losartan-E3174/ losartan-M6
+M_lst4exp_r	 	 	 	 	 	 	 	 	 	Losartan-E3174/ losartan-M6
+M_lstn1gluc_c	 	 	 	 	 	 	 	 	 	Losartan-N1-glucuronide
+M_lstn1gluc_e	 	 	 	 	 	 	 	 	 	Losartan-N1-glucuronide
+M_lstn1gluc_r	 	 	 	 	 	 	 	 	 	Losartan-N1-glucuronide
+M_lstn_c	 	 	 	 	 	 	 	 	 	Losartan
+M_lstn_e	 	 	 	 	 	 	 	 	 	Losartan
+M_lstn_r	 	 	 	 	 	 	 	 	 	Losartan
+M_lstnm1_c	 	 	 	 	 	 	 	 	 	Losartan-M1
+M_lstnm1_e	 	 	 	 	 	 	 	 	 	Losartan-M1
+M_lstnm1_r	 	 	 	 	 	 	 	 	 	Losartan-M1
+M_lstnm2_c	 	 	 	 	 	 	 	 	 	Losartan-M2
+M_lstnm2_e	 	 	 	 	 	 	 	 	 	Losartan-M2
+M_lstnm2_r	 	 	 	 	 	 	 	 	 	Losartan-M2
+M_lstnm4_c	 	 	 	 	 	 	 	 	 	Losartan-M4 (glucuronide derivative)
+M_lstnm4_e	 	 	 	 	 	 	 	 	 	Losartan-M4 (glucuronide derivative)
+M_lstnm4_r	 	 	 	 	 	 	 	 	 	Losartan-M4 (glucuronide derivative)
+M_lstnm5_c	 	 	 	 	 	 	 	 	 	Losartan-M5
+M_lstnm5_e	 	 	 	 	 	 	 	 	 	Losartan-M5
+M_lstnm5_r	 	 	 	 	 	 	 	 	 	Losartan-M5
+M_lstnm7_c	 	 	 	 	 	 	 	 	 	Losartan-N2-glucuronide / Losartan-M7
+M_lstnm7_e	 	 	 	 	 	 	 	 	 	Losartan-N2-glucuronide / Losartan-M7
+M_lstnm7_r	 	 	 	 	 	 	 	 	 	Losartan-N2-glucuronide / Losartan-M7
+M_lvst_c	 	 	 	 	 	 	 	 	 	Lovastatin lactone form
+M_lvst_e	 	 	 	 	 	 	 	 	 	Lovastatin lactone form
+M_lvst_r	 	 	 	 	 	 	 	 	 	Lovastatin lactone form
+M_lvstacid_c	 	 	 	 	 	 	 	 	 	Lovastatin-hydroxyacid form
+M_lvstacid_e	 	 	 	 	 	 	 	 	 	Lovastatin-hydroxyacid form
+M_lvstacid_r	 	 	 	 	 	 	 	 	 	Lovastatin-hydroxyacid form
+M_mdz_c	 	 	 	 	 	 	 	 	 		Midazolam
+M_mdz_e	 	 	 	 	 	 	 	 	 		Midazolam
+M_mdz_r	 	 	 	 	 	 	 	 	 		Midazolam
+M_mdzglc_c	 	 	 	 	 	 	 	 	 	Midazolam-glucuronide
+M_mdzglc_e	 	 	 	 	 	 	 	 	 	Midazolam-glucuronide
+M_mdzglc_r	 	 	 	 	 	 	 	 	 	Midazolam-glucuronide
+M_meracmp_c	 	 	 	 	 	 	 	 	 	Acetaminophen-mercapturate-conjugate/N-acetyl-cysteine-acetaminophen
+M_meracmp_e	 	 	 	 	 	 	 	 	 	Acetaminophen-mercapturate-conjugate/N-acetyl-cysteine-acetaminophen
+M_mg2_c	 	 	 	 	 						Magnesium
+M_mg2_e	 	 	 	 	 						Magnesium
+M_mg2_h	 	 	 	 	 						Magnesium
+M_mg2_p	 	 	 	 	 						Magnesium
+M_mg2_u	 	 	 	 	 						Magnesium
+M_mhglz_c	 	 	 	 	 					Methyl-hydroxy-gliclazide
+M_mhglz_e	 	 	 	 	 					Methyl-hydroxy-gliclazide
+M_mhglz_r	 	 	 	 	 					Methyl-hydroxy-gliclazide
+M_mincyc_e	 	 	 	 	 					Minocycline
+M_mincyc_p	 	 	 	 	 					Minocycline
+M_mn2_c	 	 	 	 	 						Manganese
+M_mn2_e	 	 	 	 	 						Manganese
+M_mn2_p	 	 	 	 	 						Manganese
+M_mn4_e	 	 	 	 	 						Mn4+
+M_mql4_m	 	 	 	 	 					Menaquinol4
+M_mql6_c	 	 	 	 	 					Menaquinol 6
+M_mql7_c	 	 	 	 	 					Menaquinol 7 C46H66O2
+M_mql8_c	 	 	 	 	 					Menaquinol 8
+M_mqn10_c	 	 	 	 	 					Menaquinone-10
+M_mqn10_e	 	 	 	 	 					Menaquinone-10
+M_mqn11_c	 	 	 	 	 					Menaquinone-11
+M_mqn11_e	 	 	 	 	 					Menaquinone-11
+M_mqn4_c	 	 	 	 	 					Menaquinone4
+M_mqn4_m	 	 	 	 	 					Menaquinone4		
+M_mqn6_c	 	 	 	 	 					Menaquinone 6
+M_mqn7_c	 	 	 	 	 					Menaquinone 7 C46H64O2
+M_mqn7_e	 	 	 	 	 					Menaquinone 7 C46H64O2
+M_mqn8_c	 	 	 	 	 					Menaquinone 8
+M_mqn8_e	 	 	 	 	 					Menaquinone 8
+M_mqn9_c	 	 	 	 	 					Menaquinone-9
+M_mqn9_e	 	 	 	 	 					Menaquinone-9
+M_n2o_c	 	 	 	 	 						Nitrous oxide
+M_n2o_e	 	 	 	 	 						Nitrous oxide
+M_n2o_p	 	 	 	 	 						Nitrous oxide
+M_na1_c	 	 	 	 	 						Sodium
+M_na1_e	 	 	 	 	 						Sodium
+M_na1_g	 	 	 	 	 						Sodium
+M_na1_h	 	 	 	 	 						Sodium
+M_na1_m	 	 	 	 	 						Sodium
+M_na1_p	 	 	 	 	 						Sodium
+M_na1_r	 	 	 	 	 						Sodium
+M_na1_x	 	 	 	 	 						Sodium
+M_nad_c	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_e	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_f	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_h	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_m	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_n	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_r	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_s	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nad_x	 	 	 	 	 						Nicotinamide adenine dinucleotide
+M_nadh_c	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_e	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_f	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_h	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_m	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_r	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_s	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadh_x	 	 	 	 	 					Nicotinamide adenine dinucleotide - reduced
+M_nadhx__R_c	 	 	 	 	 					(R)-NADHX
+M_nadp_c	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_e	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_f	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_h	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_m	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_n	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_r	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_s	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_u	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadp_x	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate
+M_nadph_c	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_f	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_h	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_m	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_n	 	 	 	 	 					Nicotinamide denine dinucleotide phosphate - reduced
+M_nadph_r	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_s	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_u	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadph_x	 	 	 	 	 					Nicotinamide adenine dinucleotide phosphate - reduced
+M_nadphx__R_c	 	 	 	 	 					(R)-NADPHX
+M_nadphx__S_c	 	 	 	 	 					(S)-NADPHX
+M_ndersv_c	 	 	 	 	 	 	 	 	 	N-desmethyl-rosuvastatin
+M_ndersv_e	 	 	 	 	 	 	 	 	 	N-desmethyl-rosuvastatin
+M_ndersv_r	 	 	 	 	 	 	 	 	 	N-desmethyl-rosuvastatin
+M_nfd_c	 	 	 	 	 	 	 	 	 		Nifedipine
+M_nfd_e	 	 	 	 	 	 	 	 	 		Nifedipine
+M_nfdac_c	 	 	 	 	 	 	 	 	 	Acid metabolite of nifedipine
+M_nfdac_e	 	 	 	 	 	 	 	 	 	Acid metabolite of nifedipine
+M_nfdac_r	 	 	 	 	 	 	 	 	 	Acid metabolite of nifedipine
+M_nfdlac_c	 	 	 	 	 	 	 	 	 	Lactone form of nifedipine
+M_nfdlac_e	 	 	 	 	 	 	 	 	 	Lactone form of nifedipine
+M_nfdnpy_c	 	 	 	 	 	 	 	 	 	Nitropyridine metabolite of nifedipine
+M_nfdnpy_e	 	 	 	 	 	 	 	 	 	Nitropyridine metabolite of nifedipine
+M_nfdnpy_r	 	 	 	 	 	 	 	 	 	Nitropyridine metabolite of nifedipine
+M_nfdoh_c	 	 	 	 	 	 	 	 	 	Hydroxy metabolite of nifedipine
+M_nfdoh_e	 	 	 	 	 	 	 	 	 	Hydroxy metabolite of nifedipine
+M_nfdoh_r	 	 	 	 	 	 	 	 	 	Hydroxy metabolite of nifedipine
+M_nh3_c	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh3_e	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh3_m	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh3_n	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh3_r	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh3_x	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4_c	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4_e	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4_m	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4_n	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4_r	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4_x	 	 	 	 	 	 	 	 	 		Ammonium
+M_nh4oh_c	 	 	 	 	 					Ammonium hydroxide
+M_ni2_c	 	 	 	 	 						Nickel
+M_ni2_e	 	 	 	 	 						Nickel
+M_ni2_p	 	 	 	 	 						Nickel
+M_nmn_c	 	 	 	 	 						NMN C11H14N2O8P
+M_nmn_e	 	 	 	 	 						NMN C11H14N2O8P
+M_nmn_m	 	 	 	 	 						NMN C11H14N2O8P
+M_nmn_n	 	 	 	 	 						NMN C11H14N2O8P
+M_nmn_p	 	 	 	 	 						NMN C11H14N2O8P
+M_nmn_x	 	 	 	 	 						NMN C11H14N2O8P
+M_no2_c	 	 	 	 	 						Nitrite
+M_no2_e	 	 	 	 	 						Nitrite
+M_no2_h	 	 	 	 	 						Nitrite
+M_no2_m	 	 	 	 	 						Nitrite
+M_no2_p	 	 	 	 	 						Nitrite
+M_no3_c	 	 	 	 	 						Nitrate
+M_no3_e	 	 	 	 	 						Nitrate
+M_no3_m	 	 	 	 	 						Nitrate
+M_no3_p	 	 	 	 	 						Nitrate	
+M_no_c	 	 	 	 	 						Nitric oxide
+M_no_e	 	 	 	 	 						Nitric oxide
+M_no_h	 	 	 	 	 						Nitric oxide
+M_no_p	 	 	 	 	 						Nitric oxide
+M_o2D_u	 	 	 	 	 						O2 (Dummy metabolite to resolve Type IV path)
+M_o2_c	 	 	 	 	 						O2 O2
+M_o2_cx	 	 	 	 	 						O2 O2
+M_o2_e	 	 	 	 	 						O2 O2
+M_o2_h	 	 	 	 	 						O2 O2
+M_o2_l	 	 	 	 	 						O2 O2
+M_o2_m	 	 	 	 	 						O2 O2
+M_o2_n	 	 	 	 	 						O2 O2
+M_o2_p	 	 	 	 	 						O2 O2
+M_o2_r	 	 	 	 	 						O2 O2
+M_o2_u	 	 	 	 	 						O2 O2
+M_o2_x	 	 	 	 	 						O2 O2
+M_o2s_c	 	 	 	 	 						Superoxide anion
+M_o2s_e	 	 	 	 	 						Superoxide anion
+M_o2s_l	 	 	 	 	 						Superoxide anion
+M_o2s_m	 	 	 	 	 						Superoxide anion
+M_o2s_n	 	 	 	 	 						Superoxide anion
+M_o2s_p	 	 	 	 	 						Superoxide anion
+M_o2s_x	 	 	 	 	 						Superoxide anion
+M_oh1_c	 	 	 	 	 	 	 	 	 		Hydroxide ion HO
+M_oh1_e	 	 	 	 	 	 	 	 	 		Hydroxide ion HO
+M_oh1_m	 	 	 	 	 						Hydroxide ion HO
+M_omcho_e	 	 	 	 	 					Outer Membrane Cytochrome c type oxidized (high potential)
+M_omchr_e	 	 	 	 	 					Outer Membrane Cytochrome c reduced (high potential)
+M_omclo_e	 	 	 	 	 					Outer Membrane Cytochrome c type oxidized (low potential)
+M_omclr_e	 	 	 	 	 					Outer Membrane Cytochrome c type reduced 1(low potential)
+M_omeprazole_c	 	 	 	 	 	 	 	 	 	Omeprazole c
+M_omeprazole_e	 	 	 	 	 	 	 	 	 	Omeprazole c
+M_oxRieskeB6_u	 	 	 	 	 					Oxidized rieske B6
+M_oxRieskeB6_y	 	 	 	 	 					Oxidized rieske B6
+M_p680_exc_um	 	 	 	 	 					PSII reaction center P680, excited
+M_p680_u	 	 	 	 	 					PSII reaction center P680
+M_p680_um	 	 	 	 	 					PSII reaction center P680
+M_p680p_u	 	 	 	 	 					Positive charged reaction centre of the Photosystem II
+M_p700_exc_um	 	 	 	 	 					PSI reaction center P700, excited
+M_p700_u	 	 	 	 	 					PSI reaction center P700
+M_p700_um	 	 	 	 	 					PSI reaction center P700
+M_p700p_u	 	 	 	 	 					Positive charged reaction centre of the Photosystem I
+M_pa2_ST_p	 	 	 	 	 					Membrane phosphatidate mixture
+M_pa_Hp_c	 	 	 	 	 					Phosphatidic acid Hp specific
+M_pa_LLA_c	 	 	 	 	 					Phosphatidic acid  Lactis specific 
+M_pa_hs_c	 	 	 	 	 					Phosphatidic acid (homo sapiens)
+M_pa_hs_e	 	 	 	 	 					Phosphatidic acid (homo sapiens)
+M_pa_hs_g	 	 	 	 	 					Phosphatidic acid (homo sapiens)
+M_pa_hs_m	 	 	 	 	 					Phosphatidic acid (homo sapiens)
+M_pa_hs_n	 	 	 	 	 					Phosphatidic acid (homo sapiens)
+M_pa_hs_r	 	 	 	 	 					Phosphatidic acid (homo sapiens)
+M_pa_pf_16_0_16_0_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C16:0,C16:0)
+M_pa_pf_16_0_18_0_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C16:0,C18:0)
+M_pa_pf_16_0_18_1_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C16:0,C18:1)
+M_pa_pf_16_0_18_2_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C16:0,C18:2)
+M_pa_pf_16_0_20_4_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C16:0,C20:4)
+M_pa_pf_18_0_18_0_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:0,C18:0)
+M_pa_pf_18_0_18_1_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:0,C18:1)
+M_pa_pf_18_0_20_4_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:0,C20:4)
+M_pa_pf_18_1_18_1_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:1,C18:1)
+M_pa_pf_18_1_18_2_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:1,C18:2)
+M_pa_pf_18_1_20_4_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:1,C20:4)
+M_pa_pf_18_2_18_2_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C18:2,C18:2)
+M_pa_pf_20_4_20_4_c	 	 	 	 	 				Phosphatidic acid(plasmodium,C20:4,C20:4)
+M_pb2_c	 	 	 	 	 						Pb2
+M_pb2_e	 	 	 	 	 						Pb2
+M_pb2_p	 	 	 	 	 						Pb2
+M_pb_e	 	 	 	 	 						Pb
+M_pencil_c	 	 	 	 	 					Penicillin C9H11N2O4S
+M_pencilca_c	 	 	 	 	 					Penicilloic acid C9H12N2O5S
+M_peptide_c	 	 	 	 	 					TRNA charged with amino acids for peptide synthesis
+M_phllqne_c	 	 	 	 	 					Phylloquinone
+M_phllqne_e	 	 	 	 	 					Phylloquinone
+M_phllqne_h	 	 	 	 	 					Phylloquinone
+M_peng_e	 	 	 	 	 					Penicillin G C16H18N2O4S
+M_peng_p	 	 	 	 	 					Penicillin G C16H18N2O4S
+M_pho_loss_c	 	 	 	 	 					Photon energy loss (heat/fluorescence)
+M_photon298_c	 	 	 	 	 					Photon (281 to 306 nm, UVB)
+M_photon410_e	 	 	 	 	 					Photon (400nm-420nm)
+M_photon430_e	 	 	 	 	 					Photon (420nm-440nm)
+M_photon437_u	 	 	 	 	 					Photon (406 to 454 nm, indigo/blue)
+M_photon438_u	 	 	 	 	 					Photon (378 to 482 nm, violet/blue)
+M_photon450_e	 	 	 	 	 					Photon (417 to 472 nm, indigo/blue)
+M_photon450_h	 	 	 	 	 					Photon (417 to 472 nm, indigo/blue)
+M_photon470_e	 	 	 	 	 					Photon (460nm-480nm)
+M_photon490_e	 	 	 	 	 					Photon (451 to 526 nm, blue/green)
+M_photon490_s	 	 	 	 	 					Photon (451 to 526 nm, blue/green)
+M_photon510_e	 	 	 	 	 					Photon (500nm-520nm)
+M_photon530_e	 	 	 	 	 					Photon (520nm-540nm)
+M_photon550_e	 	 	 	 	 					Photon (540nm-560nm)
+M_photon570_e	 	 	 	 	 					Photon (560nm-580nm)
+M_photon590_e	 	 	 	 	 					Photon (580nm-600nm)
+M_photon610_e	 	 	 	 	 					Photon (600nm-620nm)
+M_photon630_e	 	 	 	 	 					Photon (620nm-640nm)
+M_photon646_h	 	 	 	 	 					Photon (608 to 666 nm, orange/red)
+M_photon650_e	 	 	 	 	 					Photon (640nm-660nm)
+M_photon670_e	 	 	 	 	 					Photon (660nm-680nm)
+M_photon673_u	 	 	 	 	 					Photon (659 to 684 nm, red)
+M_photon680_u	 	 	 	 	 					Photon (662 to 691 nm, red)
+M_photon690_e	 	 	 	 	 					Photon (680nm-700nm)
+M_photonVis_e	 	 	 	 	 					Photon (380 to 750 nm, visible spectrum)
+M_photon_c	 	 	 	 	 					Light
+M_photon_e	 	 	 	 	 					Light
+M_photon_e1_u	 	 	 	 	 					Photons
+M_photon_h	 	 	 	 	 					Light
+M_photon_u	 	 	 	 	 					Light
+M_pi_c	 	 	 	 	 						Phosphate
+M_pi_e	 	 	 	 	 						Phosphate
+M_pi_f	 	 	 	 	 						Phosphate
+M_pi_g	 	 	 	 	 						Phosphate
+M_pi_h	 	 	 	 	 						Phosphate
+M_pi_l	 	 	 	 	 						Phosphate
+M_pi_m	 	 	 	 	 						Phosphate
+M_pi_n	 	 	 	 	 						Phosphate
+M_pi_p	 	 	 	 	 						Phosphate
+M_pi_r	 	 	 	 	 						Phosphate
+M_pi_v	 	 	 	 	 						Phosphate
+M_pi_x	 	 	 	 	 						Phosphate
+M_pmf_c	 	 	 	 	 						Proton motive force
+M_ppi_c	 	 	 	 	 						Diphosphate
+M_ppi_e	 	 	 	 	 						Diphosphate
+M_ppi_h	 	 	 	 	 						Diphosphate
+M_ppi_m	 	 	 	 	 						Diphosphate
+M_ppi_n	 	 	 	 	 						Diphosphate
+M_ppi_p	 	 	 	 	 						Diphosphate
+M_ppi_r	 	 	 	 	 						Diphosphate
+M_ppi_u	 	 	 	 	 						Diphosphate
+M_ppi_x	 	 	 	 	 						Diphosphate
+M_pppi_c	 	 	 	 	 					Inorganic triphosphate
+M_pppi_m	 	 	 	 	 					Inorganic triphosphate
+M_pppi_n	 	 	 	 	 					Inorganic triphosphate
+M_profvs_c	 	 	 	 	 					Des-isoproylpropionic-acid-fluvastatin
+M_profvs_e	 	 	 	 	 					Des-isoproylpropionic-acid-fluvastatin
+M_profvscoa_c	 	 	 	 	 					Des-isoproylpropionic-acid-fluvastatin-CoA
+M_profvscoa_x	 	 	 	 	 					Des-isoproylpropionic-acid-fluvastatin-CoA
+M_protds_h	 	 	 	 	 					Protein disulfide
+M_protdt_h	 	 	 	 	 					Protein dithiol
+M_protein_c	 	 	 	 	 	 	 	 	 	Torasemide-M3
+M_ps2d1_exc_um	 	 	 	 	 					Damaged PSII D1 protein
+M_ptvst_c	 	 	 	 	 	 	 	 	 	Pitavastatin
+M_ptvst_e	 	 	 	 	 	 	 	 	 	Pitavastatin
+M_ptvst_r	 	 	 	 	 	 	 	 	 	Pitavastatin
+M_ptvstgluc_r	 	 	 	 	 	 	 	 	 	Pitavastatin-glucuronide
+M_ptvstlac_c	 	 	 	 	 	 	 	 	 	Pitavastatin-lactone
+M_ptvstlac_e	 	 	 	 	 	 	 	 	 	Pitavastatin-lactone
+M_ptvstlac_r	 	 	 	 	 	 	 	 	 	Pitavastatin-lactone
+M_ptvstm13_c	 	 	 	 	 	 	 	 	 	Pitavastatin-M13
+M_ptvstm13_e	 	 	 	 	 	 	 	 	 	Pitavastatin-M13
+M_ptvstm13_r	 	 	 	 	 	 	 	 	 	Pitavastatin-M13
+M_ptvstm3_c	 	 	 	 	 	 	 	 	 	Pitavastatin-M3
+M_ptvstm3_e	 	 	 	 	 	 	 	 	 	Pitavastatin-M3
+M_ptvstm3_r	 	 	 	 	 	 	 	 	 	Pitavastatin-M3
+M_pur_c	 	 	 	 	 						Puromycin C22H30N7O5
+M_pur_e	 	 	 	 	 						Puromycin C22H30N7O5
+M_pvs_c	 	 	 	 	 	 	 	 	 		Pravastatin
+M_pvs_e	 	 	 	 	 	 	 	 	 		Pravastatin
+M_pvs_r	 	 	 	 	 	 	 	 	 		Pravastatin
+M_pvsgluc_c	 	 	 	 	 	 	 	 	 	Pravastatin glucuronide
+M_pvsgluc_e	 	 	 	 	 	 	 	 	 	Pravastatin glucuronide
+M_pvsgluc_r	 	 	 	 	 	 	 	 	 	Pravastatin glucuronide
+M_q10_c	 	 	 	 	 						Ubiquinone-10
+M_q10_e	 	 	 	 	 						Ubiquinone-10
+M_q10_m	 	 	 	 	 						Ubiquinone-10
+M_q10h2_c	 	 	 	 						Ubiquinol-10
+M_q10h2_e	 	 	 	 	 					Ubiquinol-10
+M_q10h2_m	 	 	 	 	 					Ubiquinol-10
+M_q6_m	 	 	 	 	 						Ubiquinone 6 C39H58O4
+M_q6h2_m	 	 	 	 	 					Ubiquinol 6 C39H60O4
+M_q8_c	 	 	 	 	 						Ubiquinone-8
+M_q8_m	 	 	 	 	 						Ubiquinone-8
+M_q8h2_c	 	 	 	 	 					Ubiquinol-8
+M_q8h2_m	 	 	 	 	 					Ubiquinol-8
+M_q9_m	 	 	 	 	 						Ubiquinone-9
+M_q9h2_m	 	 	 	 	 					Ubiquinol-9
+M_q_c	 	 	 	 	 						Ubiquinone
+M_qh2_c	 	 	 	 	 						Ubiquinol
+M_rbflvrd_c	 	 	 	 	 					Reduced riboflavin
+M_rdRieskeB6_u	 	 	 	 	 					Reduced rieske B6
+M_rdRieskeB6_y	 	 	 	 	 					Reduced rieske B6
+M_rfamp_e	 	 	 	 	 					Rifampin
+M_rfamp_p	 	 	 	 	 					Rifampin
+M_ribflvRD_c	 	 	 	 	 					Reduced riboflavin C17H22N4O6
+M_ribflv_c	 	 	 	 	 					Riboflavin C17H20N4O6
+M_ribflv_e	 	 	 	 	 					Riboflavin C17H20N4O6
+M_ribflv_h	 	 	 	 	 					Riboflavin C17H20N4O6
+M_ribflv_m	 	 	 	 	 					Riboflavin C17H20N4O6
+M_ribflv_p	 	 	 	 	 					Riboflavin C17H20N4O6
+M_rna_c	 	 	 	 	 						RNA c
+M_rsv_c	 	 	 	 	 	 	 	 	 		Rosuvastatin
+M_rsv_e	 	 	 	 	 	 	 	 	 		Rosuvastatin
+M_rsv_r	 	 	 	 	 	 	 	 	 		Rosuvastatin
+M_rsvgluc_r	 	 	 	 	 	 	 	 	 	Rosuvastatin-glucuronide
+M_rsvlac_c	 	 	 	 	 	 	 	 	 	Rosuvastatin-5S-lactone
+M_rsvlac_e	 	 	 	 	 	 	 	 	 	Rosuvastatin-5S-lactone
+M_rsvlac_r	 	 	 	 	 	 	 	 	 	Rosuvastatin-5S-lactone
+M_s0_u	 	 	 	 	 						Starting state of a cluster of probably four manganese atoms
+M_s1_u	 	 	 	 	 						First oxidation state of the cluster of manganese atoms in the Photosystem II
+M_s2_u	 	 	 	 	 						Second oxidation state of the cluster of manganese atoms in the Photosystem II
+M_s3_u	 	 	 	 	 						Third oxidation state of the cluster of manganese atoms in the Photosystem II
+M_s3meacmp_c	 	 	 	 	 	 	 	 	 	Sulphate-conjugate-3-methoxy-acetaminophen
+M_s3meacmp_e	 	 	 	 	 	 	 	 	 	Sulphate-conjugate-3-methoxy-acetaminophen
+M_simvgluc_r	 	 	 	 	 	 	 	 	 	Simvastatin-acyl-glucuronide
+M_s4_u	 	 	 	 	 						Fourth oxidation state of the cluster of manganese atoms in the Photosystem II
+M_s_c	 	 	 	 	 						Sulfur
+M_s_e	 	 	 	 	 						Sulfur
+M_sbo3_c	 	 	 	 	 					Antimonite
+M_sbo3_e	 	 	 	 	 					Antimonite
+M_sbo3_p	 	 	 	 	 					Antimonite
+M_sel_c	 	 	 	 	 						Selenate
+M_sel_e	 	 	 	 	 						Selenate
+M_sel_p	 	 	 	 	 						Selenate
+M_seln_c	 	 	 	 	 					Selenide
+M_seln_h	 	 	 	 	 					Selenide
+M_seln_m	 	 	 	 	 					Selenide
+M_slnt_c	 	 	 	 	 					Selenite
+M_slnt_e	 	 	 	 	 					Selenite
+M_slnt_m	 	 	 	 	 					Selenite
+M_slnt_p	 	 	 	 	 					Selenite
+M_smv_c	 	 	 	 	 	 	 	 	 		Simvastatin lactone form
+M_smv_e	 	 	 	 	 	 	 	 	 		Simvastatin lactone form
+M_smv_r	 	 	 	 	 	 	 	 	 		Simvastatin lactone form
+M_smvacid_c	 	 	 	 	 	 	 	 	 	Simvastatin dihydroxy acid form
+M_smvacid_e	 	 	 	 	 	 	 	 	 	Simvastatin dihydroxy acid form
+M_smvacid_r	 	 	 	 	 	 	 	 	 	Simvastatin dihydroxy acid form
+M_so2_c	 	 	 	 	 						Sulfur dioxide
+M_so2_e	 	 	 	 	 						Sulfur dioxide
+M_so2_p	 	 	 	 	 						Sulfur dioxide
+M_so3_c	 	 	 	 	 						Sulfite
+M_so3_e	 	 	 	 	 						Sulfite
+M_so3_h	 	 	 	 	 						Sulfite
+M_so3_m	 	 	 	 	 						Sulfite
+M_so3_p	 	 	 	 	 						Sulfite
+M_so4_c	 	 	 	 	 						Sulfate
+M_so4_e	 	 	 	 	 						Sulfate
+M_so4_h	 	 	 	 	 						Sulfate
+M_so4_l	 	 	 	 	 						Sulfate
+M_so4_m	 	 	 	 	 						Sulfate
+M_so4_n	 	 	 	 	 						Sulfate
+M_so4_p	 	 	 	 	 						Sulfate
+M_so4_r	 	 	 	 	 						Sulfate
+M_sox_m	 	 	 	 	 						Superoxide	
+M_stacmp_c	 	 	 	 	 	 	 	 	 	Sulphate-conjugate of thiomethyl-acetaminophen
+M_stacmp_e	 	 	 	 	 	 	 	 	 	Sulphate-conjugate of thiomethyl-acetaminophen
+M_sulpacmp_c	 	 	 	 	 	 	 	 	 	Sulphate-conjugate-acetaminophen
+M_sulpacmp_e	 	 	 	 	 	 	 	 	 	Sulphate-conjugate-acetaminophen
+M_tacr_c	 	 	 	 	 	 	 	 	 	Tacrolimus
+M_tacr_e	 	 	 	 	 	 	 	 	 	Tacrolimus
+M_tacr_r	 	 	 	 	 	 	 	 	 	Tacrolimus
+M_tauribup__S_c	 	 	 	 	 	 	 	 	 	Taurine conjugate of S-ibuprofen
+M_tauribup__S_e	 	 	 	 	 	 	 	 	 	Taurine conjugate of S-ibuprofen
+M_taxol_c	 	 	 	 	 	 	 	 	 	Paclitaxel
+M_taxol_e	 	 	 	 	 	 	 	 	 	Paclitaxel
+M_tc4_e	 	 	 	 	 						Technetium(IV)
+M_tc7_e	 	 	 	 	 						Technetium(VII)
+M_tdp_c	 	 	 	 	 						Tdp
+M_thm_c	 	 	 	 	 						Thiamin
+M_thm_e	 	 	 	 	 						Thiamin
+M_thm_h	 	 	 	 	 						Thiamin
+M_thm_m	 	 	 	 	 						Thiamin
+M_thm_p	 	 	 	 	 						Thiamin
+M_thmmp_c	 	 	 	 	 					Thiamin monophosphate
+M_thmmp_e	 	 	 	 	 					Thiamin monophosphate
+M_thmmp_h	 	 	 	 	 					Thiamin monophosphate
+M_thmmp_m	 	 	 	 	 					Thiamin monophosphate
+M_thmpp_c	 	 	 	 	 					Thiamine diphosphate
+M_thmpp_e	 	 	 	 	 					Thiamine diphosphate
+M_thmpp_h	 	 	 	 	 					Thiamine diphosphate
+M_thmpp_m	 	 	 	 	 					Thiamine diphosphate
+M_thmtp_c	 	 	 	 	 					Thiamin triphosphate C12H16N4O10P3S
+M_thmtp_e	 	 	 	 	 					Thiamin triphosphate C12H16N4O10P3S
+M_thmtp_h	 	 	 	 	 					Thiamin triphosphate C12H16N4O10P3S
+M_tlacfvs_c	 	 	 	 	 	 	 	 	 	Trans-lactone-fluvastatin
+M_tlacfvs_e	 	 	 	 	 	 	 	 	 	Trans-lactone-fluvastatin
+M_tlacfvs_r	 	 	 	 	 	 	 	 	 	Trans-lactone-fluvastatin
+M_tmacmp_c	 	 	 	 	 	 	 	 	 	Thiomethyl-conjugate-acetaminophen
+M_tmacmp_r	 	 	 	 	 	 	 	 	 	Thiomethyl-conjugate-acetaminophen
+M_tmd_c	 	 	 	 	 	 	 	 	 		Torasemide
+M_tmd_e	 	 	 	 	 	 	 	 	 		Torasemide
+M_tmd_r	 	 	 	 	 	 	 	 	 		Torasemide
+M_tmdm1_c	 	 	 	 	 	 	 	 	 	Torasemide-M1
+M_tmdm1_e	 	 	 	 	 	 	 	 	 	Torasemide-M1
+M_tmdm1_r	 	 	 	 	 	 	 	 	 	Torasemide-M1
+M_tmdm3_c	 	 	 	 	 	 	 	 	 	Torasemide-M3
+M_tmdm3_e	 	 	 	 	 	 	 	 	 	Torasemide-M3
+M_tmdm3_r	 	 	 	 	 	 	 	 	 	Torasemide-M3
+M_tmdm5_c	 	 	 	 	 	 	 	 	 	Torasemide-M5
+M_tmdm5_e	 	 	 	 	 	 	 	 	 	Torasemide-M5
+M_tmdm5_r	 	 	 	 	 	 	 	 	 	Torasemide-M5
+M_tolbutamide_c	 	 	 	 	 	 	 	 	 	Tolbutamide c
+M_tolbutamide_e	 	 	 	 	 	 	 	 	 	Tolbutamide c
+M_tripvs_c	 	 	 	 	 	 	 	 	 	Triol metabolite of pravastatin
+M_tripvs_e	 	 	 	 	 	 	 	 	 	Triol metabolite of pravastatin
+M_tripvs_r	 	 	 	 	 	 	 	 	 	Triol metabolite of pravastatin
+M_trnaala_c	 	 	 	 	 					TRNA(Ala)
+M_trnaala_h	 	 	 	 	 					TRNA(Ala)
+M_trnaala_m	 	 	 	 	 					TRNA(Ala)
+M_trnaarg_c	 	 	 	 	 					TRNA(Arg)
+M_trnaarg_m	 	 	 	 	 					TRNA(Arg)
+M_trnaasn_c	 	 	 	 	 					TRNA Asn  C10H17O10PR2
+M_trnaasn_h	 	 	 	 	 					TRNA Asn  C10H17O10PR2
+M_trnaasn_m	 	 	 	 	 					TRNA Asn  C10H17O10PR2
+M_trnaasp_c	 	 	 	 	 					TRNA(Asp)
+M_trnaasp_m	 	 	 	 	 					TRNA(Asp)
+M_trnaasp_preq34_c	 	 	 	 	 				TRNA Asp  preQ1 modified
+M_trnaaspq_c	 	 	 	 	 					TRNA asp  queuosine34
+M_trnaaspqo_c	 	 	 	 	 					Trnaasp epoxyqueuosine34
+M_trnacys_c	 	 	 	 	 					TRNA(Cys)
+M_trnacys_h	 	 	 	 	 					TRNA(Cys)
+M_trnagln_c	 	 	 	 	 					TRNA(Gln)
+M_trnagln_h	 	 	 	 	 					TRNA(Gln)
+M_trnaglu_c	 	 	 	 	 					TRNA (Glu)
+M_trnaglu_h	 	 	 	 	 					TRNA (Glu)
+M_trnaglu_m	 	 	 	 	 					TRNA (Glu)
+M_trnagly_c	 	 	 	 	 					TRNA(Gly)
+M_trnagly_m	 	 	 	 	 					TRNA(Gly)
+M_trnagua_c	 	 	 	 	 
+M_trnahis_c	 	 	 	 	 					TRNA(His)
+M_trnahis_h	 	 	 	 	 					TRNA(His)
+M_trnahis_m	 	 	 	 	 					TRNA(His)	
+M_trnahis_preq34_c	 	 	 	 	 				L Histidyl tRNA His  preQ1 modified
+M_trnahisq_c	 	 	 	 	 					L Histidyl tRNA His  queuosine34
+M_trnahisqo_c	 	 	 	 	 					L Histidyl tRNA His  epoxyqueuosine34
+M_trnaile_c	 	 	 	 	 					TRNA(Ile)
+M_trnaile_m	 	 	 	 	 					TRNA(Ile)
+M_trnaleu_c	 	 	 	 	 					TRNA(Leu)
+M_trnaleu_h	 	 	 	 	 					TRNA(Leu)
+M_trnaleu_m	 	 	 	 	 					TRNA(Leu)
+M_trnalys_c	 	 	 	 	 					TRNA(Lys)
+M_trnalys_m	 	 	 	 	 					TRNA(Lys)
+M_trnamet_c	 	 	 	 	 					TRNA(Met)
+M_trnamet_m	 	 	 	 	 					TRNA(Met)
+M_trnaphe_c	 	 	 	 	 					TRNA(Phe)
+M_trnaphe_h	 	 	 	 	 					TRNA(Phe)
+M_trnaphe_m	 	 	 	 	 					TRNA(Phe)
+M_trnapro_c	 	 	 	 	 					TRNA(Pro)
+M_trnarib_c	 	 	 	 	 					TRNA containing ribothymidine at position 54
+M_trnasecys_c	 	 	 	 	 					TRNA(SeCys)
+M_trnasecys_h	 	 	 	 	 					TRNA(SeCys)
+M_trnasecys_m	 	 	 	 	 					TRNA(SeCys)
+M_trnaser_c	 	 	 	 	 					TRNA(Ser)
+M_trnaser_h	 	 	 	 	 					TRNA(Ser)
+M_trnathr_c	 	 	 	 	 					TRNA(Thr)
+M_trnathr_m	 	 	 	 	 					TRNA(Thr)
+M_trnatrp_c	 	 	 	 	 					TRNA(Trp)
+M_trnatrp_h	 	 	 	 	 					TRNA(Trp)
+M_trnatrp_m	 	 	 	 	 					TRNA(Trp)
+M_trnatyr_c	 	 	 	 	 					TRNA(Tyr)
+M_trnatyr_m	 	 	 	 	 					TRNA(Tyr)
+M_trnatyr_preq34_c	 	 	 	 	 				TRNA Tyr  preQ1 modified
+M_trnatyrq_c	 	 	 	 	 					TRNA tyr  queuosine34
+M_trnatyrqo_c	 	 	 	 	 					Trnatyr epoxyqueuosine34
+M_trnauri_c	 	 	 	 	 					TRNA containing uridine at position 54
+M_trnaval_c	 	 	 	 	 					TRNA(Val)
+M_trnaval_h	 	 	 	 	 					TRNA(Val)
+M_trnaval_m	 	 	 	 	 					TRNA(Val)
+M_tsul_c	 	 	 	 	 					Thiosulfate
+M_tsul_e	 	 	 	 	 					Thiosulfate
+M_tsul_h	 	 	 	 	 					Thiosulfate
+M_tsul_m	 	 	 	 	 					Thiosulfate
+M_tsul_p	 	 	 	 	 					Thiosulfate
+M_ttp_c	 	 	 	 	 						Ttp
+M_u4_e	 	 	 	 	 						Uranium(IV)
+M_u6_e	 	 	 	 	 						Uranium(VI)
+M_udp_c	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_e	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_g	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_h	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_l	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_m	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_n	 	 	 	 	 						UDP C9H11N2O12P2
+M_udp_r	 	 	 	 	 						UDP C9H11N2O12P2
+M_ump_c	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_e	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_g	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_h	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_l	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_m	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_n	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_p	 	 	 	 	 						UMP C9H11N2O9P
+M_ump_r	 	 	 	 	 						UMP C9H11N2O9P 
+M_utp_c	 	 	 	 	 						UTP C9H11N2O15P3
+M_utp_e	 	 	 	 	 						UTP C9H11N2O15P3
+M_utp_h	 	 	 	 	 						UTP C9H11N2O15P3
+M_utp_m	 	 	 	 	 						UTP C9H11N2O15P3
+M_utp_n	 	 	 	 	 						UTP C9H11N2O15P3
+M_v4_e	 	 	 	 	 						Vanadium(IV)
+M_v5_e	 	 	 	 	 						Vanadium(V)
+M_zn2_c	 	 	 	 	 						Zinc
+M_zn2_e	 	 	 	 	 						Zinc
+M_zn2_p	 	 	 	 	 						Zinc
