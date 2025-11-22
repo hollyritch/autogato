@@ -56,8 +56,12 @@ Secondly, you partition the network by using the output from the first
 
 Again you have multiple options:
 
--  -b or --circuitBound <Max. Length elementary circuits>    : Specify the maximum length of elementary circuits as length=len(metabolites)+len(reactions), default = 20. Unbounded search can be enforced by setting circuitBound = 2*(min(len(metabolites), len(reactions)). But be carefull due to very high memory consumption for larger networks.
--  -n or --nonMetzler <True/False>                           : Specify if you want non-Metzler matrices to be investigated for autocatalycity or not. Default = True. This only make
-                                                              sense if core == False
+- -b or --circuitBound <Max. Length elementary circuits> :
+  Specify the maximum length of elementary circuits as length=len(metabolites)+len(reactions), default = 20. Unbounded search can be enforced by setting circuitBound = 2*(min(len(metabolites), len(reactions)). But be carefull due to very high memory consumption for larger networks.
+- -n or --nonMetzler <True/False>:
+    Specify if you want non-Metzler matrices to be investigated for autocatalycity or not. Default = True. This only make sense if core == False
+- -t or --threads   <Number of Threads> :
+    Number of threads for parallel processing, default=2
+- -e or --equivClassBound <Max. length Equiv.Clases>:
+    Maximum length of equivalance classes gnerated via superimposition of elementary circuits in terms of length=len(metabolites)+len(reactions) of the Equivalence class
 - 
--
