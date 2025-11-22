@@ -15,7 +15,7 @@ speciesXMLDict = {}
 for k in tqdm(range(len(speciesList)), desc="Species"):
     species = speciesList[k]    
     print(species)
-    if species != "EColiCore":
+    if species != "EColiDH5Alpha":
         continue
     if species == ".DS_Store":
         continue
