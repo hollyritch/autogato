@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 cutOffElementaryCircuits = 50
 cutOffLargerCycles = 50
-maxThreads = 128
+maxThreads = 12
 cutOffReactionNetworkSize = 2
 path = "./XML-Files/"
 speciesList = sorted(list(os.listdir(path)))
@@ -11,7 +11,7 @@ speciesXMLDict = {}
 for k in tqdm(range(len(speciesList)), desc="Species"):
     species = speciesList[k]    
     print(species)
-    if species != "EColiCore":
+    if species != "MethanosarcinaBarkeri":
         continue
     if species == ".DS_Store":
         continue
