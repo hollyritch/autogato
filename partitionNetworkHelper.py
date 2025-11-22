@@ -4,16 +4,9 @@
 import networkx as nx
 import libsbml
 import sys
-from copy import copy, deepcopy
 import sympy as sp
 from sympy import * 
 import concurrent.futures
-import itertools
-from tqdm import tqdm
-import numpy as np
-import random 
-import matplotlib
-from matplotlib import pyplot as plt
 
 def buildNetwork(model:libsbml.Model):
     # 0. Read parameters
@@ -134,39 +127,6 @@ def generateUndirectedReactionNetwork(reactionNetwork:nx.DiGraph):
     for e in reactionNetwork.edges():
         uRN.add_edge(e[0],e[1])
     return uRN
-#############################
-#############################
-
-
-def buildExampleNetwork():
-    metabolicNetwork = nx.DiGraph()
-    for i in range(1,13):
-        if i<=8:
-            metabolicNetwork.add_node("R"+str(i))
-        metabolicNetwork.add_node("M"+str(i))
-    metabolicNetwork.add_edge("M1", "R1")  
-    metabolicNetwork.add_edge("M5", "R1")
-    metabolicNetwork.add_edge("R1", "M2")
-    metabolicNetwork.add_edge("M2", "R2")
-    metabolicNetwork.add_edge("R2", "M3")
-    metabolicNetwork.add_edge("R2", "M4")
-    metabolicNetwork.add_edge("M3", "R3")
-    metabolicNetwork.add_edge("R3", "M5")
-    metabolicNetwork.add_edge("M4", "R4")
-    metabolicNetwork.add_edge("M6", "R4")
-    metabolicNetwork.add_edge("R4", "M7")
-    metabolicNetwork.add_edge("M7", "R5")
-    metabolicNetwork.add_edge("R5", "M8")
-    metabolicNetwork.add_edge("R5", "M9")
-    metabolicNetwork.add_edge("M8", "R6")
-    metabolicNetwork.add_edge("R6", "M6")
-    metabolicNetwork.add_edge("R6", "M10")
-    metabolicNetwork.add_edge("M9", "R7")
-    metabolicNetwork.add_edge("M11", "R7")
-    metabolicNetwork.add_edge("R7", "M12")
-    metabolicNetwork.add_edge("M12", "R8")
-    metabolicNetwork.add_edge("R8", "M11")
-    return metabolicNetwork
 #############################
 #############################
 
@@ -398,32 +358,5 @@ def getAbundantMolecules(smallMoleculesSet:set, metabolicNetwork:nx.DiGraph, exc
                 unneccessaryMolecules.add(node)
                 abundantMolecules.add(node)
     return unneccessaryMolecules, abundantMolecules
-#############################
-#############################
-
-
-def plotDegreeDistribution(metabolicNetwork:dict):
-    degreeDict = {}
-    for n in metabolicNetwork.nodes():
-        if n.startswith("R_"):
-            continue
-        else:
-            d = len(metabolicNetwork.out_edges(n)) + len(metabolicNetwork.in_edges(n))
-            degreeDict.setdefault(d, list()).append(n)
-            if n == "M_atp_c":
-                print("Found ATP, deine Mudda")
-                for c in nx.algorithms.cycles._johnson_cycle_search(metabolicNetwork, [n]):
-                    print(c)
-    keys = sorted(list(degreeDict.keys()))    
-    print("Max degree:", max(keys), "Metabolites:", degreeDict[max(keys)])
-    with open("maxDegrees.txt", "w") as file:
-        for d in keys:
-            file.write(str(d)+ str(degreeDict[d])+ "\n")
-            print("Degree:", d, "Metaolites:", degreeDict[d])
-    plt.bar(x=keys, height=list(len(degreeDict[k]) for k in keys))
-    plt.xlim([0,40])
-    plt.ylim([0,1700])
-    plt.savefig("./degreeDistribution.png")
-    plt.close()
 #############################
 #############################
