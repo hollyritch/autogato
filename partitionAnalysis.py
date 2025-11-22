@@ -19,6 +19,7 @@ from collections import deque
 from checkMatch import assembleCython, checkMatch, assembleCythonCores
 import traceback
 
+
 def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int, species:str, treeCounter:int):
     # Global variables
     # 0.1. Get global variables
@@ -1219,6 +1220,58 @@ def processCircuits(circuits, leaf:bool, left:bool, circuitCounter:int):
 #############################
 
 
+def readArguments():
+    inputBool = False
+    xmlBool = False
+    circuitBool = False
+    checkNonMetzler = True
+    threadBool = False
+    equivClassBoundBool = False
+    fluffleBool = False
+    coreBool = False
+    parallelBool = False
+    for k in range(len(sys.argv)):
+        newArgument = sys.argv[k]
+        if newArgument == "-x" or "--xmlFile":
+            inputXMLFilePath = sys.argv[k+1]
+            xmlBool = True
+        if newArgument == "-i" or "--input":
+            inputPickleFile = sys.argv[k+1]
+            inputBool = True
+        if newArgument == "-b" or "--circuitBound":
+            circuitBound = int(sys.argv[k+1])
+            circuitBool = True
+        if newArgument == "-n" or newArgument == "-nonMetzler":
+            nonMetzlerString = sys.argv[k+1].lower()
+            if nonMetzlerString == "false":
+                checkNonMetzler=False
+        if newArgument == "-t" or newArgument == "--noThreads":
+            noThreads = int(sys.argv[k+1])
+            threadBool = True
+        if newArgument == "-e" or newArgument == "--equivClassBound":
+            equviClassBound = int(sys.argv[k+1])
+            equivClassBoundBool = True
+        if newArgument == "-f" or newArgument == "--fluffles":
+            fluffleBool = True
+        if newArgument == "-c" or newArgument == "--cores":
+            coreBool = True
+        if newArgument == "-p" or newArgument == "--parallel":
+            parallelBool = True
+    if inputBool==False:
+        sys.exit("Please specify input pickle file.")
+    if xmlBool == False:
+        sys.exit("Please specify original xml-file.")    
+    if circuitBool == False:
+        circuitBound = 20
+    if threadBool == False:
+        noThreads = 2
+    if equivClassBoundBool == False:
+        equviClassBound = 20
+    return inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, equviClassBound, fluffleBool, coreBool, parallelBool
+#############################
+#############################
+
+
 def writeDataToListsAndDicts(parameters, aM, nAM, nMAC, nMnAC):
     # 1. Metzler
     parameters["autocatalyticMetzlerUnstableCycles"] += aM
@@ -1600,42 +1653,7 @@ timeStamp = time.time()
 gc.enable()
 
 # 1. Define variables
-inputXMLFilePath = sys.argv[1]
-inputPickleFile = sys.argv[2]
-cycleBound = int(sys.argv[3])
-nonMetzlerString = sys.argv[4]
-species = sys.argv[5]
-noThreads = int(sys.argv[6])
-cutoffLargerCycles = int(sys.argv[7])
-fluffleBoolString = sys.argv[8]
-boundedString = sys.argv[9]
-coreString = sys.argv[10]
-parallelString = sys.argv[11]
-
-if fluffleBoolString.lower() == "true":
-    fluffleBool = True
-else:
-    fluffleBool = False
-    
-if nonMetzlerString == "True" or nonMetzlerString == "true":
-    checkNonMetzler=True
-else:
-    checkNonMetzler=False
-
-if boundedString.lower() == "true":
-    bounded = True
-else:
-    bounded = False
-
-if coreString.lower() == "true":
-    coreBool = True
-else:
-    coreBool = False
-
-if parallelString.lower() == "true":
-    parallelBool = True
-else:
-    parallelBool = False
+inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, cutoffLargerCycles, fluffleBool, coreBool, parallelBool = readArguments()
 
 reader = libsbml.SBMLReader()
 document = reader.readSBML(inputXMLFilePath)
@@ -1701,7 +1719,7 @@ outputPickleFilePath = "/scratch/richard/Autocatalysis/cycleData/" + species + "
 
 file = open("/scratch/richard/Autocatalysis/cycleData/"+ species +"/allCycles"+ str(treeCounter) +".txt", "w")
 file.close()
-analysePartitionTree(parameters, partitionTree, siblings, leaves, uRN, usefulNetwork, cycleBound, species, treeCounter)
+analysePartitionTree(parameters, partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter)
 parameters["cycleDict"] = cycleDict 
 parameters["cycleLengthDict"] = cycleLengthDict
 totalTime = time.time()-timeStamp
