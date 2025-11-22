@@ -1230,6 +1230,7 @@ def readArguments():
     fluffleBool = False
     coreBool = False
     parallelBool = False
+    speciesBool = False
     for k in range(len(sys.argv)):
         newArgument = sys.argv[k]
         if newArgument == "-x" or newArgument=="--xmlFile":
@@ -1257,17 +1258,22 @@ def readArguments():
             coreBool = True
         elif newArgument == "-p" or newArgument == "--parallel":
             parallelBool = True
+        elif newArgument == "-s" or newArgument == "--Species":
+            species = sys.argv[k+1]
+            speciesBool = True
     if inputBool==False:
         sys.exit("Please specify input pickle file.")
     if xmlBool == False:
         sys.exit("Please specify original xml-file.")    
+    if speciesBool == False:
+        sys.exit("Please specify species!")
     if circuitBool == False:
         circuitBound = 20
     if threadBool == False:
         noThreads = 2
     if equivClassBoundBool == False:
         equviClassBound = 20
-    return inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, equviClassBound, fluffleBool, coreBool, parallelBool
+    return inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, equviClassBound, fluffleBool, coreBool, parallelBool, species
 #############################
 #############################
 
@@ -1653,7 +1659,7 @@ timeStamp = time.time()
 gc.enable()
 
 # 1. Define variables
-inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, cutoffLargerCycles, fluffleBool, coreBool, parallelBool = readArguments()
+inputXMLFilePath, inputPickleFile, circuitBound, checkNonMetzler, noThreads, cutoffLargerCycles, fluffleBool, coreBool, parallelBool, species = readArguments()
 
 reader = libsbml.SBMLReader()
 document = reader.readSBML(inputXMLFilePath)
