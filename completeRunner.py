@@ -1,8 +1,8 @@
 import sys, os
 from tqdm import tqdm 
 
-cutOffElementaryCircuits = 30
-cutOffLargerCycles = 30
+cutOffElementaryCircuits = 1000
+cutOffLargerCycles = 1000
 fluffles = "False"
 bounded = "False"
 core = "False"
@@ -15,7 +15,7 @@ speciesXMLDict = {}
 for k in tqdm(range(len(speciesList)), desc="Species"):
     species = speciesList[k]    
     print(species)
-    if species != "MethanosarcinaBarkeri":
+    if species != "EColiCore":
         continue
     if species == ".DS_Store":
         continue
