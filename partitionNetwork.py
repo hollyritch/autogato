@@ -55,10 +55,7 @@ def readSmallMolecules(smallMoleculesPath):
                 break
             else:
                 shortendNode = "_".join(line.split("_")[:-1])+"_"
-                if shortendNode in exclude:
-                    print("Excluding",line)
-                else:
-                    smallMolecules.add(shortendNode)
+                smallMolecules.add(shortendNode)
     return smallMolecules
 #=============================================================================#
 #                                   Main                                      #
