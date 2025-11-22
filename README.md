@@ -56,5 +56,8 @@ Secondly, you partition the network by using the output from the first
 
 Again you have multiple options:
 
--c or --circuitBound <Max. Length elementary circuits>    : Specify the maximum length of elementary circuits as length=len(metabolites)+len(reactions), default = 20
+-  -b or --circuitBound <Max. Length elementary circuits>    : Specify the maximum length of elementary circuits as length=len(metabolites)+len(reactions), default = 20. Unbounded search can be enforced by setting circuitBound = 2*(min(len(metabolites), len(reactions)). But be carefull due to very high memory consumption for larger networks.
+-  -n or --nonMetzler <True/False>                           : Specify if you want non-Metzler matrices to be investigated for autocatalycity or not. Default = True. This only make
+                                                              sense if core == False
+- 
 -
