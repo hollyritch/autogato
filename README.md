@@ -34,7 +34,7 @@ to compile checkMatch.pyx so that it can be imported as a normal in all partitio
 
 # 3. Usage
 
-3.1 Partition your Network
+## 3.1 Partition your Network
 
 First call partition Network via the following command:
 
