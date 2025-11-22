@@ -85,7 +85,7 @@ metabolicNetwork, vertexIDs = partitionNetworkHelper.buildNetwork(model=model)
 inhibitors = {}                             # not yet implemented
 # 4.1 Find/Determine/Define abundant molecules to inhibit to many crosslinkings between modules that are actually distant from each other
 
-unnecessaryMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork, {})
+unnecessaryMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork)
 
 unnecessaryMoleculesIDSet = set()
 #partitionNetworkHelper.plotDegreeDistribution(metabolicNetwork)
