@@ -8,6 +8,27 @@ import sympy as sp
 from sympy import * 
 import concurrent.futures
 
+def analyseOverlap(partitionTree:nx.DiGraph, network:nx.DiGraph, siblings:dict):
+    maxOverlap = 0
+    overlapLengthDict = {}
+    overlapMetaboliteDict = {}
+    for subG in partitionTree.nodes():
+        subnetwork, metabolites, reactions = generateSubnetwork(subG, network)
+        if len(partitionTree.in_edges(subG))==0:
+            continue
+        siblingSubG = siblings[subG]
+        if len(partitionTree.in_edges(subG))!=0:
+            siblingSubnetwork, siblingMetabolites, siblingReactions = generateSubnetwork(siblingSubG, network)
+            overlapMetaboliteDict[(subG, siblingSubG)] = set(siblingMetabolites).intersection(set(metabolites))
+            overlap = len(overlapMetaboliteDict[(subG, siblingSubG)])
+            overlapLengthDict[overlap] = overlapLengthDict.setdefault(overlap, 0) + 1
+            if overlap > maxOverlap:
+                maxOverlap = overlap
+    return maxOverlap, overlapLengthDict, overlapMetaboliteDict
+#############################
+#############################
+
+
 def buildNetwork(model:libsbml.Model):
     # 0. Read parameters
     #model = parameters["model"]
@@ -98,105 +119,40 @@ def buildNetwork(model:libsbml.Model):
 #############################
 
 
-def createReactionNetwork(sCC:nx.DiGraph, reactions:set, inhibitors:dict):
-    reactionNetwork = nx.DiGraph()
-    reactions = sorted(list(reactions))
-    for i in range(len(reactions)):
-        r1 = reactions[i]
-        for j in range(len(reactions)):
-            if i==j:
+def callCoefficientAnalyzer(A:sp.Matrix, noThreads:int):
+    lamda = sp.Symbol("lamda")
+    p = A.charpoly(lamda)
+    coefficients = p.coeffs()
+    DAG = nx.DiGraph()
+    DAG.add_node("1")
+    edgeDict = {}
+    minusCoffDict = {}
+    minusPlusCoffDict = {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=noThreads) as executor:
+        futureSet = {executor.submit(computeEdges, coefficients[x], x, coefficients) for x in range(1, len(coefficients))}
+        j =0
+        for future in concurrent.futures.as_completed(futureSet):
+            try:
+                edgeDict[j], minusC, minusPlusC = future.result()
+                minusCoffDict.update(minusC)
+                minusPlusCoffDict.update(minusPlusC)
+                j+=1
+            except Exception as exc:
+                print('%r generated an exception: %s' % (str(j), exc))
+    print(minusPlusCoffDict)
+#############################
+#############################
+
+
+def checkForMetzlerMatrix(S):
+    for i in range(sp.shape(S)[0]):
+        for j in range(sp.shape(S)[1]):
+            if i == j:
                 continue
-            r2 = reactions[j]            
-            # First Check if a product of r1 is a reactant of r2
-            productsR1 = set(sCC.successors(r1))
-            eductsR2 = set(sCC.predecessors(r2))
-            if len(productsR1.intersection(eductsR2))>0:
-                reactionNetwork.add_edge(r1, r2)
-            # Now Check the converse
-    for key, value in inhibitors.items():
-        for in_edge in sCC.in_edges(key):
-            r = in_edge[0]
-            reactionNetwork.add_edge(r, value)
-    return reactionNetwork
-#############################
-#############################
-
-
-def generateUndirectedReactionNetwork(reactionNetwork:nx.DiGraph):
-    uRN = nx.Graph()
-    for e in reactionNetwork.edges():
-        uRN.add_edge(e[0],e[1])
-    return uRN
-#############################
-#############################
-
-
-def getReactionsAndMetabolites(X:set, Y:set, metabolicNetwork:nx.DiGraph):
-    for z in X:
-        x = metabolicNetwork.nodes[z]["Name"]
-        if x.startswith("R"):
-            reactions = X
-            metabolites = Y
-        else:
-            reactions = Y
-            metabolites = X
-        break
-    return reactions, metabolites
-#############################
-#############################
-
-
-def performSanityChecks(leaves:set, partitionTree:nx.DiGraph, siblings:dict):
-    lengthOfLeaves = 0
-    leafSet1 = set()
-    for G in leaves:
-        lengthOfLeaves += len(G.nodes()) 
-        for n in G.nodes():
-            leafSet1.add(n)
-    lengthOfLeaves2 = 0
-    leafSet2 = set()
-    for G in partitionTree.nodes():
-        if len(partitionTree.out_edges(G)) == 0:
-            lengthOfLeaves2 += len(G.nodes())
-            for n in G.nodes():
-                leafSet2.add(n)
-    if lengthOfLeaves == lengthOfLeaves2:
-        if len(leafSet1.symmetric_difference(leafSet2)) != 0:
-            sys.exit("Automatically generated leaf set and leaves from the tree do not coincide although they have the same length")
-    else:
-        sys.exit("Automatically generated leaf set and leaves from tree do not have the same length")
-    if not nx.is_tree(partitionTree):
-        sys.exit("Partition tree is no tree!!!")
-    for n in partitionTree.nodes():
-        if len(partitionTree.out_edges(n))>0:
-            if len(partitionTree.out_edges(n))!=2:
-                sys.exit("Partition tree is no binary tree")
-    for n, s in siblings.items():
-        if len(partitionTree.in_edges(n))>1:
-            sys.exit("Wrrrrroooooong, no tree!!!")
-        for inEdge in partitionTree.in_edges(n):
-            p = inEdge[0]
-            for outEdge in partitionTree.out_edges(p):
-                if n == outEdge[1]:
-                    continue
-                else:
-                    putativeSibling = outEdge[1]
-                    if s!=putativeSibling:
-                        sys.exit("Siblings dictionary seems to be wrong")
-#############################
-#############################
-
-
-def generateSubnetwork(subG:dict, metabolicNetwork:dict):
-    metabolites = set()
-    subGReactions = set(subG.nodes()) 
-    for r in subGReactions:
-        for inEdge in metabolicNetwork.in_edges(r):
-            metabolites.add(inEdge[0])
-        for outEdge in metabolicNetwork.out_edges(r):
-            metabolites.add(outEdge[1])
-    subnetwork = nx.subgraph(metabolicNetwork, metabolites.union(subGReactions)).copy()
-    return subnetwork, sorted(list(metabolites)), sorted(list(subGReactions))
+            else:
+                if S[i,j] < 0:
+                    return False
+    return True
 #############################
 #############################
 
@@ -250,61 +206,84 @@ def computeEdges(c, x, coefficients):
 #############################
 
 
-def analyseOverlap(partitionTree:nx.DiGraph, network:nx.DiGraph, siblings:dict):
-    maxOverlap = 0
-    overlapLengthDict = {}
-    overlapMetaboliteDict = {}
-    for subG in partitionTree.nodes():
-        subnetwork, metabolites, reactions = generateSubnetwork(subG, network)
-        if len(partitionTree.in_edges(subG))==0:
-            continue
-        siblingSubG = siblings[subG]
-        if len(partitionTree.in_edges(subG))!=0:
-            siblingSubnetwork, siblingMetabolites, siblingReactions = generateSubnetwork(siblingSubG, network)
-            overlapMetaboliteDict[(subG, siblingSubG)] = set(siblingMetabolites).intersection(set(metabolites))
-            overlap = len(overlapMetaboliteDict[(subG, siblingSubG)])
-            overlapLengthDict[overlap] = overlapLengthDict.setdefault(overlap, 0) + 1
-            if overlap > maxOverlap:
-                maxOverlap = overlap
-    return maxOverlap, overlapLengthDict, overlapMetaboliteDict
-#############################
-#############################
-
-
-def callCoefficientAnalyzer(A:sp.Matrix, noThreads:int):
-    lamda = sp.Symbol("lamda")
-    p = A.charpoly(lamda)
-    coefficients = p.coeffs()
-    DAG = nx.DiGraph()
-    DAG.add_node("1")
-    edgeDict = {}
-    minusCoffDict = {}
-    minusPlusCoffDict = {}
-    with concurrent.futures.ThreadPoolExecutor(max_workers=noThreads) as executor:
-        futureSet = {executor.submit(computeEdges, coefficients[x], x, coefficients) for x in range(1, len(coefficients))}
-        j =0
-        for future in concurrent.futures.as_completed(futureSet):
-            try:
-                edgeDict[j], minusC, minusPlusC = future.result()
-                minusCoffDict.update(minusC)
-                minusPlusCoffDict.update(minusPlusC)
-                j+=1
-            except Exception as exc:
-                print('%r generated an exception: %s' % (str(j), exc))
-    print(minusPlusCoffDict)
-#############################
-#############################
-
-
-def checkForMetzlerMatrix(S):
-    for i in range(sp.shape(S)[0]):
-        for j in range(sp.shape(S)[1]):
-            if i == j:
+def createReactionNetwork(sCC:nx.DiGraph, reactions:set, inhibitors:dict):
+    reactionNetwork = nx.DiGraph()
+    reactions = sorted(list(reactions))
+    for i in range(len(reactions)):
+        r1 = reactions[i]
+        for j in range(len(reactions)):
+            if i==j:
                 continue
-            else:
-                if S[i,j] < 0:
-                    return False
-    return True
+            r2 = reactions[j]            
+            # First Check if a product of r1 is a reactant of r2
+            productsR1 = set(sCC.successors(r1))
+            eductsR2 = set(sCC.predecessors(r2))
+            if len(productsR1.intersection(eductsR2))>0:
+                reactionNetwork.add_edge(r1, r2)
+            # Now Check the converse
+    for key, value in inhibitors.items():
+        for in_edge in sCC.in_edges(key):
+            r = in_edge[0]
+            reactionNetwork.add_edge(r, value)
+    return reactionNetwork
+#############################
+#############################
+
+
+def getAbundantMolecules(smallMoleculesSet:set, metabolicNetwork:nx.DiGraph, exclude:set):
+    abundantMolecules = set()
+    unneccessaryMolecules =set()
+    for n in metabolicNetwork.nodes():
+        node = metabolicNetwork.nodes[n]["Name"]
+        if node.startswith("M_"):
+            if node.endswith("_e"):
+                unneccessaryMolecules.add(node)
+                abundantMolecules.add(node)
+            shortendNode = "_".join(node.split("_")[:-1])+"_"
+            if shortendNode in exclude:
+                abundantMolecules.add(node)
+            if shortendNode in smallMoleculesSet:
+                unneccessaryMolecules.add(node)
+                abundantMolecules.add(node)
+    return unneccessaryMolecules, abundantMolecules
+#############################
+#############################
+
+
+def generateSubnetwork(subG:dict, metabolicNetwork:dict):
+    metabolites = set()
+    subGReactions = set(subG.nodes()) 
+    for r in subGReactions:
+        for inEdge in metabolicNetwork.in_edges(r):
+            metabolites.add(inEdge[0])
+        for outEdge in metabolicNetwork.out_edges(r):
+            metabolites.add(outEdge[1])
+    subnetwork = nx.subgraph(metabolicNetwork, metabolites.union(subGReactions)).copy()
+    return subnetwork, sorted(list(metabolites)), sorted(list(subGReactions))
+#############################
+#############################
+
+
+def getReactionsAndMetabolites(X:set, Y:set, metabolicNetwork:nx.DiGraph):
+    for z in X:
+        x = metabolicNetwork.nodes[z]["Name"]
+        if x.startswith("R"):
+            reactions = X
+            metabolites = Y
+        else:
+            reactions = Y
+            metabolites = X
+        break
+    return reactions, metabolites
+#############################
+#############################
+
+
+def generateUndirectedReactionNetwork(reactionNetwork:nx.DiGraph):
+    uRN = nx.Graph()
+    for e in reactionNetwork.edges():
+        uRN.add_edge(e[0],e[1])
+    return uRN
 #############################
 #############################
 
@@ -342,21 +321,43 @@ def performCycleCongruenceCheck(newCs:list, cycleList:list):
 #############################
 
 
-def getAbundantMolecules(smallMoleculesSet:set, metabolicNetwork:nx.DiGraph, exclude:set):
-    abundantMolecules = set()
-    unneccessaryMolecules =set()
-    for n in metabolicNetwork.nodes():
-        node = metabolicNetwork.nodes[n]["Name"]
-        if node.startswith("M_"):
-            if node.endswith("_e"):
-                unneccessaryMolecules.add(node)
-                abundantMolecules.add(node)
-            shortendNode = "_".join(node.split("_")[:-1])+"_"
-            if shortendNode in exclude:
-                abundantMolecules.add(node)
-            if shortendNode in smallMoleculesSet:
-                unneccessaryMolecules.add(node)
-                abundantMolecules.add(node)
-    return unneccessaryMolecules, abundantMolecules
+def performSanityChecks(leaves:set, partitionTree:nx.DiGraph, siblings:dict):
+    lengthOfLeaves = 0
+    leafSet1 = set()
+    for G in leaves:
+        lengthOfLeaves += len(G.nodes()) 
+        for n in G.nodes():
+            leafSet1.add(n)
+    lengthOfLeaves2 = 0
+    leafSet2 = set()
+    for G in partitionTree.nodes():
+        if len(partitionTree.out_edges(G)) == 0:
+            lengthOfLeaves2 += len(G.nodes())
+            for n in G.nodes():
+                leafSet2.add(n)
+    if lengthOfLeaves == lengthOfLeaves2:
+        if len(leafSet1.symmetric_difference(leafSet2)) != 0:
+            sys.exit("Automatically generated leaf set and leaves from the tree do not coincide although they have the same length")
+    else:
+        sys.exit("Automatically generated leaf set and leaves from tree do not have the same length")
+    if not nx.is_tree(partitionTree):
+        sys.exit("Partition tree is no tree!!!")
+    for n in partitionTree.nodes():
+        if len(partitionTree.out_edges(n))>0:
+            if len(partitionTree.out_edges(n))!=2:
+                sys.exit("Partition tree is no binary tree")
+    for n, s in siblings.items():
+        if len(partitionTree.in_edges(n))>1:
+            sys.exit("Wrrrrroooooong, no tree!!!")
+        for inEdge in partitionTree.in_edges(n):
+            p = inEdge[0]
+            for outEdge in partitionTree.out_edges(p):
+                if n == outEdge[1]:
+                    continue
+                else:
+                    putativeSibling = outEdge[1]
+                    if s!=putativeSibling:
+                        sys.exit("Siblings dictionary seems to be wrong")
 #############################
 #############################
+

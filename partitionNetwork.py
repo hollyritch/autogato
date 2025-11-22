@@ -7,43 +7,48 @@ from tqdm import tqdm
 import time
 import pickle
 
-
+def readArguments():
+    inputBool = False
+    threadBool = False
+    cutOffBool = False
+    outputBool = False
+    smallMoleculesBool = False
+    for k in range(sys.argv()):
+        newArgument = sys.argv[k]
+        if newArgument == "-i" or newArgument == "--input":
+            inputFilePath = sys.argv[k+1]
+            inputBool = True
+        if newArgument == "-t" or newArgument == "--threads":
+            maxThreads = int(sys.argv[k+1])
+            threadBool = True
+        if newArgument == "-c" or newArgument == "--cutOff":
+            cutOff = int(sys.argv[k+1])            
+            cutOffBool = True
+        if newArgument == "-o" or newArgument == "--ouput":
+            outputPickleFiles=sys.argv[k+1]
+            outputBool = True
+        if newArgument == "-s" or newArgument == "--smallMolecules":
+            smallMoleculePath = sys.argv[k+1]
+            smallMoleculesBool = True
+    if inputBool == False:
+        sys.exit("Please provide an input file.")
+    if threadBool==False:
+        maxThreads = 1
+    if cutOffBool == False:
+        cutOff = 2
+    if outputBool == False:
+        if os.path.exists("./Output") == False:
+            os.makedirs("./Output")
+        outputPickleFiles = "./Output"
+    if smallMoleculesBool == True:
+        smallMoleculePath = ""
+    return inputFilePath, maxThreads, cutOff, outputBool, outputPickleFiles, smallMoleculesBool, smallMoleculePath
 ########################################
 ########################################
-# Main
-# 0. Read input parameters
-timeStamp = time.time()
-inputFilePath = sys.argv[1]
-cutOff = int(sys.argv[2])
-maxThreads = int(sys.argv[3])
-outputPickleFiles = sys.argv[4]
-# 1. Define variables
-parameters = {}
-parameters["path"] = inputFilePath
 
-# 2. Read Model
-reader = libsbml.SBMLReader()
-document = reader.readSBML(inputFilePath)
-model = document.getModel()
-
-#parameters["model"] = model
-
-# 3. Build network
-metabolicNetwork, vertexIDs = partitionNetworkHelper.buildNetwork(model=model)
-inhibitors ={}
-# 3.1 Find/Determine/Define abundant molecules to inhibit to many crosslinkings between modules that are actually distant from each other
-if outputPickleFiles=="EColiCore":
-    abundantMolecules = {"M_adp_c", "M_h_c", "M_coa_c", "M_h2o_c", "M_nad_c", "M_nadh_c", "M_h_e", "M_pi_e", "M_pi_c", "M_co2_c", "M_amp_c", "M_co2_e", "M_o2_c", "M_q8h2_c", "M_q8_c", "M_nadp_c", "M_nadph_c", "M_h2o_e", "M_nh4_e", "M_o2_e", "M_nh4_c"}
-    unnecessaryMolecules = {"M_adp_c", "M_h2o_c", "M_co2_c", "M_h_c", "M_coa_c", "M_nad_c", "M_nadh_c", "M_h_e", "M_pi_e", "M_pi_c", "M_amp_c", "M_co2_e", "M_o2_c", "M_q8h2_c", "M_q8_c", "M_nadp_c", "M_nadph_c", "M_h2o_e", "M_nh4_e", "M_o2_e", "M_nh4_c"}
-else:
-    smallMolecules=set()
-    exclude = {}
-
-    # abundantMolecules = set()
-    # unnecessaryMolecules = set()
-    # # #exclude = {"M_atp_", "M_gtp_", "M_ctp_", "M_udp_", "M_ttp_", "M_utp_"}
-
-    with open("./smallMolecules.txt", "r") as file:
+def readSmallMolecules(smallMoleculesPath):
+    smallMolecules = set()
+    with open(smallMoleculesPath, "r") as file:
         while True:
             line = file.readline().strip()
             if line=="":
@@ -54,10 +59,42 @@ else:
                     print("Excluding",line)
                 else:
                     smallMolecules.add(shortendNode)
+    return smallMolecules
+#=============================================================================#
+#                                   Main                                      #
+#=============================================================================#
+
+# 0. Read input parameters
+timeStamp = time.time()
+inputFilePath, maxThreads, cutOff, outputBool, outputPickleFiles, smallMoleculesBool, smallMoleculesPath = readArguments()
+
+# 1. Define variables
+parameters = {}
+parameters["path"] = inputFilePath
+
+# 2. Read Model
+reader = libsbml.SBMLReader()
+document = reader.readSBML(inputFilePath)
+model = document.getModel()
+
+# 3. Read small molecules
+if smallMoleculesBool == False:
+    smallMolecules = set() 
+else:
+    smallMolecules = readSmallMolecules(smallMoleculesPath)
+
+# 4. Build network
+metabolicNetwork, vertexIDs = partitionNetworkHelper.buildNetwork(model=model)
+
+# 4.1 Find/Determine/Define abundant molecules to inhibit to many crosslinkings between modules that are actually distant from each other
+
+if outputPickleFiles=="EColiCore":
+    abundantMolecules = {"M_adp_c", "M_h_c", "M_coa_c", "M_h2o_c", "M_nad_c", "M_nadh_c", "M_h_e", "M_pi_e", "M_pi_c", "M_co2_c", "M_amp_c", "M_co2_e", "M_o2_c", "M_q8h2_c", "M_q8_c", "M_nadp_c", "M_nadph_c", "M_h2o_e", "M_nh4_e", "M_o2_e", "M_nh4_c"}
+    unnecessaryMolecules = {"M_adp_c", "M_h2o_c", "M_co2_c", "M_h_c", "M_coa_c", "M_nad_c", "M_nadh_c", "M_h_e", "M_pi_e", "M_pi_c", "M_amp_c", "M_co2_e", "M_o2_c", "M_q8h2_c", "M_q8_c", "M_nadp_c", "M_nadph_c", "M_h2o_e", "M_nh4_e", "M_o2_e", "M_nh4_c"}        
 
     # 3.2 Get inhibitors if necesary
     
-    unnecessaryMolecules, abundantMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork, exclude)
+    unnecessaryMolecules, abundantMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork, {})
 
 unnecessaryMoleculesIDSet = set()
 #partitionNetworkHelper.plotDegreeDistribution(metabolicNetwork)
