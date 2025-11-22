@@ -1,11 +1,11 @@
 import sys, os
 from tqdm import tqdm 
 
-cutOffElementaryCircuits = 1000
-cutOffLargerCycles = 1000
+cutOffElementaryCircuits = 30
+cutOffLargerCycles = 30
 fluffles = "False"
 bounded = "False"
-core = "False"
+core = "True"
 parallel = "True"
 maxThreads = 12
 cutOffReactionNetworkSize = 2
