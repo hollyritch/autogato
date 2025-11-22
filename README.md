@@ -38,7 +38,7 @@ to compile checkMatch.pyx so that it can be imported as a normal in all partitio
 
 First call partition Network via the following command:
 
-- python partitionNetwork.py -i <InputXMLFile>
+- python partitionNetwork.py -i <InputXMLFile> or - python partitionNetwork.py -input <InputXMLFile>
 
 You can provide additional options:
 - -t or --threads <Number of Threads>  : Number of threads for parallel processing, default=2
@@ -53,3 +53,8 @@ If the network decomposes into multiple strongly connected components, each of t
 Secondly, you partition the network by using the output from the first
 
 - python partitionAnalysis.py -x <XMLFile> -i <inputPickleFile> 
+
+Again you have multiple options:
+
+-c or --circuitBound <Max. Length elementary circuits>    : Specify the maximum length of elementary circuits as length=len(metabolites)+len(reactions), default = 20
+-
