@@ -61,7 +61,11 @@ Again you have multiple options:
 - -n or --nonMetzler <True/False>:
     Specify if you want non-Metzler matrices to be investigated for autocatalycity or not. Default = True. This only make sense if core == False
 - -t or --threads   <Number of Threads> :
-    Number of threads for parallel processing, default=2
+    Number of threads for parallel processing, default=2. Makes only sense if -p is set.
 - -e or --equivClassBound <Max. length Equiv.Clases>:
     Maximum length of equivalance classes gnerated via superimposition of elementary circuits in terms of length=len(metabolites)+len(reactions) of the Equivalence class
-- 
+- -f or --fluffle
+    Will enforce enumeration of fluffles. Be very carefull to do that. Memory consumption explodes very quickly. Default = False.
+- -c or --cores
+    Enumerates only cores. Recommended to apply first to larger networks. Consumes significantly less memory than normal mode.
+- p or --parallel
