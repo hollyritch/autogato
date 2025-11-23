@@ -1551,8 +1551,7 @@ def processCircuitsCore(circuits, description:str):
                     n+=1
                 except StopIteration as sti:
                     breakBool = True
-                if breakBool == True or n>1e4:
-                    inneBreakBool = False
+                if breakBool == True or n>1e7:
                     for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
                         try:
                             remove, circuit, eqClass, autocatalytic, metzler = f.result()
@@ -1566,11 +1565,6 @@ def processCircuitsCore(circuits, description:str):
                                         equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
                                         #cycleFile.write(str(circuit) + "\n")
                             del circuit, f
-                            if inneBreakBool==False:
-                                try:
-                                    futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
-                                except StopIteration as sti: 
-                                    inneBreakBool==True
                         except Exception as exc:
                             print('%r generated an exception: %s', exc)
                     del futureSet
