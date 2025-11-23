@@ -1554,12 +1554,13 @@ def processCircuitsCore(circuits, description:str):
                 if n>1e4:
                     break
             Iter = concurrent.futures.as_completed(futureSet)
-            sillCircuits = False
+            sillCircuits = True
             #for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
             spinner = cycle("|/-\\")
             while True:
                 try:
                     f = next(Iter)
+                    n+=1
                 except StopIteration:
                     breakBool = True
                     break                    
@@ -1578,13 +1579,13 @@ def processCircuitsCore(circuits, description:str):
                         del circuit, f
                     except Exception as exc:
                         print('%r generated an exception: %s', exc)
-                if sillCircuits == False:
+                if sillCircuits == True:
                     try:
                         futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
                         n+=1
                     except StopIteration as sti:
-                        sillCircuits = True
-                sys.stdout.write(f"\r{next(spinner)} Queue length: {len(Q):<5}")
+                        sillCircuits = False
+                sys.stdout.write(f"\r{next(spinner)} Queue length: {n:<5}")
                 sys.stdout.flush()
     else:
         for c in circuits:
