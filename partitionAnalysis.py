@@ -957,25 +957,8 @@ def getEquivalenceClass(c:list):
     
     Parameters
     ----------
-    Q : list
-        Contains all elementary circuits enumerated by the Johnsons-Algorithm in 
-        def(analysePartitionTree).
-
-    E : dict 
-        Key: (frozen sets) of equivalence classes composed of MR-edges
-        Value: tuple(metabolites, reactions)
-
-    M : dict
-        Key: One MR-edge
-        Value: Set of elementary circuits containing this particular MR-edge
-
-    cycleIDDict : dict
-        Key: Integer (subsequently termed cycle-identifier)
-        Value: Elementary circuit
-    
-    circuitIdMrEdgeDict : dict
-        Key: cycle-identifier
-        Value: Set of MR-edges
+    c  : list 
+        List of vertices (metabolite, reaction, metabolite, reaction, ...), i.e. an elementary circuit as a list of nodes
 
     """
 
@@ -1568,7 +1551,8 @@ def processCircuitsCore(circuits, description:str):
                     n+=1
                 except StopIteration as sti:
                     breakBool = True
-                if breakBool == True or n>1e7:
+                if breakBool == True or n>1e4:
+                    inneBreakBool = False
                     for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
                         try:
                             remove, circuit, eqClass, autocatalytic, metzler = f.result()
@@ -1582,6 +1566,11 @@ def processCircuitsCore(circuits, description:str):
                                         equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
                                         #cycleFile.write(str(circuit) + "\n")
                             del circuit, f
+                            if inneBreakBool==False:
+                                try:
+                                    futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
+                                except StopIteration as sti: 
+                                    inneBreakBool==True
                         except Exception as exc:
                             print('%r generated an exception: %s', exc)
                     del futureSet
