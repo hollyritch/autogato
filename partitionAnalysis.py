@@ -1561,21 +1561,23 @@ def processCircuitsCore(circuits, description:str):
                 try:
                     f = next(Iter)
                 except StopIteration:
+                    breakBool = True
                     break                    
-                try:
-                    remove, circuit, eqClass, autocatalytic, metzler = f.result()
-                    if remove == False:
-                        if metzler == True:
-                            l = len(circuit)
-                            cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
-                            if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
-                                circuitCounter+=1
-                                lequiv = len(eqClass)*2
-                                equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
-                                #cycleFile.write(str(circuit) + "\n")
-                    del circuit, f
-                except Exception as exc:
-                    print('%r generated an exception: %s', exc)
+                else:
+                    try:
+                        remove, circuit, eqClass, autocatalytic, metzler = f.result()
+                        if remove == False:
+                            if metzler == True:
+                                l = len(circuit)
+                                cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
+                                if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
+                                    circuitCounter+=1
+                                    lequiv = len(eqClass)*2
+                                    equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
+                                    #cycleFile.write(str(circuit) + "\n")
+                        del circuit, f
+                    except Exception as exc:
+                        print('%r generated an exception: %s', exc)
                 if sillCircuits == False:
                     try:
                         futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
