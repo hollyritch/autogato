@@ -1,9 +1,9 @@
 import sys, os
 from tqdm import tqdm 
 
-cutOffElementaryCircuits = 50
-cutOffLargerCycles = 50
-maxThreads = 12
+cutOffElementaryCircuits = 40
+cutOffLargerCycles = 40
+maxThreads = 24
 cutOffReactionNetworkSize = 2
 path = "./XML-Files/"
 speciesList = sorted(list(os.listdir(path)))
