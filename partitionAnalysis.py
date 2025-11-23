@@ -958,7 +958,7 @@ def getEquivalenceClass(c:list):
     Parameters
     ----------
     c  : list 
-        List of vertices (metabolite, reaction, metabolite, reaction, ...), i.e. an elementary circuit as a list of nodes
+        List of vertices (metabolite, reaction, metabolite, reaction, ...), i.e. an elementary circuit as a list of nodes is describing.
 
     """
 
@@ -1550,44 +1550,28 @@ def processCircuitsCore(circuits, description:str):
                     futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
                     n+=1
                 except StopIteration as sti:
-                    break
-                if n>1e4:
-                    break
-            Iter = concurrent.futures.as_completed(futureSet)
-            sillCircuits = True
-            #for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
-            spinner = cycle("|/-\\")
-            while True:
-                try:
-                    f = next(Iter)
-                    n+=1
-                except StopIteration:
                     breakBool = True
-                else:
-                    try:
-                        remove, circuit, eqClass, autocatalytic, metzler = f.result()
-                        if remove == False:
-                            if metzler == True:
-                                l = len(circuit)
-                                cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
-                                if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
-                                    circuitCounter+=1
-                                    lequiv = len(eqClass)*2
-                                    equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
-                                    #cycleFile.write(str(circuit) + "\n")
-                        del circuit, f
-                    except Exception as exc:
-                        print('%r generated an exception: %s', exc)
-                if sillCircuits == True:
-                    try:
-                        futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
-                        n+=1
-                    except StopIteration as sti:
-                        sillCircuits = False
-                sys.stdout.write(f"\r{next(spinner)} Queue length: {n:<5}")
-                sys.stdout.flush()
-                if breakBool==True:
-                    break
+                if breakBool == True or n>1e7:
+                    for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
+                        try:
+                            remove, circuit, eqClass, autocatalytic, metzler = f.result()
+                            if remove == False:
+                                if metzler == True:
+                                    l = len(circuit)
+                                    cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
+                                    if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
+                                        circuitCounter+=1
+                                        lequiv = len(eqClass)*2
+                                        equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
+                                        #cycleFile.write(str(circuit) + "\n")
+                            del circuit, f
+                        except Exception as exc:
+                            print('%r generated an exception: %s', exc)
+                    del futureSet
+                    futureSet=set()
+                    n=0
+                    if breakBool==True:
+                        break
     else:
         for c in circuits:
             remove, circuit, eqClass, autocatalytic, metzler = analyzeElementaryCircuitsCore(c)
