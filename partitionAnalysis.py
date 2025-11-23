@@ -1559,7 +1559,7 @@ def processCircuitsCore(circuits, description:str):
             while True:
                 try:
                     f = next(Iter)
-                except StopAsyncIteration:
+                except StopIteration:
                     breakBool=True
                 try:
                     remove, circuit, eqClass, autocatalytic, metzler = f.result()
