@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 cutOffElementaryCircuits = 40
 cutOffLargerCycles = 40
-maxThreads = 24
+maxThreads = 16
 cutOffReactionNetworkSize = 2
 path = "./XML-Files/"
 speciesList = sorted(list(os.listdir(path)))
