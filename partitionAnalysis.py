@@ -1550,28 +1550,39 @@ def processCircuitsCore(circuits, description:str):
                     futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
                     n+=1
                 except StopIteration as sti:
-                    breakBool = True
-                if breakBool == True or n>1e7:
-                    for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
-                        try:
-                            remove, circuit, eqClass, autocatalytic, metzler = f.result()
-                            if remove == False:
-                                if metzler == True:
-                                    l = len(circuit)
-                                    cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
-                                    if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
-                                        circuitCounter+=1
-                                        lequiv = len(eqClass)*2
-                                        equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
-                                        #cycleFile.write(str(circuit) + "\n")
-                            del circuit, f
-                        except Exception as exc:
-                            print('%r generated an exception: %s', exc)
-                    del futureSet
-                    futureSet=set()
-                    n=0
-                    if breakBool==True:
-                        break
+                    break
+                if n>1e4:
+                    break
+            Iter = concurrent.futures.as_completed(futureSet)
+            sillCircuits = False
+            #for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
+            while True:
+                try:
+                    f = next(Iter)
+                except StopAsyncIteration:
+                    breakBool=True
+                try:
+                    remove, circuit, eqClass, autocatalytic, metzler = f.result()
+                    if remove == False:
+                        if metzler == True:
+                            l = len(circuit)
+                            cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
+                            if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
+                                circuitCounter+=1
+                                lequiv = len(eqClass)*2
+                                equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
+                                #cycleFile.write(str(circuit) + "\n")
+                    del circuit, f
+                except Exception as exc:
+                    print('%r generated an exception: %s', exc)
+                if sillCircuits == False:
+                    try:
+                        futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
+                        n+=1
+                    except StopIteration as sti:
+                        sillCircuits = True
+                if breakBool==True:
+                    break
     else:
         for c in circuits:
             remove, circuit, eqClass, autocatalytic, metzler = analyzeElementaryCircuitsCore(c)
