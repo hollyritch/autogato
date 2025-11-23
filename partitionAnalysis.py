@@ -1563,7 +1563,6 @@ def processCircuitsCore(circuits, description:str):
                     n+=1
                 except StopIteration:
                     breakBool = True
-                    break                    
                 else:
                     try:
                         remove, circuit, eqClass, autocatalytic, metzler = f.result()
@@ -1587,6 +1586,8 @@ def processCircuitsCore(circuits, description:str):
                         sillCircuits = False
                 sys.stdout.write(f"\r{next(spinner)} Queue length: {n:<5}")
                 sys.stdout.flush()
+                if breakBool==True:
+                    break
     else:
         for c in circuits:
             remove, circuit, eqClass, autocatalytic, metzler = analyzeElementaryCircuitsCore(c)
