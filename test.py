@@ -25,11 +25,11 @@ os.system("python partitionNetwork.py " + " -i " + input + " -c " + str(c) + " -
 # 2.1 Define paarameters 
 b = 1000
 e = 1000
-o = "./cycleData/"
+o = "cycleData"
 
 pickleFileList = os.listdir("PickleFiles/" + o)
 for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):
-    pickleFilePath = "PickleFiles/"+o +  "/" + pickleFileList[j]
+    pickleFilePath = "PickleFiles/"+ o +  "/" + pickleFileList[j]
     newOrder = "python partitionAnalysis.py" + " -x " + input + " -i " + pickleFilePath + " -b " + str(b) + " -n True " + " -s " + s + " -t " + str(t) + " -e " + str(e) +  " -p" + " -o " + o
     
     # Make sure your output directory exits
