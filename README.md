@@ -15,7 +15,7 @@ Currently, only Linux systems are supported due to usage of ProcessPoolExecutor.
 
 # 2. Installation and Setup
 
-Prior to usage, setup a new conda environment with Python 3 (presumably >=3.12) and install the following packages:
+Prior to usage, setup a new conda environment with Python 3 (3.12, 3.13 work fine) and install the following packages:
 
 - SymPy
 - NumPy
