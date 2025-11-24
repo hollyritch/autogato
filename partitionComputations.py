@@ -4,7 +4,7 @@ import numpy as np
 import time 
 from tqdm import tqdm
 import concurrent.futures
-
+import sys
 # 1. Functions for computation of distance matrices and ILP solivng
 
 
@@ -73,15 +73,21 @@ def computeShortestPathMatrix(reactionNetwork:nx.DiGraph, noThreads:int):
     nodes = sorted(list((reactionNetwork.nodes())))
     n = len(nodes)
     A = np.zeros((n, n))
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        futureSet = {executor.submit(computShortestPath, reactionNetwork, nodes,  i) for i in range(n)}
-        for future in tqdm(concurrent.futures.as_completed(futureSet), total=len(futureSet), leave = False, desc="ShortestPathMatrix"):
-            try:
-                resultsList, k = future.result()
-                for l in range(len(resultsList)):
-                    A[k][l] = resultsList[l]
-            except Exception as exc:
-                print('%r generated an exception: %s', exc)
+    if sys.platform.startswith("linux"):
+        executor = concurrent.futures.ProcessPoolExecutor()
+    elif sys.platform == "darwin":
+        executor = concurrent.futures.ProcessPoolExecutor()
+    else:
+        executor = concurrent.futures.ProcessPoolExecutor()
+    futureSet = {executor.submit(computShortestPath, reactionNetwork, nodes,  i) for i in range(n)}
+    for future in tqdm(concurrent.futures.as_completed(futureSet), total=len(futureSet), leave = False, desc="ShortestPathMatrix"):
+        try:
+            resultsList, k = future.result()
+            for l in range(len(resultsList)):
+                A[k][l] = resultsList[l]
+        except Exception as exc:
+            print('%r generated an exception: %s', exc)
+    executor.shutdown()
     return A, nodes
 #############################
 #############################
