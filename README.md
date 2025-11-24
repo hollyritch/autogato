@@ -10,7 +10,8 @@ Autogato is a python package designed to compute irreducible autocatalytic subsy
 - setup.py
 - checkMatch.pyx
 
-It takes sbml-models as input, currently especially BIGG-Models. Code will be adapated to accept also other models. 
+It takes sbml-models as input, currently especially BIGG-Models. Code will be adapated to accept also other models. In the usage section we describe how to use the programme. We also provide a testscript for comuting irreducible autocatalytic subsystems for the e_coli_core model. 
+Currently, only Linux systems are supported due to usage of ProcessPoolExecutor. We will implement a version using ThreadPoolExecutor shortly.
 
 # 2. Installation and Setup
 
@@ -72,4 +73,13 @@ Again you have multiple options:
     If you want elementary circuits and assembly of larger equivalence classes parallelized, enforce -p. Default is false.
 -o or --ouput <OutputDir>
     Provide output directory. Default = "./cycleData"
+
+## 3.3 Test usage
+
+To get familiar with the package, open test.py and modify the variables provided and call it via:
+
+python test.py
+
+You can add or modify the different parameters to see the specifics for your system.
+
      
