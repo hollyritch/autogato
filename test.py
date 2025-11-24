@@ -27,9 +27,9 @@ b = 1000
 e = 1000
 o = "cycleData"
 
-pickleFileList = os.listdir("PickleFiles/" + o)
+pickleFileList = os.listdir("PickleFiles/" + s)
 for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):
-    pickleFilePath = "PickleFiles/"+ o +  "/" + pickleFileList[j]
+    pickleFilePath = "PickleFiles/"+ s +  "/" + pickleFileList[j]
     newOrder = "python partitionAnalysis.py" + " -x " + input + " -i " + pickleFilePath + " -b " + str(b) + " -n True " + " -s " + s + " -t " + str(t) + " -e " + str(e) +  " -p" + " -o " + o
     
     # Make sure your output directory exits
