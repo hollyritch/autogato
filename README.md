@@ -22,9 +22,7 @@ Prior to usage, setup a new conda environment with Python 3 (presumably >=3.12) 
 - SciPy
 - NetowrkX
 - libsbml
-- Concurrent.Futures
 - tqdm
-- itertools
 - Cython
 
 Clone the git, activate your conda environment, and first perform the following command:
