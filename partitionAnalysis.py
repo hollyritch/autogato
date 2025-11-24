@@ -1131,41 +1131,48 @@ def processCircuitsAll(circuits, description:str):
     global species
     global elementaryCircuits
     global fluffleBool
+    global noThreads
     #global allCircuitsPath
     breakBool = False
     n=0
     futureSet = set()
     circuitCounter=0
     if parallelBool==True:
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            while True:
-                try:
-                    futureSet.add(executor.submit(analyzeElementaryCircuits, next(circuits)))
-                    n+=1
-                except StopIteration as sti:
-                    breakBool = True
-                if breakBool == True or n>1e7:
-                    for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
-                        try:
-                            remove, circuit, eqClass = f.result()
-                            if remove == False:
-                                l = len(circuit)
-                                cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
-                                if fluffleBool==True:
-                                    elementaryCircuits.append(c)
-                                if checkEquivalenceClass(circuit, eqClass):
-                                    circuitCounter+=1
-                                    lequiv = len(eqClass)*2
-                                    equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
-                                    #cycleFile.write(str(circuit) + "\n")
-                            del circuit, f
-                        except Exception as exc:
-                            print('%r generated an exception: %s', exc)
-                    del futureSet
-                    futureSet=set()
-                    n=0
-                    if breakBool==True:
-                        break
+        if sys.platform.startswith("linux"):
+            executor = concurrent.futures.ProcessPoolExecutor()
+        if sys.platform == "darwin":
+            executor = concurrent.futures.ThreadPoolExecutor()
+        else:
+            executor = concurrent.futures.ProcessPoolExecutor()
+        while True:
+            try:
+                futureSet.add(executor.submit(analyzeElementaryCircuits, next(circuits)))
+                n+=1
+            except StopIteration as sti:
+                breakBool = True
+            if breakBool == True or n>1e7:
+                for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
+                    try:
+                        remove, circuit, eqClass = f.result()
+                        if remove == False:
+                            l = len(circuit)
+                            cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
+                            if fluffleBool==True:
+                                elementaryCircuits.append(c)
+                            if checkEquivalenceClass(circuit, eqClass):
+                                circuitCounter+=1
+                                lequiv = len(eqClass)*2
+                                equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
+                                #cycleFile.write(str(circuit) + "\n")
+                        del circuit, f
+                    except Exception as exc:
+                        print('%r generated an exception: %s', exc)
+                del futureSet
+                futureSet=set()
+                n=0
+                if breakBool==True:
+                    break
+        executor.shutdown()
     else:
         for c in circuits:
             remove, circuit, eqClass = analyzeElementaryCircuits(c)

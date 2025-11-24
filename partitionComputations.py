@@ -76,7 +76,7 @@ def computeShortestPathMatrix(reactionNetwork:nx.DiGraph, noThreads:int):
     if sys.platform.startswith("linux"):
         executor = concurrent.futures.ProcessPoolExecutor()
     elif sys.platform == "darwin":
-        executor = concurrent.futures.ProcessPoolExecutor()
+        executor = concurrent.futures.ThreadPoolExecutor()
     else:
         executor = concurrent.futures.ProcessPoolExecutor()
     futureSet = {executor.submit(computShortestPath, reactionNetwork, nodes,  i) for i in range(n)}
