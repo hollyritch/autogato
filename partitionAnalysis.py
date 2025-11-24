@@ -77,7 +77,7 @@ def analyzeElementaryCircuits(c:list):
 #############################
 
 
-def analysePartitionTree(parameters, partitionTree:nx.DiGraph, siblings:dict, leaves:set, uRN:nx.Graph, network:nx.DiGraph, bound:int, species:str, treeCounter:int):
+def analysePartitionTree(parameters, partitionTree:nx.DiGraph, siblings:dict, leaves:set, uRN:nx.Graph, network:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
     global E
     global Q
     global elemE
@@ -117,7 +117,7 @@ def analysePartitionTree(parameters, partitionTree:nx.DiGraph, siblings:dict, le
             print("Now checking the root vertex, might take some time")
         subnetwork, metabolites, reactions = generateSubnetwork(subG, network)                                  # Generate subnetwork
         # First analyze subG
-        additionalCycles = analyzeCycles(subG, analyzeDict, overlapDict, childrensDict, leaves, subnetwork, bound, species, treeCounter)
+        additionalCycles = analyzeCycles(subG, analyzeDict, overlapDict, childrensDict, leaves, subnetwork, bound, species, treeCounter, cycleDataPath)
         # 2. Non-Metzler
         cycleCounter+=additionalCycles
         if rootBool == False:                       # Root boolean tells us, when we have arrived at the root....then we don't have to look for siblings
@@ -137,7 +137,7 @@ def analysePartitionTree(parameters, partitionTree:nx.DiGraph, siblings:dict, le
                 current.append(p)
                 visited.add(p)
             # Second analyze subG Sibling
-            additionalCycles = analyzeCycles(subGSibling, analyzeDict, overlapDict, childrensDict, leaves, siblingSubnetwork, bound, species, treeCounter)
+            additionalCycles = analyzeCycles(subGSibling, analyzeDict, overlapDict, childrensDict, leaves, siblingSubnetwork, bound, species, treeCounter, cycleDataPath)
             # Write results into corresponding lists 
             # 1 Metzler
             # 1.1 Autocatalytic
