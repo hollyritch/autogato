@@ -20,7 +20,7 @@ from checkMatch import assembleCython, checkMatch, assembleCythonCores
 import traceback
 futures = deque()
 
-def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int, species:str, treeCounter:int):
+def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
     # Global variables
     # 0.1. Get global variables
     global globalSubN 
@@ -31,7 +31,7 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
     circuitCounter = 0
     newGraphIdentifier = "G_" + str(len(cycleDict.keys()))
     cycleDict[newGraphIdentifier] = G
-    with open("/scratch/richard/Autocatalysis/cycleData/"+ species +"/allCycles"+ str(treeCounter) +".txt", "a") as cycleFile:
+    with open(cycleDataPath+ species +"/allCycles"+ str(treeCounter) +".txt", "a") as cycleFile:
         cycleFile.write(">>>" + newGraphIdentifier + "\n")
     if analyzeDict[G] == True:                                                                          # So, if you have to analyze the network
         if G in leaves:                                                                                 # Determine if it is a leaf
@@ -1718,7 +1718,7 @@ outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(tree
 
 file = open(cycleDataPath + species +"/allCycles"+ str(treeCounter) +".txt", "w")
 file.close()
-analysePartitionTree(parameters, partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter)
+analysePartitionTree(parameters, partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter, cycleDataPath)
 parameters["cycleDict"] = cycleDict 
 parameters["cycleLengthDict"] = cycleLengthDict
 totalTime = time.time()-timeStamp
