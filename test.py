@@ -26,6 +26,7 @@ os.system("python partitionNetwork.py " + " -i " + input + " -c " + str(c) + " -
 b = 1000
 e = 1000
 o = "cycleData"
+s = "EColiCore"
 
 pickleFileList = os.listdir("PickleFiles/" + s)
 for j in tqdm(range(len(pickleFileList)), leave = False, desc="Pickle-Files"):
