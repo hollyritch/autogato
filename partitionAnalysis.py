@@ -18,7 +18,7 @@ from itertools import chain
 from collections import deque
 from checkMatch import assembleCython, checkMatch, assembleCythonCores
 import traceback
-
+futures = deque()
 
 def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int, species:str, treeCounter:int):
     # Global variables
@@ -958,7 +958,7 @@ def getEquivalenceClass(c:list):
     Parameters
     ----------
     c  : list 
-        List of vertices (metabolite, reaction, metabolite, reaction, ...), i.e. an elementary circuit as a list of nodes is describing.
+        List of vertices (metabolite, reaction, metabolite, reaction, ...), i.e. an elementary circuit as a list of nodes. is describing.
 
     """
 
@@ -1544,21 +1544,21 @@ def processCircuitsCore(circuits, description:str):
     breakBool = False
     if parallelBool == True:
         with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
-            futureSet = set()
+            futureList = []
             while True:
                 try:
-                    futureSet.add(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
+                    futureList.append(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
                     n+=1
                 except StopIteration as sti:
                     breakBool = True
-                if breakBool == True or n>1e7:
-                    for f in tqdm(concurrent.futures.as_completed(futureSet), leave = False, total = n, desc= description+species):
+                if breakBool == True or n>10e6:
+                    for f in tqdm(concurrent.futures.as_completed(futureList), leave = False, total = n, desc= description+species):
                         try:
                             remove, circuit, eqClass, autocatalytic, metzler = f.result()
                             if remove == False:
+                                l = len(circuit)
+                                cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
                                 if metzler == True:
-                                    l = len(circuit)
-                                    cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
                                     if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
                                         circuitCounter+=1
                                         lequiv = len(eqClass)*2
@@ -1567,8 +1567,7 @@ def processCircuitsCore(circuits, description:str):
                             del circuit, f
                         except Exception as exc:
                             print('%r generated an exception: %s', exc)
-                    del futureSet
-                    futureSet=set()
+                    futureList=[]
                     n=0
                     if breakBool==True:
                         break
@@ -1576,9 +1575,9 @@ def processCircuitsCore(circuits, description:str):
         for c in circuits:
             remove, circuit, eqClass, autocatalytic, metzler = analyzeElementaryCircuitsCore(c)
             if remove == False:
+                l = len(circuit)
+                cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
                 if metzler == True:
-                    l = len(circuit)
-                    cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
                     if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
                         circuitCounter+=1
                         lequiv = len(eqClass)*2

@@ -8,6 +8,16 @@ import time
 import pickle
 
 def readArguments():
+    '''Reading arguments 
+
+        Upon invocation this function reads the arguments that were passed from the commandline.
+        
+        Parameters
+        ----------
+
+        None
+        '''
+    
     inputBool = False
     threadBool = False
     cutOffBool = False
