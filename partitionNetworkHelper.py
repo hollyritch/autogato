@@ -30,11 +30,21 @@ def analyseOverlap(partitionTree:nx.DiGraph, network:nx.DiGraph, siblings:dict):
 
 
 def buildNetwork(model:libsbml.Model):
-    # 0. Read parameters
-    #model = parameters["model"]
-    # 1 Define new variables
+    '''Build the bipartite Digraph that represents the graph structure of the model
+    
+    Upon invocation, this function translates a libsbml (currently BIGG-models) into a networkX DiGraph object, by 
+    translating each metabolite into a vertex, each reaction into a reaction vertex. Each vertex receives two label, specifying its name and the type - metabolite or reaction. A metabolite is connected to reaction by a directed edge whenever this metabolite is a reactant for a reaction and a reaction vertex is connected to a metablite by a directed edge whenever the metabolite is a product of this reaction yielding two types of edges, m -> r and r -> m edge, respectively. Corresponding stoichiometric coefficients are assigned as edge labels.
+    
+    Parameters
+    ----------
+    
+    model : libsbml.Model
+        Defines the metabolic model as a complex object, that allows to derive reactions, metabolites and all necessary information from it to build '''
+    
+    # 1. Define new variables
     metabolicNetwork = nx.DiGraph()
-    # 1. Get list of reactions
+    
+    # 2. Get list of reactions
     reactions = model.getListOfReactions()
     vertexIDs = {} 
     counter = 0
@@ -43,42 +53,51 @@ def buildNetwork(model:libsbml.Model):
         rFullName = r.getName()
         if not rFullName.startswith("R_"):
             rFullName = "R_" + rFullName
-        if "BIOMASS" in rName:
+        if "BIOMASS" in rName:                              # Exclude biomass function 
             continue
-        if "EX" in rName:
+                                                            
+        if "EX" in rName:                                   # Exlucde export and transport reaction since they do       
+                                                            # not contribute to autocatalysis but only increase complexity
             continue
         if "transport" in rFullName.lower():
             continue
-        reversible = r.getReversible()
-        if reversible == True:
+        reversible = r.getReversible()                              # Check for reversibility
+        if reversible == True:                                      # If so split reactions in fw and reverse
             rNameFW = rName + "_fw"
         else:
             rNameFW = rName
-        educts = r.getListOfReactants()
-        products = r.getListOfProducts()
-        reactionFWID = counter
+        educts = r.getListOfReactants()                             # get reactants
+        products = r.getListOfProducts()                            # get products
+        reactionFWID = counter                                      # Assign id...which is just a counter
         counter+=1
-        vertexIDs[rNameFW] = reactionFWID
+        
+        vertexIDs[rNameFW] = reactionFWID                           # Add reaction name and id to dict, so that they can 
+                                                                    #be identified later on
+        # Add reaction node to the network
         metabolicNetwork.add_node(reactionFWID)
         metabolicNetwork.nodes[reactionFWID]["Name"]=rNameFW
         metabolicNetwork.nodes[reactionFWID]["Type"]="Reaction"
-        for e in educts:
+        for e in educts:                                            # Add educts
             eSpecies = e.getSpecies()
             eductStoichiometry = e.getStoichiometry()
-            if not eSpecies.startswith("M_"):
+            if not eSpecies.startswith("M_"):                       # this case should only appear in non-BIGG models
+                                                                    # done for unification of the models 
                 eSpecies = "M_" + eSpecies
             if eSpecies not in vertexIDs:
                 eSpeciesID = counter
                 counter+=1
-                vertexIDs[eSpecies] = eSpeciesID
-                metabolicNetwork.add_node(eSpeciesID)
+                vertexIDs[eSpecies] = eSpeciesID                    # add entry to id dict
+                # Add educt node to networ
+                metabolicNetwork.add_node(eSpeciesID)           
                 metabolicNetwork.nodes[eSpeciesID]["Name"] = eSpecies
                 metabolicNetwork.nodes[eSpeciesID]["Type"] = "Species"
             else:
                 eSpeciesID = vertexIDs[eSpecies]
+            
+            # Add educt edge
             metabolicNetwork.add_edge(eSpeciesID, reactionFWID)
             metabolicNetwork.edges[eSpeciesID, reactionFWID]["Stoichiometry"]=eductStoichiometry
-        for p in products:
+        for p in products:                                          # Add products
             pSpecies = p.getSpecies()
             productStoichiometry = p.getStoichiometry()
             if not pSpecies.startswith("M_"):
@@ -86,35 +105,48 @@ def buildNetwork(model:libsbml.Model):
             if pSpecies not in vertexIDs:
                 pSpeciesID = counter
                 counter+=1
-                vertexIDs[pSpecies] = pSpeciesID
+                vertexIDs[pSpecies] = pSpeciesID                    # add product to ID dict
+                
+                # Add product to network
                 metabolicNetwork.add_node(pSpeciesID)
                 metabolicNetwork.nodes[pSpeciesID]["Name"] = pSpecies
                 metabolicNetwork.nodes[pSpeciesID]["Type"] = "Species"
             else:
                 pSpeciesID = vertexIDs[pSpecies]
+            
+            # Add product edge
             metabolicNetwork.add_edge(reactionFWID, pSpeciesID)
             metabolicNetwork.edges[reactionFWID, pSpeciesID]["Stoichiometry"]=productStoichiometry
-        if reversible == True:
+        if reversible == True:                                      # Add the reaction node for the reverse edge and 
+                                                                    # connect metabolites in reverse order to it as for the forwar reaction
             rNameRev = rName + "_rev"
-            reactionRevID = counter
+            reactionRevID = counter                                 # asssign ID
             counter +=1
-            vertexIDs[rNameRev] = reactionRevID
+            vertexIDs[rNameRev] = reactionRevID                     # add reaction to ID dict
+
+            # Add reaction node to network
             metabolicNetwork.add_node(reactionRevID)
             metabolicNetwork.nodes[reactionRevID]["Name"] = rNameRev
             metabolicNetwork.nodes[reactionRevID]["Type"] = "Reaction"
-            for e in products:
+            for e in products:                                      # Now add edge edge (which are products for 
+                                                                    # fw-reaction)
                 eSpecies = e.getSpecies()
                 s = e.getStoichiometry()
                 eSpeciesID = vertexIDs[eSpecies]
+
+                # Add educt edge
                 metabolicNetwork.add_edge(eSpeciesID, reactionRevID)
                 metabolicNetwork.edges[eSpeciesID, reactionRevID]["Stoichiometry"]=s
-            for p in educts:
+            for p in educts:                                        # Add products (educts in fw reaction)
                 pSpecies = p.getSpecies()
                 s = p.getStoichiometry()
                 pSpeciesID = vertexIDs[pSpecies]
+
+                # Add product edge
                 metabolicNetwork.add_edge(reactionRevID, pSpeciesID)
                 metabolicNetwork.edges[reactionRevID, pSpeciesID]["Stoichiometry"]=s
-    return metabolicNetwork, vertexIDs
+    return metabolicNetwork, vertexIDs                              # Return network and the id-dict which is structured 
+                                                                    # vice versa
 #############################
 #############################
 

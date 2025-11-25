@@ -14,7 +14,6 @@ def readArguments():
         
         Parameters
         ----------
-
         None
         '''
     
@@ -57,6 +56,18 @@ def readArguments():
 ########################################
 
 def readSmallMolecules(smallMoleculesPath):
+    ''' Read small Molecules
+    
+    Upon invocation this function reads a set of small and from the perspective of the user unneccessary
+    molecules that are being removed from the network.
+    
+    Parameters
+    ----------
+    
+    smallMoleculesPath : str
+        Specifies the path to a file wit the molecules that should be removed from the network and not considered 
+        for analysis 
+    '''
     smallMolecules = set()
     with open(smallMoleculesPath, "r") as file:
         while True:
