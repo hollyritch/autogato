@@ -7,18 +7,37 @@ import sys
 import sympy as sp
 from sympy import * 
 import concurrent.futures
+import numpy as np
 
 def analyseOverlap(partitionTree:nx.DiGraph, network:nx.DiGraph, siblings:dict):
+    ''' 
+    Analyse the overlap between two generatted modules
+
+    Upon invocation this functions determines the intersection between two sibling DiGraphs (modules) in the binary partition tree, in terms of metabolite vertices. The partition tree is thereby traversed in BFS, and a dictionary filled with a network as key and its sibling as value.
+
+    Parameters
+    ----------
+
+    partiationTree : nx.DiGraph
+        Is a a binary tree, that contains subgraphs of the reaction network of the metabolic network as nodes an directed edges from elder to child vertices, whenever the child is a proper subset of the elder
+
+    network : nx.DiGraph 
+        The metabolic network that was defined in the main function and represents the model to investigate.
+
+    siblings : dictionary
+        Specifying sibling relationsships for two children of the same elder in the partition tree.
+    '''
+    
     maxOverlap = 0
     overlapLengthDict = {}
     overlapMetaboliteDict = {}
-    for subG in partitionTree.nodes():
-        subnetwork, metabolites, reactions = generateSubnetwork(subG, network)
-        if len(partitionTree.in_edges(subG))==0:
+    for subG in partitionTree.nodes():                                                  # Traverse the partitiontree
+        subnetwork, metabolites, reactions = generateSubnetwork(subG, network)          # 
+        if len(partitionTree.in_edges(subG))==0:                                        # Skip root vertex
             continue
-        siblingSubG = siblings[subG]
+        siblingSubG = siblings[subG]                                                    # read sibling of the current node
         if len(partitionTree.in_edges(subG))!=0:
-            siblingSubnetwork, siblingMetabolites, siblingReactions = generateSubnetwork(siblingSubG, network)
+            siblingSubnetwork, siblingMetabolites, siblingReactions = generateSubnetwork(siblingSubG, network)  # generate siblings netwwork
             overlapMetaboliteDict[(subG, siblingSubG)] = set(siblingMetabolites).intersection(set(metabolites))
             overlap = len(overlapMetaboliteDict[(subG, siblingSubG)])
             overlapLengthDict[overlap] = overlapLengthDict.setdefault(overlap, 0) + 1
@@ -151,44 +170,6 @@ def buildNetwork(model:libsbml.Model):
 #############################
 
 
-def callCoefficientAnalyzer(A:sp.Matrix, noThreads:int):
-    lamda = sp.Symbol("lamda")
-    p = A.charpoly(lamda)
-    coefficients = p.coeffs()
-    DAG = nx.DiGraph()
-    DAG.add_node("1")
-    edgeDict = {}
-    minusCoffDict = {}
-    minusPlusCoffDict = {}
-    with concurrent.futures.ThreadPoolExecutor(max_workers=noThreads) as executor:
-        futureSet = {executor.submit(computeEdges, coefficients[x], x, coefficients) for x in range(1, len(coefficients))}
-        j =0
-        for future in concurrent.futures.as_completed(futureSet):
-            try:
-                edgeDict[j], minusC, minusPlusC = future.result()
-                minusCoffDict.update(minusC)
-                minusPlusCoffDict.update(minusPlusC)
-                j+=1
-            except Exception as exc:
-                print('%r generated an exception: %s' % (str(j), exc))
-    print(minusPlusCoffDict)
-#############################
-#############################
-
-
-def checkForMetzlerMatrix(S):
-    for i in range(sp.shape(S)[0]):
-        for j in range(sp.shape(S)[1]):
-            if i == j:
-                continue
-            else:
-                if S[i,j] < 0:
-                    return False
-    return True
-#############################
-#############################
-
-
 def computeEdges(c, x, coefficients):
     edgeSet = set()
     summands = sp.Add.make_args(c)
@@ -277,15 +258,30 @@ def getAbundantMolecules(smallMoleculesSet:set, metabolicNetwork:nx.DiGraph):
 #############################
 
 
-def generateSubnetwork(subG:dict, metabolicNetwork:dict):
-    metabolites = set()
-    subGReactions = set(subG.nodes()) 
-    for r in subGReactions:
-        for inEdge in metabolicNetwork.in_edges(r):
+def generateSubnetwork(subG:nx.Graph, metabolicNetwork:dict):
+    ''' Generate a subnetwork of the MR network from a subnetwork of the reaction graph
+    
+    Upon invocation this function determines the MR (bipartite directed graph) from an undirected reaction network
+
+    Parameters:
+    ----------
+    
+    subG : undirected reaction network
+        Specifies relationsships between reaction nodes in this subnetwork, i.e. (r,s)€ E <=> exits x: (r,x,s) is a path in the metabolic network
+
+    metabolicNetwork : nx.DiGraph
+        Specifies the model as a bipartite DiGraph.
+
+    '''
+    
+    metabolites = set()                                                     # Create new set of overlapption metabolites
+    subGReactions = set(subG.nodes())                                       # Retrive all nodes from the reaction network
+    for r in subGReactions:                 
+        for inEdge in metabolicNetwork.in_edges(r):                         # Get all educt metabolites
             metabolites.add(inEdge[0])
-        for outEdge in metabolicNetwork.out_edges(r):
+        for outEdge in metabolicNetwork.out_edges(r):                       # Get all prodict metabolites
             metabolites.add(outEdge[1])
-    subnetwork = nx.subgraph(metabolicNetwork, metabolites.union(subGReactions)).copy()
+    subnetwork = nx.subgraph(metabolicNetwork, metabolites.union(subGReactions)).copy() # generate subgraph from it.
     return subnetwork, sorted(list(metabolites)), sorted(list(subGReactions))
 #############################
 #############################
