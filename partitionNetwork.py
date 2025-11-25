@@ -159,7 +159,7 @@ for i in tqdm(range(len(wCCList)), desc="Weakly connected components"):
                 siblings = {}
                 leaves = set()
                 uRN = partitionNetworkHelper.generateUndirectedReactionNetwork(reactionNetwork)
-                partitionTree.add_node(uRN)
+                partitionTree.add_node(uRN)                                                         # partition tree has only undirected graphs as edges
                 s, Q, nodes = partitionComputations.computePartitioning(reactionNetwork, noThreads)
                 if Q<=0:                                                                    # If Q == 0 or below don't partition
                     leaves.add(uRN)
