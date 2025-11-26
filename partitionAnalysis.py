@@ -58,8 +58,8 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
                 rightOutCircuits = nx.algorithms.cycles._bounded_cycle_search(rightOutNetwork, [m], length_bound=bound)
                 circuitCounter = processCircuits(circuits = leftOutCircuits, leaf = False, left = True, circuitCounter = circuitCounter)
                 circuitCounter = processCircuits(circuits = rightOutCircuits, leaf = False, left = False, circuitCounter = circuitCounter) 
-                if len(elemE)>5e6*(12/noThreads):
-                    sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
+            if len(elemE)>5e6*(12/noThreads):
+                sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
     return circuitCounter
 #############################
 #############################     

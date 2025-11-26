@@ -70,8 +70,8 @@ def buildNetwork(model:libsbml.Model):
     for r in reactions:
         rName = r.getId()
         rFullName = r.getName()
-        if not rFullName.startswith("R_"):
-            rFullName = "R_" + rFullName
+        # if not rFullName.startswith("R_"):
+        #     rFullName = "R_" + rFullName
         if "BIOMASS" in rName:                              # Exclude biomass function 
             continue
                                                             
@@ -99,9 +99,9 @@ def buildNetwork(model:libsbml.Model):
         for e in educts:                                            # Add educts
             eSpecies = e.getSpecies()
             eductStoichiometry = e.getStoichiometry()
-            if not eSpecies.startswith("M_"):                       # this case should only appear in non-BIGG models
-                                                                    # done for unification of the models 
-                eSpecies = "M_" + eSpecies
+            # if not eSpecies.startswith("M_"):                       # this case should only appear in non-BIGG models
+            #                                                         # done for unification of the models 
+            #     eSpecies = "M_" + eSpecies
             if eSpecies not in vertexIDs:
                 eSpeciesID = counter
                 counter+=1
@@ -119,8 +119,8 @@ def buildNetwork(model:libsbml.Model):
         for p in products:                                          # Add products
             pSpecies = p.getSpecies()
             productStoichiometry = p.getStoichiometry()
-            if not pSpecies.startswith("M_"):
-                pSpecies = "M_" + pSpecies
+            # if not pSpecies.startswith("M_"):
+            #     pSpecies = "M_" + pSpecies
             if pSpecies not in vertexIDs:
                 pSpeciesID = counter
                 counter+=1
@@ -170,56 +170,27 @@ def buildNetwork(model:libsbml.Model):
 #############################
 
 
-def computeEdges(c, x, coefficients):
-    edgeSet = set()
-    summands = sp.Add.make_args(c)
-    minusCoffs = {}
-    minusPlusCoffs = {}
-    for y in range(len(summands)):
-        s = summands[y]
-        if s.could_extract_minus_sign() == False:
-            continue
-        sNums = {atom for atom in s.atoms() if atom.is_number}
-        if len(sNums)>1:
-            sys.exit("Numbers bigger than zero, something is wrong here")
-        if len(sNums) == 1:
-            k = sNums.pop()
-            symS = s.coeff(k)
-        else:    
-            symS = s
-        edgeSet.add(("1", symS))
-        minusCoffs[symS] = []
-        minusPlusCoffs[symS] = []
-        #  DAG.add_edge("1", symS)
-        for z in range(x+1, len(coefficients)):
-            largerCoefficients = coefficients[z]
-            lCoeffs = largerCoefficients.coeff(symS)
-            if lCoeffs == 0:
-                continue
-            else:
-                lCoeffsList = sp.Add.make_args(lCoeffs)
-            for w in range(len(lCoeffsList)):
-                n = lCoeffsList[w]
-                nNums = {atom for atom in n.atoms() if atom.is_number}
-                if len(nNums)>1:
-                    sys.exit("Numbers bigger than zero, something is wrong here")
-                if len(nNums) == 1:
-                    l = nNums.pop()
-                    symN = n.coeff(l)
-                else:
-                    symN = n
-                #DAG.add_edge(symS, symS*symN)
-                edgeSet.add((symS, symS*symN))
-                if n.could_extract_minus_sign()==True:
-                    minusCoffs[symS] = minusCoffs.setdefault(symS, []) + [-symS*symN]
-                else:
-                    minusPlusCoffs[symS] = minusPlusCoffs.setdefault(symS, []) + [symS*symN]
-    return edgeSet, minusCoffs, minusPlusCoffs
-#############################
-#############################
-
-
 def createReactionNetwork(sCC:nx.DiGraph, reactions:set, inhibitors:dict):
+    '''Create the R-Graph from the MR-Graph
+    
+        Upon invocation this function generates a DiGraph with only reaction vertices (no metabolite vertices). 
+        Two reactions are connected by a directed edge if a product of the first is also an educt of the second. Inhibiting relationshipts, e.g. r1 inhibits r2 can also be included, but are not yet implemented.
+
+    Parameters
+    ----------
+
+    sCC : nx.DiGraph
+        Represents a strongly connected component of the input metabolic network after removal of unneccessary metabolites.
+
+    reactions : set 
+        Set of all reactions in the strongly connected component (sCC). 
+
+    inhibitors : dict
+        key : inhibiting reaction
+        values : set of inhibited reactions
+        A map specififying inhibing relationships, where the key reaction inhibits all reactions in the value.
+    '''
+    
     reactionNetwork = nx.DiGraph()
     reactions = sorted(list(reactions))
     for i in range(len(reactions)):
