@@ -1340,7 +1340,7 @@ def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
         if len(speedCores)>1e4:
             maxVal = min(int(2e12/len(Q)), len(Q))
             with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
-                for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCythonCores, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = True):
+                for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCythonCores, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = False):
                     Q.popleft()
                     try:
                         equivClass, newEquivClasses, change  = f.result()
