@@ -70,9 +70,8 @@ def buildNetwork(model:libsbml.Model):
     for r in reactions:
         rName = r.getId()
         rFullName = r.getName()
-        print(rName, rFullName)
-        # if not rFullName.startswith("R_"):
-        #     rFullName = "R_" + rFullName
+        if not rFullName.startswith("R_"):
+            rFullName = "R_" + rFullName
         if "BIOMASS" in rName:                              # Exclude biomass function 
             continue
                                                             
@@ -100,9 +99,9 @@ def buildNetwork(model:libsbml.Model):
         for e in educts:                                            # Add educts
             eSpecies = e.getSpecies()
             eductStoichiometry = e.getStoichiometry()
-            # if not eSpecies.startswith("M_"):                       # this case should only appear in non-BIGG models
-            #                                                         # done for unification of the models 
-            #     eSpecies = "M_" + eSpecies
+            if not eSpecies.startswith("M_"):                       # this case should only appear in non-BIGG models
+                                                                    # done for unification of the models 
+                eSpecies = "M_" + eSpecies
             if eSpecies not in vertexIDs:
                 eSpeciesID = counter
                 counter+=1
