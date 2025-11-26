@@ -58,10 +58,7 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
                 rightOutCircuits = nx.algorithms.cycles._bounded_cycle_search(rightOutNetwork, [m], length_bound=bound)
                 circuitCounter = processCircuits(circuits = leftOutCircuits, leaf = False, left = True, circuitCounter = circuitCounter)
                 circuitCounter = processCircuits(circuits = rightOutCircuits, leaf = False, left = False, circuitCounter = circuitCounter) 
-                if len(E)>0:
-                    print(len(E))
                 if len(elemE)>5e6*(12/noThreads):
-                    print(len(E))
                     sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
     return circuitCounter
 #############################
@@ -1343,7 +1340,7 @@ def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
         if len(speedCores)>1e4:
             maxVal = min(int(2e12/len(Q)), len(Q))
             with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
-                for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCythonCores, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = False):
+                for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCythonCores, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = True):
                     Q.popleft()
                     try:
                         equivClass, newEquivClasses, change  = f.result()
