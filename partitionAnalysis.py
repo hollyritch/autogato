@@ -899,6 +899,7 @@ def generateStoichiometricMatrix(parameters:dict, model:libsbml.Model):
             if r.split("_")[-1]=="fw": 
                 r = "_".join(r.split("_")[0:-1])
             rObject = model.getReaction(r)
+            print(r, rObject)
             if forward == True:
                 educts = rObject.getListOfReactants()
                 products = rObject.getListOfProducts()
