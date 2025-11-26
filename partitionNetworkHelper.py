@@ -70,6 +70,7 @@ def buildNetwork(model:libsbml.Model):
     for r in reactions:
         rName = r.getId()
         rFullName = r.getName()
+        print(rName, rFullName)
         # if not rFullName.startswith("R_"):
         #     rFullName = "R_" + rFullName
         if "BIOMASS" in rName:                              # Exclude biomass function 
