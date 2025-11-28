@@ -44,6 +44,7 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
         else:                                                                                           # Otherwise, we need to make sure to now separate the cycles
             if len(elemE)>0:
                 print(len(elemE))
+                print()
             if len(elemE)>1e6:
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
             leftChild = childrensDict[G]["left"]                                                        # Get left child
