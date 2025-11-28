@@ -42,9 +42,7 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
             leafSimpleCycles = nx.simple_cycles(subN, length_bound = bound)
             circuitCounter = processCircuits(circuits = leafSimpleCycles, leaf = True, left = False, circuitCounter = circuitCounter)
         else:                                                                                           # Otherwise, we need to make sure to now separate the cycles
-            if len(elemE)>0:
-                print(len(elemE))
-                print()
+            print(len(elemE))
             if len(elemE)>1e6:
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
             leftChild = childrensDict[G]["left"]                                                        # Get left child
