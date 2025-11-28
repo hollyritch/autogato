@@ -35,16 +35,15 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
         cycleFile.write(">>>" + newGraphIdentifier + "\n")
     if analyzeDict[G] == True:                                                                          # So, if you have to analyze the network
         if G in leaves:                                                                                 # Determine if it is a leaf
-            if len(elemE)>0:
-                print(len(elemE))
-            if len(elemE)>1e6:
+            if len(E)>0:
+                print(len(E))
+            if len(E)>1e6:
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
             leafSimpleCycles = nx.simple_cycles(subN, length_bound = bound)
             circuitCounter = processCircuits(circuits = leafSimpleCycles, leaf = True, left = False, circuitCounter = circuitCounter)
         else:                                                                                           # Otherwise, we need to make sure to now separate the cycles
-            print(len(elemE))
-            if len(elemE)>1e6:
-                sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
+            if len(E)>0:
+                print(len(E))
             leftChild = childrensDict[G]["left"]                                                        # Get left child
             rightChild = childrensDict[G]["right"]                                                      # Get right child
             overlapSet = overlapDict[G]                                                                 # Read overlap set
@@ -60,7 +59,7 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
                 rightOutCircuits = nx.algorithms.cycles._bounded_cycle_search(rightOutNetwork, [m], length_bound=bound)
                 circuitCounter = processCircuits(circuits = leftOutCircuits, leaf = False, left = True, circuitCounter = circuitCounter)
                 circuitCounter = processCircuits(circuits = rightOutCircuits, leaf = False, left = False, circuitCounter = circuitCounter) 
-            if len(elemE)>5e6*(12/noThreads):
+            if len(E)>5e6*(12/noThreads):
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
     return circuitCounter
 #############################
