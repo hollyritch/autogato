@@ -31,19 +31,24 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
     circuitCounter = 0
     newGraphIdentifier = "G_" + str(len(cycleDict.keys()))
     cycleDict[newGraphIdentifier] = G
+    thousands = 1
     with open(cycleDataPath+ species +"/allCycles"+ str(treeCounter) +".txt", "a") as cycleFile:
         cycleFile.write(">>>" + newGraphIdentifier + "\n")
     if analyzeDict[G] == True:                                                                          # So, if you have to analyze the network
         if G in leaves:                                                                                 # Determine if it is a leaf
             if len(E)>0:
-                print(len(E))
+                if int(len(E)/1000)>thousands:
+                    print(len(E))
+                    thousands+=1
             if len(E)>1e6:
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
             leafSimpleCycles = nx.simple_cycles(subN, length_bound = bound)
             circuitCounter = processCircuits(circuits = leafSimpleCycles, leaf = True, left = False, circuitCounter = circuitCounter)
         else:                                                                                           # Otherwise, we need to make sure to now separate the cycles
             if len(E)>0:
-                print(len(E))
+                if int(len(E)/1000)>thousands:
+                    print(len(E))
+                    thousands+=1
             leftChild = childrensDict[G]["left"]                                                        # Get left child
             rightChild = childrensDict[G]["right"]                                                      # Get right child
             overlapSet = overlapDict[G]                                                                 # Read overlap set
