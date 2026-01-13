@@ -166,7 +166,7 @@ for i in tqdm(range(len(wCCList)), desc="Weakly connected components"):
                 leaves = set()
                 uRN = reactionNetwork.to_undirected(reactionNetwork, as_view=False) 
                 partitionTree.add_node(uRN)                           # partition tree has only undirected graphs as nodes
-                s, Q, nodes = partitionComputations.computePartitioning(reactionNetwork, noThreads)
+                s, Q, nodes = partitionComputations.computePartitioning(reactionNetwork)
                 if Q<=0:                                              # If Q == 0 or smaller don't partition
                     leaves.add(uRN)
                     continue
