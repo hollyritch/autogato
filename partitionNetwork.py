@@ -164,15 +164,13 @@ for i in tqdm(range(len(wCCList)), desc="Weakly connected components"):
                 partitionTree = nx.DiGraph()
                 siblings = {}
                 leaves = set()
-                uRN = partitionNetworkHelper.generateUndirectedReactionNetwork(reactionNetwork)
+                uRN = reactionNetwork.to_undirected(reactionNetwork, as_view=False) 
                 partitionTree.add_node(uRN)                           # partition tree has only undirected graphs as nodes
                 s, Q, nodes = partitionComputations.computePartitioning(reactionNetwork, noThreads)
                 if Q<=0:                                              # If Q == 0 or smaller don't partition
                     leaves.add(uRN)
                     continue
                 partitionComputations.continuePartitioning(s, nodes, uRN, partitionTree, cutOff, siblings, leaves, reactionNetwork, noThreads)
-                partitionNetworkHelper.performSanityChecks(leaves, partitionTree, siblings)
-                maxOverlap, overlapDict, metaboliteOverlapDict = partitionNetworkHelper.analyseOverlap(partitionTree, metabolicNetwork, siblings)
 
                 partitionTreePath = "./PickleFiles/" + outputPickleFiles+ "/partitionTree"+str(treeCounter) + ".pkl"
                 if not os.path.exists("./PickleFiles"):
