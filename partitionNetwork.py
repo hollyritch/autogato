@@ -15,6 +15,14 @@ def readArguments():
         Parameters
         ----------
         None
+
+        Returns:
+        - str: inputFilePath - the path directing to the input sbml file
+        - int: maxThreads - number of maximum threads that can be used for parallelization
+        - int: cutLength - the minimum length subnetwork in the generated R-Graph (the smallest partitions)
+        - str: outputPickleFiles - path specifying where the pickle-files with the data on the partitioned network are going to be stored
+        - bool: smallMoleculesBool - specifying if small highly intersecting molecules should be excluded from the network or not
+        - str: smallMoleculePath - path to the file specifying small molecules that should be exluded from the network
         '''
     
     inputBool = False
@@ -55,18 +63,21 @@ def readArguments():
 ########################################
 ########################################
 
-def readSmallMolecules(smallMoleculesPath):
+def readSmallMolecules(smallMoleculesPath:str):
     ''' Read small Molecules
     
     Upon invocation this function reads a set of small and from the perspective of the user unneccessary
     molecules that are being removed from the network.
     
-    Parameters
+    Parameters:
     ----------
     
     smallMoleculesPath : str
         Specifies the path to a file wit the molecules that should be removed from the network and not considered 
         for analysis 
+    
+    Returns:
+    - set: A set of strings specifying small molecules exluded from the analyzed network.
     '''
     smallMolecules = set()
     with open(smallMoleculesPath, "r") as file:
@@ -78,6 +89,9 @@ def readSmallMolecules(smallMoleculesPath):
                 shortendNode = "_".join(line.split("_")[:-1])+"_"
                 smallMolecules.add(shortendNode)
     return smallMolecules
+########################################
+########################################
+
 #=============================================================================#
 #                                   Main                                      #
 #=============================================================================#
@@ -103,32 +117,24 @@ else:
 
 # 4. Build network
 metabolicNetwork, vertexIDs = partitionNetworkHelper.buildNetwork(model=model)
-inhibitors = {}                             # not yet implemented
+inhibitors = {}      # not yet implemented
+                       
 # 4.1 Find/Determine/Define abundant molecules to inhibit to many crosslinkings between modules that are actually distant from each other
-
 unnecessaryMolecules = partitionNetworkHelper.getAbundantMolecules(smallMolecules, metabolicNetwork)
-
-unnecessaryMoleculesIDSet = set()
-#partitionNetworkHelper.plotDegreeDistribution(metabolicNetwork)
 usefulNetwork = deepcopy(metabolicNetwork)                              
-highest = 0
 nodes = deepcopy(set(metabolicNetwork.nodes()))
 
+unnecessaryMoleculesIDSet = set()
 for m in unnecessaryMolecules:
     if m in vertexIDs:
         unnecessaryMoleculesIDSet.add(vertexIDs[m])
 parameters["unnecessaryMolecules"] = unnecessaryMolecules
 parameters["unnecessaryMoleculesIDs"] = unnecessaryMoleculesIDSet
-# 3.4 Remove unnecessary stuf‚
-metabolicNetwork.remove_nodes_from(unnecessaryMoleculesIDSet)                  # Network for constructing the submodules
-usefulNetwork.remove_nodes_from(unnecessaryMoleculesIDSet)                   # Network that will be analyzed in the end for elementary circuits
 
-# TODO: Problem: This has the disadvantage that reactions might get lost.
-#metabolicNetwork.remove_nodes_from(abundantMolecules)                  # Network for constructing the submodules
+metabolicNetwork.remove_nodes_from(unnecessaryMoleculesIDSet)     # Network for constructing the submodules
+usefulNetwork.remove_nodes_from(unnecessaryMoleculesIDSet)        # Network that will be analyzed in the end for elementary circuits
 
-#metabolicNetwork = buildExampleNetwork()                               # Only for toy example
-#partitionNetworkHelper.plotDegreeDistribution(metabolicNetwork)
-# 4. Partitioning and Analysis 
+# 5. Partitioning and Analysis 
 wCCList = list(nx.weakly_connected_components(metabolicNetwork))
 treeCounter = 0
 parameters["metabolicNetwork"]=deepcopy(metabolicNetwork)
@@ -139,17 +145,17 @@ for i in tqdm(range(len(wCCList)), desc="Weakly connected components"):
     cSet = wCCList[i]
     if len(cSet)>1:
         connectedComponent = nx.subgraph(metabolicNetwork, cSet).copy()
-        for scSet in nx.strongly_connected_components(connectedComponent):
+        for scSet in nx.strongly_connected_components(connectedComponent):                      # Only analyze strongly connected components
             stronglyConnectedComponent = nx.subgraph(connectedComponent, scSet).copy()
             X, Y = nx.bipartite.sets(stronglyConnectedComponent)
             if len(X)>0:
                 parameters["reactions"], parameters["metabolites"] = partitionNetworkHelper.getReactionsAndMetabolites(X,Y, metabolicNetwork)
                 print("Reactions:", len(parameters["reactions"]), "Metabolites:", len(parameters["metabolites"]))
-                # print("Metabolites:", parameters["metabolites"])
                 reactionNetwork = partitionNetworkHelper.createReactionNetwork(stronglyConnectedComponent, parameters["reactions"], inhibitors)
                 if len(reactionNetwork)<cutOff:
                     print("Exiting because reaction network is too small")
                     continue
+
                 # Define new variables that are necessary
                 if len(reactionNetwork)>100:
                     noThreads = maxThreads
@@ -159,9 +165,9 @@ for i in tqdm(range(len(wCCList)), desc="Weakly connected components"):
                 siblings = {}
                 leaves = set()
                 uRN = partitionNetworkHelper.generateUndirectedReactionNetwork(reactionNetwork)
-                partitionTree.add_node(uRN)                                                         # partition tree has only undirected graphs as edges
+                partitionTree.add_node(uRN)                           # partition tree has only undirected graphs as nodes
                 s, Q, nodes = partitionComputations.computePartitioning(reactionNetwork, noThreads)
-                if Q<=0:                                                                    # If Q == 0 or below don't partition
+                if Q<=0:                                              # If Q == 0 or smaller don't partition
                     leaves.add(uRN)
                     continue
                 partitionComputations.continuePartitioning(s, nodes, uRN, partitionTree, cutOff, siblings, leaves, reactionNetwork, noThreads)
