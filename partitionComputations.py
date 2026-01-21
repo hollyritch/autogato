@@ -39,7 +39,7 @@ def computeExpectedShRed(ShReD:np.matrix):
                 D_i +=1
                 sum_i += ShReD[i][k]
         if D_i != 0:
-            Di[i] = sum_i/D_i
+            Di[i][0] = sum_i/D_i
 
     for j in tqdm(range(m), leave = False, desc="expectedShRed PreComputation 2/3"):
         sum_j = 0
@@ -49,7 +49,7 @@ def computeExpectedShRed(ShReD:np.matrix):
                 D_j +=1
                 sum_j += ShReD[j][k]
         if D_j!=0:
-            Dj[j] = sum_j/D_j
+            Dj[j][0] = sum_j/D_j
             
     for i in tqdm(range(n), leave = False, desc="expectedShRed PreComputation 3/3"):
         for j in range(m):
@@ -58,7 +58,7 @@ def computeExpectedShRed(ShReD:np.matrix):
             if np.isinf(ShReD[i][j])==True:
                 P[i][j]=0
                 continue
-            P[i][j] = 1/2 * (Di[i] + Dj[j])
+            P[i][j] = 1/2 * (Di[i][0] + Dj[j][0])
     return P           
 #############################
 #############################
