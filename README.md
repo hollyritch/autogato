@@ -24,6 +24,7 @@ Prior to usage, setup a new conda environment with Python 3 (3.12, 3.13 work fin
 - libsbml
 - tqdm
 - Cython
+- (setuptools)
 
 Clone the git, activate your conda environment, and first perform the following command:
 
