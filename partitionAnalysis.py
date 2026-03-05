@@ -22,12 +22,30 @@ futures = deque()
 
 
 
-def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
+def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int):
+    ''' analyzeCycles
+
+      Upon invocation ... .
+
+
+    Parameters
+    ----------
+    :param species: Name of the species the metabolic network belongs to.
+    :type species: str
+
+    :param treeCounter: Specifies the number of the analyzed pickle file (for documentation purposes). 
+    :type treeCounter: int
+
+    :param cycleDataPath: Specifies where 
+    :type cycleDataPath: str
+
+    :param bound: Maximum length of enumerated elementary circuits.
+    :type bound: int
+
+    '''
     # Global variables
     # 0.1. Get global variables
-    global globalSubN 
-    global cycleDict
-    global E
+    global globalSubN, cycleDict, E, species, treeCounter, cycleDataPath
     # 0.2 assign values
     globalSubN = subN
     circuitCounter = 0
@@ -82,7 +100,7 @@ def analyzeElementaryCircuits(c:list):
 #############################
 
 
-def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uRN:nx.Graph, network:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
+def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uRN:nx.Graph, network:nx.DiGraph, bound:int):
     ''' AnalzyePartitionTree
     
     Upon invocation this function is the main function parsing the partition tree that has been created in partitionNetwork and 
@@ -94,41 +112,85 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
     
     1. Global
 
-    parameters : dict
-        Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+    :param sCC: Represents a strongly connected component of the input metabolic network after removal of unneccessary metabolites.
+    :type sCC: nx.DiGraph
 
-    E : dict
-        Dictionary designated to store all CS equivalence classes
-    
-    elem : dict
-        Dictionary designated to store all CS equivalence classes for elementary circuits.
+    :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+    :type parameters: dict
 
-    Q : deque
-        Collection that collects all CS equivalence classes that are designated for the assembly of larger fluffles.
+    :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+    :type E: dict
+            
+    :param elemE: Same as E but only for CS-equivalence classes corresponding to elementary circuits. 
+    :type elemE: dict
+
+    :param Q: Collection that collects all CS equivalence classes that are designated for the assembly of larger fluffles in FIFO order.
+    :type Q: deque
+
+    :param cycleLengthDict: Dictionary storing the number of elementary circuits with a certain length. Only for later statistic reasons. Key: int, value: int
+    :type cycleLength: dict
     
-    
+    :param elementaryCircuits: List storing all elementary circuits as lists provided by nx.simple_cycles(G). Required for enumeration of fluffle equivalence classes, if desired.
+    :type elementaryCircuits: List
+
+    :param equivClassLengthDict: Dictionary storing the number of CS equivalence classes of a certain length. Only for later statistic reasons. Key: int, value: int
+    :type equivClassLengthDict: dict
+
+    :param fluffleBool: Specifies if next to CS-equivalence classes also fluffle equivalence classes should be enumerated (not recommended due to complexity, only for small networks and academic reasons)
+    :type fluffleBool: bool
+
+    :param coreBool: Specifies if only autocatalytic cores or all autocatalytic CS-equivalence classes with CS matrices with irreducible Metzler part should be enumerated. 
+    :type coreBool: bool
+
+    :param speedCores: List for collecting autocatalytic cores if only cores are enumerated.
+    :type speedCores: list
+
+    2. Local
+
+    :param partitionTree: Encodes the modularization of the given metabolic network that was created by partitionNetwork in a directed binary tree. Beginning with leaves, modules are analyzed separately before fused with their siblings and analyzed subsequently. 
+    :type partitionTree: nx.DiGraph
+
+    :param siblings: Dictionary encoding the affiliation of vertices in the partitionTree to their brother/sister vertices. In particular, each key maps to the second child of its parent.
+    :type siblings: dict
+
+    :param leaves: Set of vertices of the partition Tree that have not outoing edges.
+    :type leaves: set
+
+    :param uRN: Graph encoding the underlying undirected graph of the reaction network corresponding to the currently analzyed strongly connected component of the metabolic network (network) after reduction by the list of small metabolites.
+    :typ uRN: nx.Graph
+
+    :param network: Currently analzyed strongly connected componented of the input metabolic network. 
+    :type network: nx.DiGraph
+
+    :param bound: Maximum length of enumerated elementary circuits.
+    :type bound: int
+
+    Returns:
+      - None
     '''
     
-    global parameters, E,  elemE, Q, cycleLengthDict, elementaryCircuits, equivClassLengthDict, checkNonMetzler, fluffleBool, coreBool, speedCores
+    # 0. Read global variables
+    global parameters, E,  elemE, Q, cycleLengthDict, elementaryCircuits, equivClassLengthDict, fluffleBool, coreBool, speedCores 
     # 1. Define variables
     # 1.1 Dictionaries
     analyzeDict = {}                                                                # Dictionaries for storing information if an analysis on this node is necessary
-    overlapDict = {}                                                                # Dictionary to store overlap of metabolites between to siblings                                                              # Dictionary to store all the cycles for subnetworks to impede enumerating them de nove
-    childrensDict = {}
-    cycleCounter = 0
-    defineNewVariablesForParametersDictionary(parameters)
-    # Define the three global variables
+    overlapDict = {}                                                                # Dictionary to store overlap of metabolites between to siblings
+    childrensDict = {}                                                              # Dictionary to store all the cycles for subnetworks to impede enumerating them de nove
+    # 1.1 Integers
+    cycleCounter = 0                                                                # Counts number of enumerated elementary circuits
+    # 1.2 Complexer datastructures 
+    defineNewVariablesForParametersDictionary(parameters)                           # Assigns new variables to parameters dictionary for storage of the elementary circuits with different CS Matrices
     # 2. Initialize datastructures for traversal of partition Tree
     for l in leaves: 
         analyzeDict[l] = True                       # Each leaf has to be analysed
         overlapDict[l] = set()                      # Each overlap of metabolites for laeves is 0
     current = list(copy(leaves))                    # Start with leaves
     visited = copy(leaves)                          # Store what has already been visited
-    # 3. Define necessary variables
+    # 3. Traverse Tree
     while True:
         subG  = current.pop(0)                      # Get first element from the queue 
-        rootBool= False
-        if subG == uRN:
+        rootBool= False                             # Set root - boolean to false
+        if subG == uRN:                             # If the current subnetwork is the complete undirected RN then the rootbool is True
             rootBool = True
         else:
             subGSibling = siblings[subG]                # Read sibling of this element
@@ -137,14 +199,14 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
                 continue
         if rootBool == True:
             print("Now checking the root vertex, might take some time")
-        subnetwork, metabolites, reactions = generateSubnetwork(subG, network)                                  # Generate subnetwork
+        subnetwork, metabolites = generateSubnetwork(subG, network)                                  # Generate subnetwork
         # First analyze subG
-        additionalCycles = analyzeCycles(subG, analyzeDict, overlapDict, childrensDict, leaves, subnetwork, bound, species, treeCounter, cycleDataPath)
+        additionalCycles = analyzeCycles(subG, analyzeDict, overlapDict, childrensDict, leaves, subnetwork, bound)
         # 2. Non-Metzler
         cycleCounter+=additionalCycles
         if rootBool == False:                       # Root boolean tells us, when we have arrived at the root....then we don't have to look for siblings
             current.remove(subGSibling)             # Since we are dealing now with the current element and its sibling, remove the sibling from the queue, otherwise we would do the same thin twice
-            siblingSubnetwork, siblingMetabolites, siblingReactions = generateSubnetwork(subGSibling, network)      # Generate siblings subnetwork
+            siblingSubnetwork, siblingMetabolites = generateSubnetwork(subGSibling, network)      # Generate siblings subnetwork
             metaboliteOverlap = set(metabolites).intersection(set(siblingMetabolites))                              # Compute overlap of metabolites between the siblings networks for the parent
             for inEdge in partitionTree.in_edges(subG):                                                             # Determine if this is the root or not
                 p = inEdge[0]
@@ -159,7 +221,7 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
                 current.append(p)
                 visited.add(p)
             # Second analyze subG Sibling
-            additionalCycles = analyzeCycles(subGSibling, analyzeDict, overlapDict, childrensDict, leaves, siblingSubnetwork, bound, species, treeCounter, cycleDataPath)
+            additionalCycles = analyzeCycles(subGSibling, analyzeDict, overlapDict, childrensDict, leaves, siblingSubnetwork, bound)
             # Write results into corresponding lists 
             # 1 Metzler
             # 1.1 Autocatalytic
@@ -951,7 +1013,7 @@ def generateSubnetwork(subG:dict, metabolicNetwork:dict):
         for outEdge in metabolicNetwork.out_edges(r):
             metabolites.add(outEdge[1])
     subnetwork = nx.subgraph(metabolicNetwork, metabolites.union(subGReactions)).copy()
-    return subnetwork, sorted(list(metabolites)), sorted(list(subGReactions))
+    return subnetwork, sorted(list(metabolites))
 #############################
 #############################
 
@@ -1745,7 +1807,7 @@ outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(tree
 
 file = open(cycleDataPath + species +"/allCycles"+ str(treeCounter) +".txt", "w")
 file.close()
-analysePartitionTree(partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter, cycleDataPath)
+analysePartitionTree(partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound)
 parameters["cycleDict"] = cycleDict 
 parameters["cycleLengthDict"] = cycleLengthDict
 totalTime = time.time()-timeStamp
