@@ -18,283 +18,8 @@ from itertools import chain
 from collections import deque
 from checkMatch import assembleCython, checkMatch, assembleCythonCores
 import traceback
-import libsbml
-import networkx as nx
-from collections import defaultdict
-from itertools import product
+futures = deque()
 
-# def chordless_cycle_search(F, B, path, length_bound, G):
-#     blocked = defaultdict(int)
-#     target = path[0]
-#     blocked[path[0]] = 1
-#     blocked[path[1]] = 1
-#     for a in path[1:]:
-#         if G.nodes[a]["Type"] == "Species":
-#             for b in F[a]:
-#                 blocked[b] += 1
-
-#     stack = [iter(F[path[2]])]
-#     visited = {path[0], path[1], path[2]}
-#     while stack:
-#         nbrs = stack[-1]
-#         for x in nbrs:
-#             if type(x) == str:
-#                 x_ = int(x.split("_")[0])
-#             else:
-#                 x_ = x 
-#             if G.nodes[x]["Type"] == "Species":
-#                 proceed = (x_ not in visited and (length_bound is None or len(path) < length_bound))
-#             else:
-#                 proceed = (blocked[x] == 1 and (length_bound is None or len(path) < length_bound))
-#             if not proceed:
-#                 continue
-#             Fx = F[x]
-#             if target in Fx:
-#                 yield path + [x]
-#                 if G.nodes[x]["Type"]=="Reaction":
-#                     Bx = B[x]
-#                     for y in Bx:
-#                         blocked[y] += 1
-#                     visited.add(x_)
-#                     path.append(x)
-#                     stack.append(iter(Fx))
-#                     break
-#                 else:
-#                     continue
-#             else:
-#                 Bx = B[x]
-#                 if target in Bx:
-#                     if G.nodes[x]["Type"]=="Reaction":
-#                         continue
-#                 if G.nodes[x]["Type"]=="Species": 
-#                     for y in Fx:
-#                         blocked[y] += 1
-#                 visited.add(x_)
-#                 path.append(x)
-#                 stack.append(iter(Fx))
-#                 break
-#         else:
-#             stack.pop() 
-#             z = path.pop()
-#             if type(z)==str:
-#                 z_=z.split("_")[0]
-#             else:
-#                 z_=z
-#             visited.discard(z_)
-#             if G.nodes[z]["Type"]=="Species":
-#                 Fz=F[z]
-#                 for y in Fz:
-#                     blocked[y] -= 1
-#                     if y not in path:
-#                         if type(y)==str:
-#                             y_=y.split("_")[0]
-#                         else:
-#                             y_=y
-# #############################
-# #############################
-
-
-def chordless_cycle_search_Species(F, B, path, length_bound, G):
-    fwBlocked = defaultdict(int)
-    bwBlocked = defaultdict(int)
-    target = path[0]
-    for i in range(1, len(path)):
-        a = path[i]
-        if i==0 or i==2:
-            Fa = F[a]
-            for r in Fa:                                            # Block reactions from being visited twice
-                fwBlocked[r] += 1
-        else:
-            Ba=B[a]
-            for m in Ba:
-                bwBlocked[m] 
-    stack = [iter(F[path[2]])]
-    while stack:
-        nbrs = stack[-1]
-        for x in nbrs:
-            if x==target:
-                continue
-            if G.nodes[x]["Type"] == "Species":
-                proceed = (bwBlocked[x]==0 and (length_bound is None or len(path) < length_bound))
-            else:
-                proceed = (fwBlocked[x] == 1 and (length_bound is None or len(path) < length_bound))
-            if not proceed:
-                continue
-            Fx = F[x]
-            Bx = B[x]
-            if target in Fx:                        # x is a reaction, target a metabolite
-                yield path + [x]                    # yield the path
-                for m in Bx:
-                    bwBlocked[m] += 1
-                path.append(x)
-                stack.append(iter(Fx))
-                break
-                
-            else:
-                if target in Bx:                    # since target is a metabolite, then x is a reaction
-                    continue                        # we can probably remove this check, should have been done before
-                else:        
-                    if G.nodes[x]["Type"]=="Species":
-                        for r in Bx:
-                            bwBlocked[r] += 1
-                    else:
-                        for m in Fx:
-                            bwBlocked[m] += 1
-                    path.append(x)
-                    stack.append(iter(Fx))
-                    break
-        else:                                       # Take off 
-            stack.pop() 
-            z = path.pop()
-            if G.nodes[z]["Type"]=="Species":
-                Fz=F[z]
-                for y in Fz:
-                    fwBlocked[y] -= 1
-            else:
-                Bz = B[z]
-                for y in Bz:
-                    bwBlocked[y] -= 1
-#############################
-#############################
-
-
-def chordless_cycle_search_Reaction(F:dict, B:dict, path:list, length_bound:int, G:nx.DiGraph, U:nx.DiGraph, specialNodes:set):
-    ## Reaction is the first node
-    
-    fwBlocked = defaultdict(int)                                    # will contain only reactions
-    bwBlocked = defaultdict(int)                                    # will contain only metabolites‚
-    target = path[0]                                                # Target is a reaction
-    
-    for i in range(len(path)):                                      # Initializing
-        a = path[i]
-        if i==2:                                                    # Reaction case 
-            Ba=B[a]
-            for m in Ba:
-                bwBlocked[m] +=1                                    # Block m from being visited (only unvisited metabolites can be visited)
-        else:
-            Fa = U.successors(a)                                              # Species case
-            for r in Fa:                                            # Block reactions from being visited twice
-                fwBlocked[r] += 1
-    
-    stack = [iter(F[path[2]])]
-    while stack:                                                    # Now the real loop
-        nbrs = stack[-1]
-        for x in nbrs:
-            if G.nodes[x]["Type"] == "Species":
-                proceed = (bwBlocked[x]==0 and (length_bound is None or len(path) < length_bound))
-            else:
-                proceed = (fwBlocked[x] == 1 and (length_bound is None or len(path) < length_bound))
-            if not proceed:
-                continue
-            Fx = F[x]
-            if target in Fx:                            # Remember: x is a metabolite
-                if sum(1 for y in Fx if y in path)==1: 
-                    yield path + [x]                    # yield the path and stop.....you can' go any further, otherwise there would be non MR-chordfree cycles
-            else:                                   
-                if G.nodes[x]["Type"]=="Species":   # Block forward in the case of a metabolite
-                    if type(x)==str:
-                        x_= int(x.split("_")[0])
-                        Succx = U.successors(x_)
-                        for y in Succx:
-                            fwBlocked[y] +=1
-                    else:
-                        for y in Fx:
-                            fwBlocked[y] += 1
-                else:                               
-                    Predx = U.predecessors(x)
-                    for y in Predx:
-                        if y in specialNodes:                    # Block backward in case of a reaction
-                            y_in = str(y)+"_in"
-                            y_out = str(y) +"_out"
-                            bwBlocked[y_in] += 1
-                            bwBlocked[y_out] += 1
-                        else: 
-                            bwBlocked[y] += 1
-                path.append(x)                                  # Either way, append x to the path add all forward oriented vertices 
-                                                    # to the stack
-                stack.append(iter(Fx))
-                break
-        else:                                       # Take off 
-            stack.pop() 
-            z = path.pop()
-            if G.nodes[z]["Type"]=="Species":
-                if type(z)==str:
-                    z_= int(z.split("_")[0])
-                    Succz = U.successors(z_)
-                    for y in Succz:
-                        fwBlocked[y] -=1
-                else:
-                    Fz=F[z]
-                    for y in Fz:
-                        fwBlocked[y] -= 1
-            else:
-                Predz = U.predecessors(z)
-                for y in Predz:
-                    if y in specialNodes:                    # Block backward in case of a reaction
-                        y_in = str(y)+"_in"
-                        y_out = str(y) +"_out"
-                        bwBlocked[y_in] -= 1
-                        bwBlocked[y_out] -= 1
-                    else: 
-                        bwBlocked[y] += 1
-#############################
-#############################
-
-
-def chordless_cycle_search(F, B, path, length_bound, G, U, specialNodeSet):
-    if G.nodes[path[0]]["Type"]=="Species":
-        yield from chordless_cycle_search_Species(F, B, path, length_bound, G)
-    else:
-        yield from chordless_cycle_search_Reaction(F, B, path, length_bound, G, U, specialNodeSet)
-#############################
-#############################
-
-
-def findAllMRChordlessCycles(F, bound):
-    B = F.reverse(copy=True)
-
-    def stems(C, v):
-        for u, w in product(C.pred[v], C.succ[v]):
-            yield [u, v, w]
-
-    components = [c for c in nx.strongly_connected_components(F) if len(c) > 3]
-    while components:
-        c = components.pop()
-        v = next(iter(c))
-        Fc = F.subgraph(c)
-        Bc = B.subgraph(c)
-        Fcc = Bcc = None
-        for S in stems(Fc, v):
-            if Fcc is None:
-                Fcc = nx.algorithms.cycles._NeighborhoodCache(Fc)
-                Bcc = nx.algorithms.cycles._NeighborhoodCache(Bc)
-            yield from chordless_cycle_search(Fcc, Bcc, S, bound, F, F, set())
-        components.extend(c for c in nx.strongly_connected_components(F.subgraph(c - {v})) if len(c) > 3)
-#############################
-#############################
-
-
-def findNodeSpecificMRChordlessCycles(F:dict, U:nx.DiGraph, x:int, specialNodeSet: set, bound:int):
-    B = F.reverse(copy=True)
-    def stems(C, v):
-        for u, w in product(C.pred[v], C.succ[v]):
-            yield [u, v, w]
-
-    components = [c for c in nx.strongly_connected_components(F) if len(c) > 3]
-    while components:
-        c = components.pop()
-        if x in c:
-            Fc = F.subgraph(c)
-            Bc = B.subgraph(c)
-            Fcc = Bcc = None
-            for S in stems(Fc, x):
-                if Fcc is None:
-                    Fcc = nx.algorithms.cycles._NeighborhoodCache(Fc)
-                    Bcc = nx.algorithms.cycles._NeighborhoodCache(Bc)
-                yield from chordless_cycle_search(Fcc, Bcc, S, bound, F, U, specialNodeSet)
-            break
-#############################
-#############################
 
 
 def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
@@ -303,7 +28,6 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
     global globalSubN 
     global cycleDict
     global E
-    global coreBool
     # 0.2 assign values
     globalSubN = subN
     circuitCounter = 0
@@ -317,41 +41,31 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
             if len(E)>0:
                 if int(len(E)/1000)>thousands:
                     print(len(E))
-                    thousands+=int(len(E)/1000)
+                    thousands+=1
             if len(E)>1e6:
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
-            if coreBool == True:
-                leafSimpleCycles = findAllMRChordlessCycles(subN, bound)
-            else: 
-                leafSimpleCycles = nx.simple_cycles(subN, length_bound = bound)
-            circuitCounter = processCircuits(circuits = leafSimpleCycles, leaf = True, left = False, circuitCounter = circuitCounter, overlapList=[])
+            leafSimpleCycles = nx.simple_cycles(subN, length_bound = bound)
+            circuitCounter = processCircuits(circuits = leafSimpleCycles, leaf = True, left = False, circuitCounter = circuitCounter)
         else:                                                                                           # Otherwise, we need to make sure to now separate the cycles
             if len(E)>0:
                 if int(len(E)/1000)>thousands:
                     print(len(E))
-                    thousands+=int(len(E)/1000)
+                    thousands+=1
             leftChild = childrensDict[G]["left"]                                                        # Get left child
             rightChild = childrensDict[G]["right"]                                                      # Get right child
             overlapSet = overlapDict[G]                                                                 # Read overlap set
             overlapList = list(overlapSet)
             nodeDeleteList = []
-            nodeDeleteSet = set()
             leaves = False
             for j in tqdm(range(len(overlapList)), leave=False, desc="Computing cycles for overlapping metabolites"):
                 m = overlapList[j]    
                 leftOutNetwork = getOutNetwork(outNetwork = leftChild, inNetwork = rightChild, startingNode = m, nodeDeletelist = nodeDeleteList)
                 rightOutNetwork = getOutNetwork(outNetwork = rightChild, inNetwork = leftChild, startingNode = m, nodeDeletelist = nodeDeleteList)    
-                if coreBool==True:
-                    childUnion = nx.compose(leftChild, rightChild)
-                    leftOutCircuits = findNodeSpecificMRChordlessCycles(leftOutNetwork, childUnion, m, nodeDeleteSet, None)
-                    rightOutCircuits = findNodeSpecificMRChordlessCycles(rightOutNetwork, childUnion, m, nodeDeleteSet, None)
-                else:
-                    leftOutCircuits = nx.algorithms.cycles._bounded_cycle_search(leftOutNetwork, [m], bound)
-                    rightOutCircuits = nx.algorithms.cycles._bounded_cycle_search(rightOutNetwork, [m], bound)
-                nodeDeleteSet.add(m)
                 nodeDeleteList.append(m)
-                circuitCounter = processCircuits(circuits = leftOutCircuits, leaf = False, left = True, circuitCounter = circuitCounter, overlapList=overlapList)
-                circuitCounter = processCircuits(circuits = rightOutCircuits, leaf = False, left = False, circuitCounter = circuitCounter, overlapList=overlapList)
+                leftOutCircuits = nx.algorithms.cycles._bounded_cycle_search(leftOutNetwork, [m], length_bound=bound)
+                rightOutCircuits = nx.algorithms.cycles._bounded_cycle_search(rightOutNetwork, [m], length_bound=bound)
+                circuitCounter = processCircuits(circuits = leftOutCircuits, leaf = False, left = True, circuitCounter = circuitCounter)
+                circuitCounter = processCircuits(circuits = rightOutCircuits, leaf = False, left = False, circuitCounter = circuitCounter) 
             if len(E)>5e6*(12/noThreads):
                 sys.exit("Size of elementary circuits getting too large, please reduce the size of the network.")
     return circuitCounter
@@ -368,17 +82,34 @@ def analyzeElementaryCircuits(c:list):
 #############################
 
 
-def analysePartitionTree(parameters, partitionTree:nx.DiGraph, siblings:dict, leaves:set, uRN:nx.Graph, network:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
-    global E
-    global Q
-    global elemE
-    global cycleLengthDict
-    global elementaryCircuits
-    global equivClassLengthDict
-    global checkNonMetzler
-    global fluffleBool
-    global coreBool
-    global speedCores
+def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uRN:nx.Graph, network:nx.DiGraph, bound:int, species:str, treeCounter:int, cycleDataPath:str):
+    ''' AnalzyePartitionTree
+    
+    Upon invocation this function is the main function parsing the partition tree that has been created in partitionNetwork and 
+    represents the modularization of the metabolic network, and calling the functions for enumerating elementary circuits as well
+    as assembling larger fluffles/CS equivalence classes depending on the options given to the main function.
+    
+    Parameters
+    ----------
+    
+    1. Global
+
+    parameters : dict
+        Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+
+    E : dict
+        Dictionary designated to store all CS equivalence classes
+    
+    elem : dict
+        Dictionary designated to store all CS equivalence classes for elementary circuits.
+
+    Q : deque
+        Collection that collects all CS equivalence classes that are designated for the assembly of larger fluffles.
+    
+    
+    '''
+    
+    global parameters, E,  elemE, Q, cycleLengthDict, elementaryCircuits, equivClassLengthDict, checkNonMetzler, fluffleBool, coreBool, speedCores
     # 1. Define variables
     # 1.1 Dictionaries
     analyzeDict = {}                                                                # Dictionaries for storing information if an analysis on this node is necessary
@@ -1387,14 +1118,12 @@ def getIntersectingEquivClasses(equivClass:set, E:dict):
 
 def getOutNetwork(outNetwork:nx.DiGraph, inNetwork:nx.DiGraph, startingNode:str, nodeDeletelist:list):
     global globalSubN 
-    newNetwork = deepcopy(globalSubN)
+    newNetwork = deepcopy(globalSubN )
     for n in nodeDeletelist:
         inNode = str(n) + "_in"
         outNode = str(n) + "_out"
         newNetwork.add_node(inNode)
-        newNetwork.nodes[inNode]["Type"]="Species"
         newNetwork.add_node(outNode)
-        newNetwork.nodes[outNode]["Type"]="Species"
         for inEdge in globalSubN.in_edges(n):
             if inEdge[0] in inNetwork.nodes():
                 newNetwork.add_edge(inEdge[0], inNode) 
@@ -1485,7 +1214,7 @@ def processCircuitsAll(circuits, description:str):
 #############################
 
 
-def processCircuits(circuits, leaf:bool, left:bool, circuitCounter:int, overlapList:list):
+def processCircuits(circuits, leaf:bool, left:bool, circuitCounter:int):
     global coreBool
     if leaf == True:
         description = "Analyzing elementary circuits for leaf for"
@@ -1495,7 +1224,7 @@ def processCircuits(circuits, leaf:bool, left:bool, circuitCounter:int, overlapL
         else:
             description = "Analyzing elementary circuits of right outnetwork for "
     if coreBool == True:
-        processCircuitsCore(circuits, description, overlapList)
+        processCircuitsCore(circuits, description)
     else:
         circuitCounter += processCircuitsAll(circuits, description)
     return circuitCounter
@@ -1632,7 +1361,7 @@ def analyzeElementaryCircuitsCore(c:list):
 
 def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
     cutoff = parameters["cutoffLargerCycles"]
-    while Q:
+    while True:
         if len(speedCores)>1e4:
             maxVal = min(int(2e12/len(Q)), len(Q))
             with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
@@ -1770,7 +1499,6 @@ def checkEquivalenceClassCore(c, eqClass, autocatalytic):
             speedCores.add(frozenEq)
         return True
     else:
-        print("Found something twice", c, eqClass)
         return False
 #############################
 #############################  
@@ -1836,55 +1564,47 @@ def getIntersectingEquivClassesCores(equivClass:set, E:dict):
 #############################
 
 
-def processCircuitsCore(circuits, description:str, overlapList:list):
+def processCircuitsCore(circuits, description:str):
     global parallelBool
     global noThreads
     global species
     circuitCounter=0
     n=0
     breakBool = False
-    removeCounter = 0
-    nonMetzlerCounter = 0
     if parallelBool == True:
-        with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
-            futureList = []
-            while True:
-                try:
-                    futureList.append(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
-                    n+=1
-                except StopIteration as sti:
-                    breakBool = True
-                if breakBool == True or n>1e7:
-                    for f in tqdm(concurrent.futures.as_completed(futureList), leave = False, total = n, desc= description+species):
-                        try:
-                            remove, circuit, eqClass, autocatalytic, metzler = f.result()
-                            if remove == False:
-                                l = len(circuit)
-                                cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
-                                if metzler == True:
-                                    if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
-                                        circuitCounter+=1
-                                        lequiv = len(eqClass)*2
-                                        equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
-                                        #cycleFile.write(str(circuit) + "\n")
-                                else:
-                                    subS = computeSubstochasticMatrixForSetOfMREdges(parameters, eqClass)
-                                    print(circuit)
-                                    print(subS)
-                                    for n in circuit:
-                                        if n in overlapList:
-                                            print(n)
-                                    input()
-                                    nonMetzlerCounter+=1
-                            else:
-                                removeCounter+=1
-                            del circuit, f
-                        except Exception as exc:
-                            print('%r generated an exception: %s', exc)
-                    futureList=[]
-                    n=0
-                    if breakBool==True:
-                        break
+        if sys.platform.startswith("linux"):
+            executor = concurrent.futures.ProcessPoolExecutor(max_workers=noThreads)
+        elif sys.platform == "darwin":
+            executor = concurrent.futures.ThreadPoolExecutor(max_workers=noThreads)
+        else:
+            executor = concurrent.futures.ProcessPoolExecutor(max_workers=noThreads)
+        futureList = []
+        while True:
+            try:
+                futureList.append(executor.submit(analyzeElementaryCircuitsCore, next(circuits)))
+                n+=1
+            except StopIteration as sti:
+                breakBool = True
+            if breakBool == True or n>10e6:
+                for f in tqdm(concurrent.futures.as_completed(futureList), leave = False, total = n, desc= description+species):
+                    try:
+                        remove, circuit, eqClass, autocatalytic, metzler = f.result()
+                        if remove == False:
+                            l = len(circuit)
+                            cycleLengthDict[l]=cycleLengthDict.setdefault(l,0)+1
+                            if metzler == True:
+                                if checkEquivalenceClassCore(circuit, eqClass, autocatalytic):
+                                    circuitCounter+=1
+                                    lequiv = len(eqClass)*2
+                                    equivClassLengthDict[lequiv]=equivClassLengthDict.setdefault(lequiv,0)+1
+                                    #cycleFile.write(str(circuit) + "\n")
+                        del circuit, f
+                    except Exception as exc:
+                        print('%r generated an exception: %s', exc)
+                futureList=[]
+                n=0
+                if breakBool==True:
+                    break
     else:
         for c in circuits:
             remove, circuit, eqClass, autocatalytic, metzler = analyzeElementaryCircuitsCore(c)
@@ -2025,7 +1745,7 @@ outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(tree
 
 file = open(cycleDataPath + species +"/allCycles"+ str(treeCounter) +".txt", "w")
 file.close()
-analysePartitionTree(parameters, partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter, cycleDataPath)
+analysePartitionTree(partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound, species, treeCounter, cycleDataPath)
 parameters["cycleDict"] = cycleDict 
 parameters["cycleLengthDict"] = cycleLengthDict
 totalTime = time.time()-timeStamp
