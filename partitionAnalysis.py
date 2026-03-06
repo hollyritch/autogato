@@ -424,71 +424,27 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
 #############################  
 
 
-def callAssembleCython(equivClass:frozenset, equivClassValues:dict, cutoff:int):
-    ''' CallAssembleCython
-
-    Upon invocation this function calls the cython function assembleCython() to assemble larger CS equivalence classes. The cython function is required to speed up the assembly of larger CS equivalence classes, which is the most time consuming part of the algorithm. The function returns the new equivalence classes and a dicitonary that records the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel().
-
-    Parameters
-    ----------
-
-    1. Global 
-
-    :param elemE: Storing CS equivalence classes for elementary circuits as keys with additional information on the equivalenc class in a dictionary as value. 
-    :type elemE: dict
-
-    :param M: Dictionary storing the CS equivlance classes containing a particular MR-edge. Key: One single MR-edge, value: Set of CS equivalence classes containing this MR-edge. 
-    :type M: dict
-
-    :param circuitIdMrEdgeDict: Dictionary storing the MR-edges corresponding to a certain elementary circuit. Key: int (elementary circuit identifier), value: frozenset of MR-edges of the key.
-    :type circuitIdMrEdgeDict: dict
-
-    2. Local
-
-    :param equivClass: Frozenset representing the currently analyzed equivalence class.
-    :type equivClass: frozenset
-
-    :param equivClassValues: Dictionary storing the information on the currently analyzed equivalence class. Key: "MR", "RM", "Predecessors", "Leaf", "Autocatalytic", "Metzler", "Update", "Visited", "Core", values: corresponding values
-    :type equivClassValues: dict
-
-    :param cutoff: Maximum length of CS equivalence classes that are assembled.
-    :type cutoff: int
-
-    Returns:
-        - newEquivClasses: Dictionary storing the new equivalence classes that are assembled from the currently analyzed equivalence class and all overlapping CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
-        - change: Dictionary storing the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel(). Keys: frozensets of MR-edges, value: Dictionary with different information and datastructures that are updated by the assembly of the currently analyzed equivalence class with all overlapping CS equivalence classes. 
-    '''
-    global elemE, M, circuitIdMrEdgeDict
-    newEquivClasses, change = assembleCython(equivClass, equivClassValues,  elemE, M, circuitIdMrEdgeDict, cutoff)
-    return newEquivClasses, change
-#############################
-#############################
-
-
-# def assemble(equivClass:frozenset, equivClassValues:dict, cutoff:int):
-#     '''Assemble
-#         Upon invocation this function assembles larger CS equivalence classes from the currently analyzed equivalence class and all overlapping CS equivalence classes. The function is required to speed up the assembly of larger CS equivalence classes, which is the most time consuming part of the algorithm. The function returns the new equivalence classes and a dicitonary that records the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel().
-#     '''
-#     global elemE
-#     intersecEquivClasses, changeE = getIntersectingEquivClassesParallel(equivClass)
-#     newEquivClasses = {}
-#     for interEqCl in intersecEquivClasses:
-#         newEquivClass = equivClass | interEqCl
-#         if len(newEquivClass)<=cutoff:
-#             newFrozen = frozenset(newEquivClass)
-#             interEquivClassValues = elemE[interEqCl]
-#             plausible, newMR = checkMatch(equivClassValues, interEquivClassValues)
-#             if plausible:
-#                 newEquivClasses[newFrozen] = {"MR":newMR, "RM": 0, "Predecessors": {equivClass, interEqCl}, "Leaf": False, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}
-#     return newEquivClasses, changeE
-# #############################
-# ############################# 
-
-
 def assembleLargerEquivClassesParallel(parameters:dict, Q: deque, E:dict, equivClassLengthDict:dict):
-    '''
-    Determines all CS equivalence classes depending on the input set (here still Q)
-    
+    ''' assmbleLargerEquivClassesParallel
+
+        Upon invocation this function assembles larger CS equivalence classes by invoking the cython function assembleCython() in parallel for all equivalence classes in Q. The cython function is required to speed up the assembly of larger CS equivalence classes, which is the most time consuming part of the algorithm. The function updates E and equivClassLengthDict with the new equivalence classes and the changes in already existing equivalence classes, which are returned by callAssembleCython(). In case the length of Q exceeds 1e3, the assembly is executed in parallel, otherwise it is executed sequentially to avoid the overhead of parallelization. The function returns nothing but updates E and equivClassLengthDict in place.
+
+        Parameters 
+        ----------
+        :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+        :type parameters: dict  
+
+        :param Q: Collection that stores all CS equivalence classes that are designated for the assembly of larger CS equivalence classes. Is processed within this function FIFO order.
+        :type Q: deque
+
+        :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+        :type E: dict
+
+        :equivClassLengthDict: Dictionary storing the number of CS equivalence classes of a certain length. Only for later statistic reasons. Key: int, value: int
+        :type equivClassLengthDict: dict
+
+        Returns:
+            - None, but updates E and equivClassLengthDict in place.
     '''
     if len(Q)==0:                               
         return [], 0, []    
@@ -499,30 +455,36 @@ def assembleLargerEquivClassesParallel(parameters:dict, Q: deque, E:dict, equivC
     while True:
         if len(Q)>1e3:
             maxVal = min(int(2e12/len(Q)), len(Q))
-            with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
-                for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCython, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = False):
-                    Q.popleft()
-                    try:
-                        newEquivClasses, change = f.result()
-                        for c in change:
-                            E[c]["Predecessors"].update(change[c]["Predecessors"])
-                            E[c]["Leaf"] = False
-                        for newFrozen in newEquivClasses:
-                            values = newEquivClasses[newFrozen]
-                            if newFrozen in E:
-                                E[newFrozen]["Predecessors"].update(values["Predecessors"])
-                            else:
-                                E[newFrozen] = values
-                                l = len(newFrozen)*2
-                                equivClassLengthDict[l] = equivClassLengthDict.setdefault(l, 0)+1
-                                if len(newFrozen)<cutoff:
-                                    Q.append(newFrozen)
-                        del f
-                        del newEquivClasses
-                        del change
-                    except Exception as exc:
-                        print('%r generated an exception: %s', exc)
-                        print(traceback.format_exc())
+            if sys.platform.startswith("linux"):
+                executor = concurrent.futures.ProcessPoolExecutor(max_workers=noThreads)
+            elif sys.platform == "darwin":
+                executor = concurrent.futures.ThreadPoolExecutor(max_workers=noThreads)
+            else:
+                executor = concurrent.futures.ProcessPoolExecutor(max_workers=noThreads)
+            for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCython, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = False):
+                Q.popleft()
+                try:
+                    newEquivClasses, change = f.result()
+                    for c in change:
+                        E[c]["Predecessors"].update(change[c]["Predecessors"])
+                        E[c]["Leaf"] = False
+                    for newFrozen in newEquivClasses:
+                        values = newEquivClasses[newFrozen]
+                        if newFrozen in E:
+                            E[newFrozen]["Predecessors"].update(values["Predecessors"])
+                        else:
+                            E[newFrozen] = values
+                            l = len(newFrozen)*2
+                            equivClassLengthDict[l] = equivClassLengthDict.setdefault(l, 0)+1
+                            if len(newFrozen)<cutoff:
+                                Q.append(newFrozen)
+                    del f
+                    del newEquivClasses
+                    del change
+                except Exception as exc:
+                    print('%r generated an exception: %s', exc)
+                    print(traceback.format_exc())
+            executor.shutdown()
         else:
             equivClass = Q.popleft()
             intersecEquivClasses = getIntersectingEquivClasses(equivClass, E)
@@ -553,8 +515,29 @@ def assembleLargerEquivClassesParallel(parameters:dict, Q: deque, E:dict, equivC
 
 
 def assembleFluffles(parameters:dict, queue:list):
-    global checkNonMetzler
-    global cycleLengthDict
+    '''assmebleFluffles
+    
+    Upon invocation this function assembles larger fluffle equivalence classes by assembling all pairs of elementary circuits that have an overlap in their MR-edges and checking the plausibility of the matching by invocation of checkPlausibilityOfMatching(). The function updates the global variables cycleLengthDict, elementaryCircuits, cycleIDDict, cycleIDEdgeDict, cycleIDNodeDict with the new equivalence classes and the changes in already existing equivalence classes. The function returns the number of assembled larger fluffle equivalence classes.
+    
+    Parameters
+    ----------
+    1. Global 
+    
+    :param elementaryCircuits: List storing all elementary circuits as lists provided by nx.simple_cycles(G). 
+    :type elementaryCircuits: List
+
+    2. Local
+
+    :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+    :type parameters: dict
+
+    :queue: List of elementary circuits that are designated for the assembly of larger fluffle equivalence classes.
+    :type queue: list
+
+    Returns:
+        - additionalCycleCounter: Integer counting the number of assembled larger fluffle equivalence classes.
+    '''
+    
     global elementaryCircuits
     if len(queue)==0:
         return [], 0, []
@@ -612,7 +595,69 @@ def assembleFluffles(parameters:dict, queue:list):
 #############################  
 
 
+def callAssembleCython(equivClass:frozenset, equivClassValues:dict, cutoff:int):
+    ''' CallAssembleCython
+
+    Upon invocation this function calls the cython function assembleCython() to assemble larger CS equivalence classes. The cython function is required to speed up the assembly of larger CS equivalence classes, which is the most time consuming part of the algorithm. The function returns the new equivalence classes and a dicitonary that records the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel().
+
+    Parameters
+    ----------
+
+    1. Global 
+
+    :param elemE: Storing CS equivalence classes for elementary circuits as keys with additional information on the equivalenc class in a dictionary as value. 
+    :type elemE: dict
+
+    :param M: Dictionary storing the CS equivlance classes containing a particular MR-edge. Key: One single MR-edge, value: Set of CS equivalence classes containing this MR-edge. 
+    :type M: dict
+
+    :param circuitIdMrEdgeDict: Dictionary storing the MR-edges corresponding to a certain elementary circuit. Key: int (elementary circuit identifier), value: frozenset of MR-edges of the key.
+    :type circuitIdMrEdgeDict: dict
+
+    2. Local
+
+    :param equivClass: Frozenset representing the currently analyzed equivalence class.
+    :type equivClass: frozenset
+
+    :param equivClassValues: Dictionary storing the information on the currently analyzed equivalence class. Key: "MR", "RM", "Predecessors", "Leaf", "Autocatalytic", "Metzler", "Update", "Visited", "Core", values: corresponding values
+    :type equivClassValues: dict
+
+    :param cutoff: Maximum length of CS equivalence classes that are assembled.
+    :type cutoff: int
+
+    Returns:
+        - newEquivClasses: Dictionary storing the new equivalence classes that are assembled from the currently analyzed equivalence class and all overlapping CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+        - change: Dictionary storing the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel(). Keys: frozensets of MR-edges, value: Dictionary with different information and datastructures that are updated by the assembly of the currently analyzed equivalence class with all overlapping CS equivalence classes. 
+    '''
+    global elemE, M, circuitIdMrEdgeDict
+    newEquivClasses, change = assembleCython(equivClass, equivClassValues,  elemE, M, circuitIdMrEdgeDict, cutoff)
+    return newEquivClasses, change
+#############################
+#############################
+
+
 def checkAutocatalycityRecursive(E:dict, equivClass:frozenset, equivClassProperties:dict, cores:set):
+    '''checkAutocatalycityRecursive
+    
+    Upon invocation this function checks recursively if a given CS equivalence class is autocatalytic by checking if it has a Hurwitz-unstable Metzler matrix or if it has at least one predecessor that is autocatalytic. The function updates the global variable E with the information on the autocatalycity of the currently analyzed equivalence class and its predecessors. The function returns nothing but updates E in place. It is the recursive pendant of checkAutocatalycity() and does the actual checking of autocatalycity for each equivalence class in E. The function is designed to be called after the assembly of larger CS equivalence classes to check the autocatalycity of these larger CS equivalence classes.
+    
+    Parameters
+    ----------
+    :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+    :type E: dict
+
+    :param equivClass: Frozenset representing the currently analyzed equivalence class.
+    :type equivClass: frozenset
+
+    :param equivClassProperties: Dictionary storing the information on the currently analyzed equivalence class. Key: "MR", "RM", "Predecessors", "Leaf", "Autocatalytic", "Metzler", "Update", "Visited", "Core", values: corresponding values
+    :type equivClassProperties: dict    
+
+    :param cores: Set storing all autocatalytic cores, which are equivalence classes that are autocatalytic but no susbet of the set of MR-edges is an autocatalytic CS equivalence class.
+    :type cores: set
+    
+    Returns:
+        - None, but updates E in place with the information on the autocatalycity of the currently analyzed equivalence class and its predecessors.
+    '''
     S, metzler = computeSubstochasticMatrixForSetOfMREdges(parameters, equivClass)
     if equivClassProperties["Leaf"] == True:                                                                   # It is a leaf                                                                   
         aM, nAM, autocatalytic = determineCircuitPropertiesMetzler(equivClass, S) 
@@ -651,9 +696,30 @@ def checkAutocatalycityRecursive(E:dict, equivClass:frozenset, equivClassPropert
 
 
 def checkAutocatalycity(E:dict):
-    '''Classifies all CS matrices collected so far, if they are autocatatalytic or not'''
-    cores = set()
+    ''' checkAutocatalycity
+
+    Upon invocation this function checks if the CS equivalence classes in E are autocatalytic by checking if they have a Hurwitz-unstable Metzler matrix or if they have at least one predecessor that is autocatalytic. The function updates the global variable E with the information on the autocatalycity of the currently analyzed equivalence class and its predecessors. The function returns a set of all autocatalytic cores, which are equivalence classes that are autocatalytic but no susbet of the set of MR-edges is an autocatalytic CS equivalence class. I calls checkAutocatalycityRecursive() which is the recursive counterpart of this function and does the actual checking of autocatalycity for each equivalence class in E. The function is designed to be called after the assembly of larger CS equivalence classes to check the autocatalycity of these larger CS equivalence classes and the ones corresponding to elementary circuits.
+
+    Parameters
+    ----------
+
+    1. Global   
+
+    :param checkNonMetzler: Boolean that is set to True if the user wants to enumerated also non-Metzler matrices and check for their autocatalytic capacity, which is computationally more expensive since also all CS equivalence classes corresponding to non-Metzler matrices are considered for the assembly of larger CS-equivalence classes. In this function, this only impacts checking the autocatalytic capacity of non-Metzler matrices.
+
+    :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited  ": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+    :type E: dict
+
+    Returns:
+        - cores: Set of all autocatalytic cores, which are equivalence classes that are autocatalytic but no susbet of the set of MR-edges is an autocatalytic CS equivalence class.
+    '''
+    # 0 .Read global variables
     global checkNonMetzler
+
+    # 1. Define new Variables
+    cores = set()
+
+    # 2. Start iterating over potential autocatalytic core CS equivalence classes. 
     for equivClass in tqdm(E, leave = False, desc="Checking autocatalycity"):
         equivClassProperties = E[equivClass]  
         if equivClassProperties["Visited"] == True:
@@ -706,10 +772,8 @@ def checkAutocatalycity(E:dict):
 
 
 def checkEquivalenceClass(c:list, eqClass:set):
-    """
-    Classify elementary circuits into equivalence classes according their 
-    vertices and edges.
-
+    """ checkEquivalenceClass
+    
     On invocation, this function determines information about the vertices 
     and edges of elementary circuits given on the list queue. Importantly,
     elementary circuits vertex and edge-sets (E and E1: only metabolite -> reaction edges) serve 
@@ -718,27 +782,36 @@ def checkEquivalenceClass(c:list, eqClass:set):
     
     Parameters
     ----------
-    Q : list
-        Contains all elementary circuits enumerated by the Johnsons-Algorithm in 
-        def(analysePartitionTree).
-
-    E : dict 
-        Key: (frozen sets) of equivalence classes composed of MR-edges
-        Value: tuple(metabolites, reactions)
-
-    M : dict
-        Key: One MR-edge
-        Value: Set of elementary circuits containing this particular MR-edge
-
-    cycleIDDict : dict
-        Key: Integer (subsequently termed cycle-identifier)
-        Value: Elementary circuit
     
-    circuitIdMrEdgeDict : dict
-        Key: cycle-identifier
-        Value: Set of MR-edges
+    1. Global
+    
+        :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+        :type E : dict 
 
+        :param Q: Contains all elementary circuits enumerated by the Johnsons-Algorithm from def(analysePartitionTree).
+        :type Q: list
+    
+        :param M: Dictionary storing the CS equivlance classes containing a particular MR-edge. Key: One single MR-edge, value: Set of CS equivalence classes containing this MR-edge. 
+        :type M: dict  
+
+        :param cycleIDDict: Dictionary mapping cycle identifiers to elementary circuits. Key: int (cycle identifier), value: elementary circuit
+        :type cycleIDDict: dict
+
+        :param circuitIdMrEdgeDict: Dictionary mapping cycle identifiers to the set of MR-edges contained in the corresponding elementary circuit. Key: int (cycle identifier), value: frozenset of MR-edges contained in the corresponding elementary circuit
+        :type circuitIdMrEdgeDict: dict
+
+    2. Local
+
+        :param c: List of vertices representing an elementary circuit.
+        :type c: list
+
+        :param eqClass: Set of MR-edges contained in the elementary circuit represented by c.
+        :type eqClass: set
+    
+    Returns:
+        - Boolean value indicating whether the equivalence class of the currently analyzed elementary circuit has already been added to the global variable E or not. If it has not been added, the function adds the equivalence class to E and updates the global variables M, circuitIdDict, circuitIdMrEdgeDict with the information on the currently analyzed elementary circuit and its equivalence class. If it has already been added, the function returns False and does not update any global variable.
     """
+
     # 0. Read Variables
     global E                                                                        # \mathcal{E} im paper
     global Q 
@@ -768,6 +841,30 @@ def checkEquivalenceClass(c:list, eqClass:set):
 
 
 def checkPlausibilityOfMatching(parameters:dict, c1Key:int, c2Key:int, cycleIDEdgeDict:dict, cycleIDNodeDict:dict):
+    ''' checkPlausibilityOfMatching
+    
+    Upon invocation this function checks the plausibility of the matching of a fluffle aned an elementary circuit by checking if each connected component of the intersection of the two graphs is an MR-path. The function returns a boolean value indicating whether the matching of the two cycles is plausible or not. The function is designed to be called in assembleFluffles() to check the plausibility of the matching of two cycles before assembling them to a larger fluffle equivalence class.
+
+    Parameters
+    ----------
+    :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+    :type parameters: dict  
+
+    :param c1Key: Integer representing the identifier of the first cycle, which is an elementary circuit or a fluffle equivalence class.
+    :type c1Key: int    
+
+    :param c2Key: Integer representing the identifier of the second cycle, which is an elementary circuit or a fluffle equivalence class.   
+    :type c2Key: int
+
+    :param cycleIDEdgeDict: Dictionary mapping cycle identifiers to the set of edges contained in the corresponding elementary circuit or fluffle equivalence class. Key: int (cycle identifier), value: frozenset of edges contained in the corresponding elementary circuit or fluffle equivalence class
+    :type cycleIDEdgeDict: dict 
+
+    :param cycleIDNodeDict: Dictionary mapping cycle identifiers to the set of nodes contained in the corresponding elementary circuit or fluffle equivalence class. Key: int (cycle identifier), value: frozenset of nodes contained in the corresponding elementary circuit or fluffle equivalence class
+    :type cycleIDNodeDict: dict
+
+    Returns:
+        - plausible: Boolean value indicating whether the matching of the two cycles is plausible or not.
+    '''
     metabolicNetwork = parameters["metabolicNetwork"]
     edgesC1 = cycleIDEdgeDict[c1Key]
     edgesC2 = cycleIDEdgeDict[c2Key]
@@ -802,47 +899,27 @@ def checkPlausibilityOfMatching(parameters:dict, c1Key:int, c2Key:int, cycleIDEd
 
 
 def computeSubstochasticMatrixForSetOfMREdges(parameters:dict, newEquivClass:set):
-    '''
-        Determine CS matrix
+    ''' computeSubstochasticMatrixForSetOfMREdges
     
         Upon invocation this function determines the k x k CS matrix for a set of MR-edges, 
         i. e. a submatrix of the stochastic matrix S, where columns are re-ordered according 
-        to the given MR relationship. Accordingly, for an edge (m,r) then r represents the i-th
-        column if and only if m represents the i-th row.
+        to the given MR relationship, which defines a perfect matching thus a CS. Accordingly, 
+        for an edge (m,r) then r represents the i-th column if and only if m represents the i-th 
+        row.
 
         Parameters
         ----------
         
-        parameters : dict
-            Key: Str
-            Value: arbitrary data structures accumulated during the execution of the whole module
+        :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+        :type parameters: dict  
 
-        newEquivClass : set
-            Set of metabolite - reaction edges
+        :param newEquivClass: Set of MR-edges representing the equivalence class for which the CS matrix is to be computed.
+        :type newEquivClass: set
         
-        k : int
-            Number of metabolites and reactions
-
-        S : Sympy Matrix 
-            This matrix represents the big stoichiometric matrix
-
-        mID : dict
-            Key : str (metabolite)
-            Value : int (row corresponding to the metabolite in S)
-        
-        rID : dict
-            Key : str (reaction)
-            value : int (column corresponding to the reaction in S)
+        Returns:
+            - subS: k x k CS matrix for the given set of MR-edges, where k is the number of MR-edges in the given set. The columns of subS are re-ordered according to the given MR relationship, which defines a perfect matching thus a CS. Accordingly, for an edge (m,r) then r represents the i-th column if and only if m represents the i-th row.
+            - metzler: Boolean value indicating whether the computed CS matrix is a Metzler matrix or not. A Metzler matrix is a matrix where all off-diagonal entries are non-negative. 
             
-        metzler : boolean 
-            Determines whether the CS matrix is Metzler or not
-        
-        subS : Numpy Matrix
-            CS Matrix, to be filled, initiated with zeros.
-
-        mRDict : dict
-            Specifies the relationship in terms of rows and columns between the 
-            metabolite and reaction of an MR edge 
     '''
 
     S = parameters["StoichiometricMatrix"]
@@ -872,7 +949,19 @@ def computeSubstochasticMatrixForSetOfMREdges(parameters:dict, newEquivClass:set
 
 
 def determineDuplicates(cycle:list):
-    global parameters
+    '''determineDuplicates
+    
+        Upon invocation this function checks if a given circuit contains duplicate vertices, which is the case if an intersecting metabolite that was split into a left and right one
+        appears twice on the elementary circuit. In this case the circuit is discarded. It is a rare case but can occur for inner vertices of the partition tree, but not for the first intersecting metabolite, only for the second, third, etc. 
+
+        Parameters
+        ----------
+        :param cycle: List of vertices representing an elementary circuit.
+        :type cycle: list
+
+        Returns:
+            - Boolean value indicating whether the given circuit contains duplicate vertices or not. If it contains duplicate vertices, the function returns True, otherwise it returns False.
+    '''
     visited = set()
     metabolicNetwork = parameters["metabolicNetwork"]
     cycle0 = cycle[0]
@@ -895,6 +984,35 @@ def determineDuplicates(cycle:list):
 
 
 def defineNewVariablesForParametersDictionary(parameters:dict): 
+    '''defineNewVariablesForParametersDictionary
+    
+        Upon invocation this functions simply defines new variables in the parameters dictionary to store the identified elementary circuits in it. It defines the following variables in the parameters dictionary:
+
+        1. Dictionaries:
+        - detAutocatalysis: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have the same absolute value of determinant are stored in a common value. Key: int (determinant), value list of tuples of CS equivalence classes + additional information
+
+        2. Lists:
+        - autocatalyticMetzlerUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that are Hurwitz-unstable are stored in this list.
+        - autocatalyticMetzlerUnstableInvertibleCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that are Hurwitz-unstable and invertible are stored in this list.
+        - autocatalyticMetzlerZeroDeterminantCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero are stored in this list.
+        - autocatalyticMetzlerZeroDeterminantUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero and are Hurwitz-unstable are stored in this list.
+        - autocatalyticMetzlerZeroDeterminantNotUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero and are not Hurwitz-unstable are stored in this list.
+        - nonAutocatalyticMetzlerCycles: All non-autocatalytic CS equivalence classes with corresponding Metzler matrices are stored in this list.
+        - notMetzlerAutocatalyticCycles: All autocatalytic CS equivalence classes with corresponding non-Metzler matrices are stored in this list.
+        - notMetzlerUnstableAutocatalyticCycles: All autocatalytic CS equivalence classes with corresponding non-Metzler matrices that are Hurwitz-unstable are stored in this list.
+        - notMetzlerNotUnstableAutocatalyticCycles: All autocatalytic CS equivalence classes with corresponding non-Metzler matrices that are not Hurwitz-unstable are stored in this list.
+        - notMetzlerNotStableNotUnstableAutocatalyticCycles: All autocatalytic CS equivalence classes with corresponding non-Metzler matrices that are not Hurwitz-unstable but also not Hurwitz-stable are stored in this list.    
+        - notMetzlerStableAutocatalyticCycles: All autocatalytic CS equivalence classes with corresponding non-Metzler matrices that are Hurwitz-stable are stored in this list.
+        - nonMetzlerNonAutocatalyticCycles: All non-autocatalytic CS equivalence classes with corresponding non-Metzler matrices are stored in this list.
+        
+        Parameters
+        ----------
+        :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+        :type parameters: dict  
+
+        Returns:
+            - None, but updates the parameters dictionary with new variables to store the identified elementary circuits in it.
+        '''
     parameters["detAutocatalysis"] = {}
     # 1.2 Lists
     # 1.2.1 Lists for Metzler cycles 
@@ -917,6 +1035,17 @@ def defineNewVariablesForParametersDictionary(parameters:dict):
 
 
 def determineAutocatalycityNonMetzler(S:np.matrix):
+    '''determineAutocatalycityNonMetzler
+    
+        Upon invocation this function checks if a given CS matrix that is not a Metzler matrix is autocatalytic by checking if it has a positive real eigenvalue. Since the matrix is not a Metzler matrix, we cannot use the Perron-Frobenius theorem to check for the existence of a positive real eigenvalue, which is why we have to use linear programming to check if there exists a positive vector v such that Sv>0, which is equivalent to the existence of a positive real eigenvalue. The function returns a boolean value indicating whether the given CS matrix that is not a Metzler matrix is autocatalytic or not.
+        
+        Parameters
+        ----------
+        :param S: k x k CS matrix that is not a Metzler matrix, where k is the number of MR-edges in the given set of MR-edges representing the CS equivalence class for which the autocatalycity is to be checked. The columns of S are re-ordered according to the given MR relationship, which defines a perfect matching thus a CS. Accordingly, for an edge (m,r) then r represents the i-th column if and only if m represents the i-th row.
+        :type S: np.matrix  
+        
+        Returns:
+            - autocatalytic: Boolean value indicating whether the given CS matrix that is not a Metzler matrix is autocatalytic or not.'''
     k = sp.shape(S)[0]
     A = (-1)*S
     b = np.zeros((k,1))    
@@ -935,6 +1064,23 @@ def determineAutocatalycityNonMetzler(S:np.matrix):
 
 
 def determineCircuitPropertiesMetzler(c:set, S:np.matrix):
+    '''determineCircuitPropertiesMetzler
+    
+        This function determines the spectral properties of the Metzler CS matrix of a CS equivalence class by calling determineStability().
+        
+        Parameters
+        ----------
+        :param c: A set containing the MR edges of a CS equivalence class.
+        :type c: set
+
+        :param S: The k x k Metzler CS matrix, corresponding to the CS equivalence class c. k is the number of MR-edges.
+        :type S: np.matrix
+        
+        Returns:
+            - aM: List of autocatalytic Metzler cycles.
+            - nAM: List of non-autocatalytic Metzler cycles.
+            - unstable: Boolean value indicating whether the circuit is unstable.
+    '''
     aM = []
     nAM = []
     unstable = determineStability(T=S)
@@ -948,6 +1094,23 @@ def determineCircuitPropertiesMetzler(c:set, S:np.matrix):
 
 
 def determineCircuitPropertiesNonMetzler(c:set,  S:np.matrix):
+    '''determineCircuitPropertiesNonMetzler
+    
+        This function determines the spectral properties of the non-Metzler CS matrix of a CS equivalence class by calling determineAutocatalycityNonMetzler().
+        
+        Parameters
+        ----------
+        :param c: A set containing the MR edges of a CS equivalence class.
+        :type c: set
+
+        :param S: The k x k Non-Metzler CS matrix, corresponding to the CS equivalence class c. k is the number of MR-edges.
+        :type S: np.matrix
+        
+        Returns:
+            - nMAC: List of non-autocatalytic Non-Metzler cycles.
+            - nMnAC: List of non-autocatalytic Non-Metzler cycles.
+            - autocatalytic: Boolean value indicating whether the given CS matrix that is not a Metzler matrix is autocatalytic or not.
+    '''
     # 0. Read variables from parameters dict
     nMAC = []
     nMnAC = []
