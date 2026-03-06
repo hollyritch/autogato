@@ -2274,9 +2274,36 @@ def getIntersectingEquivClassesCores(equivClass:set, E:dict):
 
 
 def processCircuitsCore(circuits, description:str):
-    global parallelBool
-    global noThreads
-    global species
+    ''' processCircuitsCore
+    
+        Upon invocation this function processes the elementary circuits given by the generator circuits for the identification of autocatalytic cores. The function returns the number of identified autocatalytic cores after processing the given elementary circuits.
+
+        Parameters
+        ----------
+        
+        1. Global
+
+        :param parallelBool: Boolean value indicating whether to parallel processing should be enforced for processing of elementary circutis and assembly of larger CS equivalence classes.
+        :type parallelBool: bool
+
+        :param noThreads: Integer representing the number of threads (Mac) or processes (Linux) to use for parallel processing. Only used if parallelBool is True.
+        :type noThreads: int
+
+        :param species: String representing the currently analyzed species, which is used for the description of the tqdm progress bar.
+        :type species: str
+
+        2. Local
+
+        :param circuits: Generator obtained from nx.simple_cycles() representing the elementary circuits to process.
+        :type circuits: generator
+
+        :param description: String representing the description for the tqdm progress bar.
+        :type description: str
+
+        Returns:
+            - circuitCounter: Integer representing the number of identified autocatalytic cores after processing the given elementary circuits.
+    '''
+    global parallelBool, noThreads, species
     circuitCounter=0
     n=0
     breakBool = False
@@ -2331,8 +2358,22 @@ def processCircuitsCore(circuits, description:str):
 
 
 def checkCoreInclusion(c):
-    global speedCores
-    global noCore
+    '''checkCoreInclusion
+    
+        Upon invocation this functions determines if a given candidate for an autocatalytic core is indeed a core, i.e. if it is not a superset of another already identified core. The function returns a boolean value indicating whether the given candidate is indeed a core or not and the candidate itself for later use in the case that it is indeed a core.
+        
+        Parameters
+        ----------
+        
+        1. Global
+        
+        :param speedCores: Set of candidates for autocatalytic cores that have been identified.
+        :type speedCores: set
+        
+        :param noCore: Set of candidates for autocatalytic cores that have been identified as not being cores, i.e. they are supersets of other cores.
+        :type noCore: set
+    '''
+    global speedCores, noCore
     # Return immediately if c is flagged as no core
     coreFlag = True
     for d in speedCores:
@@ -2345,9 +2386,30 @@ def checkCoreInclusion(c):
 
 
 def checkUniquenessOfCores(cores):
-    global noThreads
+    ''' checkUniquenessOfCores
+    
+        Upon invocation this function checks the set of identified candidates for autocatalytic cores for duplicates, i.e. if there are candidates that are subsets of other candidates. The function returns a set of unique cores, where all candidates that are supersets of other candidates have been removed.
+        
+        Parameters
+        ----------
+        
+        1. Global
+        
+        :param noThreads: Integer representing the number of threads (Mac) or processes (Linux) to use for parallel processing. Only used if parallelBool is True.
+        :type noThreads: int
+        
+        :param noCore: Set of candidates for autocatalytic cores that have been identified as not being cores, i.e. they are supersets of other cores.
+        :type noCore: set
+        
+        2. Local
+        
+        :param cores: Set of candidates for autocatalytic cores that have been identified.
+        :type cores: set
+        
+        Returns:
+            - realCores: Set of unique autocatalytic cores, where all candidates that are supersets of other candidates have been removed.'''
+    global noThreads, noCore
     realCores = set()
-    global noCore
     print("Checking cores now for inclusion")
     if len(cores)>1e4:
         with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
