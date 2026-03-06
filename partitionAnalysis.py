@@ -18,18 +18,34 @@ from itertools import chain
 from collections import deque
 from checkMatch import assembleCython, checkMatch, assembleCythonCores
 import traceback
-futures = deque()
 
+def analyzeCycles(G:nx.Graph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int):
+    ''' AnalyzeCycles
 
-
-def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDict:dict, leaves:set, subN:nx.DiGraph, bound:int):
-    ''' analyzeCycles
-
-      Upon invocation ... .
+      Upon invocation this function analyzes the cycles of a given subnetwork (subN) of the metabolic network, depending on the position of the corresponding vertex in the partition tree. If it is a leaf, then all cycles are enumerated and stored in E. If it is not a leaf, then only the cycles that are necessary to separate the cycles of the left and right child are enumerated and stored in E. To this end, for each overlapping metabolite m two networks are generated, one that passes m from right to left and one that passes m from left to right. Only the generator of nx.simple_cycles is handed to processCircuits() to avoid memory issues. The function returns the number of enumerated elementary circuits for statistic purposes. 
 
 
     Parameters
     ----------
+
+    1. Global
+
+    :param globalSubN: Empty nx.DiGraph that is filled with life depending on the function. It functions as a place holder that allows to use a global variable (e.g. in parallelization). GlobalSubN is set to the directed subnetwork corresponding to the currently analyzed vertex in the partition tree. Required for enumeration of cycles.
+    :type globalSubN: nx.DiGraph
+
+    :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+    :type E: dict
+
+    :param treeCounter: Specifies the number of the analyzed pickle file (for documentation purposes). 
+    :type treeCounter: int
+
+    :param cycleDataPath: Specifies where the enumerated cycles should be stored (for documentation purposes). 
+    :type cycleDataPath: str    
+
+    2. Local    
+
+    :param G: Currently analyzed vertex in the partition tree.
+    
     :param species: Name of the species the metabolic network belongs to.
     :type species: str
 
@@ -42,18 +58,30 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
     :param bound: Maximum length of enumerated elementary circuits.
     :type bound: int
 
+    :param analyzeDict: Dictionary encoding if the cycles of the corresponding vertex in the partition tree have to be analyzed or not. Key: vertex in the partition tree, value: bool
+
+    :param overlapDict: Dictionary encoding the overlap of metabolites between siblings in the partition tree. Key: vertex in the partition tree, value: set of overlapping metabolites of the corresponding children
+
+    :param childrensDict: Dictionary encoding the left and right child of each vertex in the partition tree. Key: vertex in the partition tree, value: dictionary with keys "left" and "right" mapping to the corresponding subnetworks of the children.
+
+    :param leaves: Set of vertices in the partition tree that have no outgoing edges, i.e. are not parents of any other vertex.
+    :type leaves: set
+    
+    :paran subN: Directed subnetwork corresponding to the currently analyzed vertex in the partition tree.
+    :type subN: nx.DiGraph
+
+    :param bound: Maximum length of enumerated elementary circuits.
+    :type bound: int
+
+    Returns:
+        - circuitCounter: Number of enumerated elementary circuits for statistic purposes.
     '''
     # Global variables
     # 0.1. Get global variables
-    global globalSubN, cycleDict, E, species, treeCounter, cycleDataPath
+    global globalSubN, E, species, treeCounter, cycleDataPath
     # 0.2 assign values
-    globalSubN = subN
+    globalSubN = subN                                                                                   # Set th global variable globalSubN to the currently analyzed subnetwork, required for parallelization
     circuitCounter = 0
-    newGraphIdentifier = "G_" + str(len(cycleDict.keys()))
-    cycleDict[newGraphIdentifier] = G
-    thousands = 1
-    with open(cycleDataPath+ species +"/allCycles"+ str(treeCounter) +".txt", "a") as cycleFile:
-        cycleFile.write(">>>" + newGraphIdentifier + "\n")
     if analyzeDict[G] == True:                                                                          # So, if you have to analyze the network
         if G in leaves:                                                                                 # Determine if it is a leaf
             if len(E)>0:
@@ -92,6 +120,19 @@ def analyzeCycles(G:nx.DiGraph, analyzeDict:dict, overlapDict:dict, childrensDic
 
 
 def analyzeElementaryCircuits(c:list):
+    ''' AnalyzeElementaryCircuits
+    
+    Upon invocation this function analyzes the elementary circuit c by computing the corresponding MR-edges via valling getEquivalenceClass() and determining the duplicates via determineDuplicates(). The MR-edges are required for the generation of the CS matrix and the determination of the corresponding equivalence class. In particular, the CS equivalence relationship is defined by the MR-edges. Determine duplicateds identifies vertices that occur twice on an elementary circuit, which can only happend for inner vertices of the partition tree. For an example we refer to Fig. S6 of Golnik et al. (2026), "Enumeration of autocatalytic subsystems in large chemical reaction networks". If such a duplicated occurs remove is set to true and the circuit will be discard in the corresponding calling function analyzePartitionTree(). The function additionall returns the MR-edges and the duplicates for later use.
+
+    Parameters
+    ----------  
+    :param c: List representing the currently analyzed elementary circuit as a list of vertices.
+
+    Returns:
+        - remove: Boolean specifying if the circuit should be removed due to duplicates.
+        - c: List representing the currently analyzed elementary circuit as a list of vertices.
+        - mrEdgeSet: Set of MR-edges corresponding to the currently analyzed elementary circuit.
+    '''
     # Compute stochastic matrix and check metzler a
     mrEdgeSet = getEquivalenceClass(c)
     remove = determineDuplicates(c)
@@ -104,8 +145,8 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
     ''' AnalzyePartitionTree
     
     Upon invocation this function is the main function parsing the partition tree that has been created in partitionNetwork and 
-    represents the modularization of the metabolic network, and calling the functions for enumerating elementary circuits as well
-    as assembling larger fluffles/CS equivalence classes depending on the options given to the main function.
+    represents the modularization of the metabolic network. However, each vertex in the partition tree represents a undirected reaction network 
+    and needs to be translated into the corresponding directed metabolic network, which is achieved by invocation of the function generated subnetwork. All leaves are flagged visited and added to the qeueue current. Starting then with the leaves, the elementary circuits of the subnetwork are analyzed by invocation of the function analyzeCycles(). This is, however, executed only if the sibling of the currently analyed vertex was already visited. In this case, both siblings are analyzed and their parent vertex added to the queue current and flagged as visited. The childrens dictionary remembers the left and right children for overlapping metabolites. The overlap dictionary stores the overlap of metabolites between siblings for later analysis. After the traversal of the tree, all elementary circuits are stored in E and elemE, as well as in the list elementaryCircuits. Then, larger fluffle equivalence classes are assembled by invocation of assembleLargerEquivClassesParallel() and checked for autocatalycity by invocation of checkAutocatalycity(). If desired, also fluffle equivalence classes are assembled by invocation of assembleFluffles(). If the core flag is set only autocatalytic cores are enumerated. Finally, all results are written into the parameters dictionary for later use. 
     
     Parameters
     ----------
@@ -165,6 +206,9 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
     :param bound: Maximum length of enumerated elementary circuits.
     :type bound: int
 
+    :param uRN: Graph encoding the underlying undirected graph of the reaction network corresponding to the currently analzyed strongly connected component of the metabolic network (network) after reduction by the list of small metabolites.
+    :typ uRN: nx.Graph
+
     Returns:
       - None
     '''
@@ -211,7 +255,7 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
             for inEdge in partitionTree.in_edges(subG):                                                             # Determine if this is the root or not
                 p = inEdge[0]
                 childrensDict[p] = {}
-                childrensDict[p]["left"] = subnetwork
+                childrensDict[p]["left"] = subnetwork                               # Rememever the children
                 childrensDict[p]["right"] = siblingSubnetwork
                 overlapDict[p] = metaboliteOverlap
                 if len(metaboliteOverlap)>1:
@@ -1054,7 +1098,6 @@ def getEquivalenceClass(c:list):
     offset=0
     if type(c[0])!=str:
         if metabolicNetwork.nodes[c[0]]["Type"] == "Reaction":
-    # if c[0].startswith("R_"):
             offset = 1
     n = int(len(c)/2)        
     for j in range(n):
@@ -1180,7 +1223,7 @@ def getIntersectingEquivClasses(equivClass:set, E:dict):
 
 def getOutNetwork(outNetwork:nx.DiGraph, inNetwork:nx.DiGraph, startingNode:str, nodeDeletelist:list):
     global globalSubN 
-    newNetwork = deepcopy(globalSubN )
+    newNetwork = deepcopy(globalSubN)
     for n in nodeDeletelist:
         inNode = str(n) + "_in"
         outNode = str(n) + "_out"
@@ -1782,16 +1825,15 @@ globalSubN = nx.DiGraph()
 globalLeftChild = nx.DiGraph()
 globalRightChild = nx.DiGraph()
 
-cycleDict = {}
 cycleLengthDict = {}
-elementaryCircuits = []
 equivClassLengthDict = {}
 E = {}                                                                            # \mathcal{E} im paper
 elemE = {}
-Q = deque()                                                                       # Q im paper
 M = {}                                                                            # M in the draft, Dictionary Key: One! MR-edge only, Value: Set of cycles containing this MR-edge
 circuitIdDict = {}                                                                # Dictionary Key: cycle-identifier (int), Value: Cycle
 circuitIdMrEdgeDict = {}                                                          # Dictionary Key: Cycle-Identifier Value: Set of MR-edges contained in this cycle   
+Q = deque()                                                                       # Q im paper
+elementaryCircuits = []
 speedCores = set()
 noCore = set()
 maxRAM = 0
@@ -1808,7 +1850,6 @@ outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(tree
 file = open(cycleDataPath + species +"/allCycles"+ str(treeCounter) +".txt", "w")
 file.close()
 analysePartitionTree(partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound)
-parameters["cycleDict"] = cycleDict 
 parameters["cycleLengthDict"] = cycleLengthDict
 totalTime = time.time()-timeStamp
 parameters["TotalTime"] = totalTime
