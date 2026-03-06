@@ -774,7 +774,7 @@ def checkAutocatalycity(E:dict):
 def checkEquivalenceClass(c:list, eqClass:set):
     """ checkEquivalenceClass
     
-    On invocation, this function determines information about the vertices 
+    Upon invocation, this function determines information about the vertices 
     and edges of elementary circuits given on the list queue. Importantly,
     elementary circuits vertex and edge-sets (E and E1: only metabolite -> reaction edges) serve 
     as keys and elementary circuits are stored according to equivalence classes
@@ -1125,6 +1125,18 @@ def determineCircuitPropertiesNonMetzler(c:set,  S:np.matrix):
 
 
 def determineStability(T:np.matrix):
+    '''determineStability
+    
+        This function determines the stability of a CS matrix by checking the real parts of its eigenvalues.
+        
+        Parameters
+        ----------
+        :param T: The k x k CS matrix for which stability is to be checked. k is the number of MR-edges.
+        :type T: np.matrix
+        
+        Returns:
+            - unstable: Boolean value indicating whether the circuit is unstable.
+    '''
     k = np.shape(T)[0]
     unstable = False
     if k>=3:
@@ -1144,6 +1156,27 @@ def determineStability(T:np.matrix):
 
 
 def determineTypeOfAutocatalysis(parameters:dict):
+    '''determineTypeOfAutocatalysis
+    
+        Upon invocation this function determines the type of autocatalysis of the identified autocatalytic CS equivalence classes with corresponding Metzler matrices by checking their spectral properties and determinant. The function updates the parameters dictionary with the identified autocatalytic CS equivalence classes with corresponding Metzler matrices in the following lists:
+
+        - autocatalyticMetzlerUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that are Hurwitz-unstable are stored in this list.
+        - autocatalyticMetzlerUnstableInvertibleCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that are Hurwitz-unstable and invertible are stored in this list.
+        - autocatalyticMetzlerZeroDeterminantCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero are stored in this list.
+        - autocatalyticMetzlerZeroDeterminantUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero and are Hurwitz-unstable are stored in this list.
+        - autocatalyticMetzlerZeroDeterminantNotUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero and are not Hurwitz-unstable are stored in this list.
+
+        Parameters
+        ----------
+        :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+        :type parameters: dict  
+
+        Returns:
+            - None, but updates the parameters dictionary with the identified autocatalytic CS equivalence classes with corresponding Metzler matrices in the following lists:
+                - autocatalyticMetzlerUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that are Hurwitz-unstable are stored in this list.
+                - autocatalyticMetzlerUnstableInvertibleCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that are Hurwitz-unstable and invertible are stored in this list.
+                - autocatalyticMetzlerZeroDeterminantCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices that have determinant zero are stored in this list.
+                - autocatalyticMetzlerZeroDeterminantUnstableCycles: All autocatalytic CS equivalence classes with corresponding Metzler matrices'''
     metzlerAutocatalytic = parameters["autocatalyticMetzlerUnstableCycles"]
     metabolicNetwork = parameters["metabolicNetwork"]
     E = parameters["allEquivClasses"]
@@ -1176,6 +1209,27 @@ def determineTypeOfAutocatalysis(parameters:dict):
 
 
 def generateEdgeCycleDict(queue):
+    '''generateEdgeCycleDict
+    Upon invocation this function generates the following datastructures to store information about the identified elementary circuits and their edges and nodes:
+    - edgeCycleDict: Dictionary mapping edges to the set of identifiers of elementary circuits containing this edge. Key: edge, value: set of cycle identifiers of elementary circuits containing this edge.
+    - cycleIDDict: Dictionary mapping cycle identifiers. Key: int (el. circuit identifier), value: cycle (list of vertices representing the cycle).
+    - cycleIDEdgeDict: Dictionary mapping elementary circuit identifiers to the set of edges contained in the corresponding elementary circuit. Key: int (elementary circuit identifier), value: frozenset of edges contained in the corresponding elementary circuit.
+    - cycleIDNodeDict: Dictionary mapping elementary circuit identifiers to the set of nodes contained in the corresponding elementary circuit. Key: int (elementary circuit identifier), value: frozenset of nodes contained in the corresponding elementary circuit.
+    - visitedEdges: Set of frozensets of edges, where each frozenset of edges represents the set of edges contained in an elementary circuit. This set is used to check if a fluffle equivalence class has already been enumerated.
+
+    Parameters
+    ----------
+    :param queue: List of elementary circuits, where each elementary circuit is represented as a list of vertices (metabolite, reaction, metabolite, reaction, ...).
+    :type queue: list
+
+    Returns:
+        - edgeCycleDict
+        - cycleIDDict
+        - cycleIDEdgeDict
+        - cycleIDNodeDict
+        - visitedEdges
+        as described above. 
+    '''
     edgeCycleDict = {}
     cycleIDDict = {}
     cycleIDEdgeDict = {}
@@ -1206,6 +1260,21 @@ def generateEdgeCycleDict(queue):
 
 
 def generateStoichiometricMatrix(parameters:dict, model:libsbml.Model):
+    '''generateStoichiometricMatrix
+    Upon invocation this function generates the stoichiometric matrix S for the given metabolic network and the given lists of metabolites and reactions. The function returns the generated stoichiometric matrix S.
+    
+    Parameters
+    ----------  
+    
+    :param parameters: Central dictionary storing multiple datastructures to avoid the massive transfer of datastructures to different subfunctions.
+    :type parameters: dict  
+    
+    :param model: libsbml Model object representing the metabolic network for which the stoichiometric matrix is to be generated.
+    :type model: libsbml.Model 
+    
+    Returns:
+        - S: Stoichiometric matrix for the given metabolic network
+    '''
     # 0. Read Parameters
     mID = parameters["mID"]
     rID = parameters["rID"]
@@ -1248,7 +1317,21 @@ def generateStoichiometricMatrix(parameters:dict, model:libsbml.Model):
 #############################
 
 
-def generateSubnetwork(subG:dict, metabolicNetwork:dict):
+def generateSubnetwork(subG:dict, metabolicNetwork:nx.DiGraph):
+    '''generateSubnetwork
+        Upon invocation this function generates the subnetwork of the given metabolic network that is induced by the undirected reaction graph of the currently analyzed vertex of the partition tree. The function returns the generated subnetwork and the list of metabolites contained in the subnetwork.
+        
+        Parameters
+        ----------
+        :param subG: Undirected reaction graph of the currently analyzed vertex of the partition tree.
+        :type subG: dict
+        :param metabolicNetwork: The metabolic network for which to generate the subnetwork.
+        :type metabolicNetwork: nx.DiGraph
+        Returns:
+            - subnetwork: The subnetwork of the given metabolic network that is induced by the undirected reaction graph of the currently analyzed vertex of the partition tree.
+            - metabolites: List of metabolites contained in the generated subnetwork.
+        '''
+    
     metabolites = set()
     subGReactions = set(subG.nodes()) 
     for r in subGReactions:
@@ -1263,6 +1346,24 @@ def generateSubnetwork(subG:dict, metabolicNetwork:dict):
 
 
 def getIntersectingCycles(cKey:int, cycleIDEdgeDict:int, edgeCycleDict:dict):
+    '''getIntersectingCycles
+        Upon invocation this function determines the set of elementary circuits that intersect with the currently analyzed fluffle equivalence class by checking which of the edge-set intersections are not empty. The function returns the set of cycles that intersect with the currently analyzed cycle and the set of edges contained in the currently analyzed cycle.
+        
+        Parameters
+        ----------
+
+        :param cKey: Integer representing the identifier of the currently fluffle equivalence class.
+        :type cKey: int 
+        
+        :param cycleIDEdgeDict: Dictionary mapping cycle identifiers to the set of edges contained in the corresponding elementary circuit or fluffle equivalence class. Key: int (cycle identifier), value: frozenset of edges contained in the corresponding elementary circuit or fluffle equivalence class
+        :type cycleIDEdgeDict: dict
+        :param edgeCycleDict: Dictionary mapping edges to the set of cycles they are contained in. Key: edge, value: set of cycle identifiers
+        :type edgeCycleDict: dict
+        
+        Returns:
+            - intersectingCycles: Set of cycles that intersect with the currently analyzed cycle.
+            - edgesC: Set of edges contained in the currently analyzed cycle.
+        '''
     edgesC = cycleIDEdgeDict[cKey]
     intersectingCycles = set()
     for e in edgesC:
@@ -1273,21 +1374,17 @@ def getIntersectingCycles(cKey:int, cycleIDEdgeDict:int, edgeCycleDict:dict):
 
 
 def getEquivalenceClass(c:list):
-    """
-    Classify elementary circuits into equivalence classes according their 
-    vertices and edges.
-
-    On invocation, this function determines information about the vertices 
-    and edges of elementary circuits given on the list queue. Importantly,
-    elementary circuits vertex and edge-sets (E and E1: only metabolite -> reaction edges) serve 
-    as keys and elementary circuits are stored according to equivalence classes
-    invoked by these properteis in different dictionaries.
+    """ getEquivalenceClass
+    
+    Determine the set of MR-edges and thereby the CS equivalence class of a given elementary circuit c. and edges.
     
     Parameters
     ----------
-    c  : list 
-        List of vertices (metabolite, reaction, metabolite, reaction, ...), i.e. an elementary circuit as a list of nodes. is describing.
+    :param c: List of vertices representing an elementary circuit, where the vertices are ordered as follows: metabolite, reaction, metabolite, reaction.
+    :type c: list
 
+    Returns:
+        - mrEdgeSet: Set of MR-edges contained in the given elementary circuit.
     """
 
     # 0. Define Variables
@@ -1318,6 +1415,32 @@ def getEquivalenceClass(c:list):
 
 
 def getIDDicts(metabolites:set, reactions:set):
+    ''' getIDDicts
+    
+        Upon invocation this function generates the following datastructures to store information about the metabolites and reactions of the given metabolic network:
+            - mID: Dictionary mapping metabolite identifiers to integer indices. Key: metabolite identifier (int) from the metabolic network, value: integer index in the list of metabolites, thus the row index in the stoichiometric matrix S.
+            - rID: Dictionary mapping reaction identifiers to integer indices. Key: reaction identifier (int) from the metabolic network, value: integer index in the list of reactions, thus the column index in the stoichiometric matrix S.
+            - iDM: Dictionary mapping integer indices to metabolite identifiers. Key: integer index in the list of metabolites, thus the row index in the stoichiometric matrix S, value: metabolite identifier (int) from the metabolic network.
+            - iDR: Dictionary mapping integer indices to reaction identifiers. Key: integer index in the list of reactions, thus the column index in the stoichiometric matrix S, value: reaction identifier (int) from the metabolic network.
+            - mList: List of metabolite identifiers, where the i-th element of the list corresponds to the metabolite identifier that is mapped to the i-th row of the stoichiometric matrix S.
+            - rList: List of reaction identifiers, where the j-th element of the list corresponds to the reaction identifier that is mapped to the j-th column of the stoichiometric matrix S.
+        
+        Parameters
+        ----------
+            :param metabolites: Set of metabolite identifiers (int) from the metabolic network.
+            :type metabolites: set
+            :param reactions: Set of reaction identifiers (int) from the metabolic network.
+            :type reactions: set
+        
+        Returns:
+            - mID: 
+            - rID: 
+            - iDM:
+            - iDR:
+            - mList:
+            - rList:
+            as described above.
+        '''
     mID, rID, iDM, iDR  = {}, {}, {}, {}
     mList, rList = [], []
     i=0
@@ -1338,22 +1461,31 @@ def getIDDicts(metabolites:set, reactions:set):
 
 
 def getIntersectingEquivClassesParallel(equivClass:set):
-    '''Determine the those equivalence classes (sets of MR-edges) that intersect with the current cycle of interest.
-    
-    Parameters
-    ----------
+    ''' getIntersectingEquivClassesParallel
 
-    equivClass : set
-        Set of MR-edges of the current cycle to check 
+        Upon invocation this function determines the equivalence classes (sets of MR-edges) that intersect with the current CS equivalence class handed to the function. It represents the version of getIntersectingEquivClasses() used in parallel processing of CS equivalence class assmebly.
     
-        circuitIdMrEdgeDict : dictionary
-            Key: cycle identifier (e.g. ckey)
-            Value: set of metabolite-reaction edges 
+        Parameters
+        ----------
 
-        M : dictionary
-            Key: frozenset of metabolite-reaction (MR) edges
-            Value: Set of cycles corresponding exhibiting these MR-edges
-    '''
+        1. Global
+        
+        :param M: Dictionary mapping MR-edges to the CS equivalence classes containing them. Key one MR-edge. Value: Set of CS equivalence classes containing this MR-edge. 
+        :type M: dict
+
+        :param circuitIdMrEdgeDict: Dictionary mapping elementary circuit identifiers to the set of MR-edges contained in the corresponding elementary circuit. Key: el.circuit  identifier (e.g. ckey), value: set of metabolite-reaction edges
+        
+        2. Local
+
+        :param equivClass: Set of MR-edges of the current CS equivalence class
+        :type equivClass: set
+
+    
+        Returns
+            - intersecEquivClasses: List of CS equivalence classes that intersect with equivClass.
+            - changeE: Dictionary that contains intersecting CS equivalence classes that have already been found and values that are going to be updated in the global E dictionary.
+            '''
+    
     global M, circuitIdMrEdgeDict
     intersecEquivClasses = []                                                           # Initiate empty set to 
     changeE = {}
@@ -1378,22 +1510,32 @@ def getIntersectingEquivClassesParallel(equivClass:set):
 
 
 def getIntersectingEquivClasses(equivClass:set, E:dict):
-    '''Determine the those equivalence classes (sets of MR-edges) that intersect with the current cycle of interest.
-    
-    Parameters
-    ----------
+    ''' getIntersectingEquivClasses
 
-    equivClass : set
-        Set of MR-edges of the current cycle to check 
+        Upon invocation this function determines the equivalence classes (sets of MR-edges) that intersect with the current CS equivalence class handed to the function. In contrast to the parallelized version of this function, change are directly written into the global E dictionary, which is impossible in the parallelized version due to inconsistencies upon asynchronous writing and reading operations by multiple processes.
     
-        circuitIdMrEdgeDict : dictionary
-            Key: cycle identifier (e.g. ckey)
-            Value: set of metabolite-reaction edges 
+        Parameters
+        ----------
 
-        M : dictionary
-            Key: frozenset of metabolite-reaction (MR) edges
-            Value: Set of cycles corresponding exhibiting these MR-edges
-    '''
+        1. Global
+        
+        :param M: Dictionary mapping MR-edges to the CS equivalence classes containing them. Key one MR-edge. Value: Set of CS equivalence classes containing this MR-edge. 
+        :type M: dict
+
+        :param circuitIdMrEdgeDict: Dictionary mapping elementary circuit identifiers to the set of MR-edges contained in the corresponding elementary circuit. Key: el.circuit  identifier (e.g. ckey), value: set of metabolite-reaction edges
+        
+        2. Local
+
+        :param equivClass: Set of MR-edges of the current CS equivalence class
+        :type equivClass: set
+
+        :param E: Dictionary mapping CS equivalence classes to their properties.
+        :type E: dict
+        
+    
+        Returns
+            - intersecEquivClasses: List of CS equivalence classes that intersect with equivClass.
+            '''        
     global M 
     global circuitIdMrEdgeDict
     intersecEquivClasses = []                                                           # Initiate empty set to 
@@ -1422,6 +1564,31 @@ def getIntersectingEquivClasses(equivClass:set, E:dict):
 
 
 def getOutNetwork(outNetwork:nx.DiGraph, inNetwork:nx.DiGraph, startingNode:str, nodeDeletelist:list):
+    '''getOutNetwork
+    
+        Upon invocation this function generates the left (right) out- and right (left) in-network of the currently analyzed vertex of the partition tree for the current intersecting metabolite. In this way, only elementary circuits passing the intersecting metabolite in one or the other directtion are enumerated and enumeration of already identified elementary circuits that are completely contained in on the left or right child is avoidewd. The function returns the generated orientied network.
+        
+        Parameters
+        ----------
+        
+        1. Global
+        :param globalSubN: Global variable that is the subnetwork of the currently analyzed vertex of the partition tree.
+
+        :param outNetwork: The network in to which all outgoing edges from the intersecting metabolite point.
+        :type outNetwork: nx.DiGraph
+
+        :param inNetwork: The network from which all incoming edges to the intersecting metabolite originate.
+        :type inNetwork: nx.DiGraph
+
+        :param startingNode: Currently considered intersecting metabolite. Also starting point for the enumeration of elementary circuits from which to start the enumeration.
+        :type startingNode: str
+
+        :param nodeDeletelist: A list of nodes that are deleted from the network and substituted by two nodes, one that has only in- and outgoing edges in the in-network and one that has only in- and outgoing edges in the out-network.
+        :type nodeDeletelist: list
+        
+        Returns:
+            - newNetwork: The generated orientied network.
+        '''
     global globalSubN 
     newNetwork = deepcopy(globalSubN)
     for n in nodeDeletelist:
@@ -1452,13 +1619,48 @@ def getOutNetwork(outNetwork:nx.DiGraph, inNetwork:nx.DiGraph, startingNode:str,
 
 
 def processCircuitsAll(circuits, description:str):
-    global parallelBool
-    global equivClassLengthDict
-    global cycleLengthDict
-    global species
-    global elementaryCircuits
-    global fluffleBool
-    global noThreads
+    '''processCircuitsAll
+    
+        Upon invocation this function processes the enumreated elementary circuits either in parallel or not. It calls analyzeElementaryCircuits() to determine their CS equivalence class (MR-edges), compute the corresponding CS matrix, determine if it is Metzler or not and determine its spectral properties.
+
+        Parameters
+        ----------
+
+        1. Global
+
+        :param parallelBool: Boolean value indicating whether to process the circuits in parallel or not.
+        :type parallelBool: bool
+
+        :param equivClassLengthDict: Dictionary mapping the length of the CS equivalence class (number of MR-edges) to the number of identified CS equivalence classes with this length. Key: int (length of CS equivalence class), value: int (number of identified CS equivalence classes with this length).
+        :type equivClassLengthDict: dict
+
+        :param cycleLengthDict: Dictionary mapping the length of the elementary circuits (number of vertices) to the number of identified elementary circuits with this length. Key: int (length of elementary circuit), value: int (number of identified elementary circuits with this length).
+        :type cycleLengthDict: dict
+
+        :param species: String representing the currently analyzed species, which is used for the description of the tqdm progress bar.
+        :type species: str
+
+        :param elementaryCircuits: List of identified elementary circuits, where each elementary circuit is represented as a list of vertices (metabolite, reaction, metabolite, reaction, ...).
+        :type elementaryCircuits: list
+
+        :fluffleBool: Boolean value indicating if also fluffle equivalence classes should be enumerated. In this case the elementary circuits are stored in the list elementary circuits. Otherwise not.
+        :type fluffleBool: bool
+
+        :param noThreads: Integer representing the number of threads (Mac) or processes (Linux) to use for parallel processing. Only used if parallelBool is True.
+        :type noThreads: int
+
+        2. Local
+
+        :param circuits: Generator obtained from nx.simple_cycles().
+        :type circuits: generator
+
+        :param description: String that is used as description for the tqdm progress bar.
+        :type description: str  
+
+        Returns:
+            - circuitCounter: Integer representing the number of identified new CS equivalence classes.        
+    '''
+    global parallelBool, equivClassLengthDict, cycleLengthDict, species, elementaryCircuits, fluffleBool, noThreads
     #global allCircuitsPath
     breakBool = False
     n=0
@@ -1520,6 +1722,35 @@ def processCircuitsAll(circuits, description:str):
 
 
 def processCircuits(circuits, leaf:bool, left:bool, circuitCounter:int):
+    ''' processCircuits
+
+        Distributor function: Upon invocation this function calls subfunctions to process the elementary circuits for identifying all autocatalytic CS matrices with irreducible Metzler part (processCircuitsCores()) or only cores (processCircuitsCores()) depending on the value of the global variable coreBool. The function returns the number of identified new CS equivalence classes after processing the given elementary circuits.
+
+        Parameters
+        ----------
+
+        1. Global
+
+        :param coreBool: Boolean value indicating whether to process only cores or all elementary circuits.
+        :type coreBool: bool
+
+        2. Local
+
+        :param circuits: Generator obtained from nx.simple_cycles() representing the elementary circuits to process.
+        :type circuits: generator
+
+        :param leaf: Boolean value indicating whether the currently analyzed vertex of the partition tree is a leaf or not. This is used for the description of the tqdm progress bar.
+        :type leaf: bool
+
+        :param left: Boolean value indicating whether the currently analyzed vertex of the partition tree is a left child or not. This is used for the description of the tqdm progress bar.
+        :type left: bool
+
+        :param circuitCounter: Integer representing the number of identified new CS equivalence classes before processing the given elementary circuits. This is updated by the function and returned after processing the given elementary circuits.
+        :type circuitCounter: int
+
+        Returns:
+            - circuitCounter: Integer representing the number of identified new CS equivalence classes after processing the given elementary circuits.
+    '''
     global coreBool
     if leaf == True:
         description = "Analyzing elementary circuits for leaf for"
@@ -1538,6 +1769,35 @@ def processCircuits(circuits, leaf:bool, left:bool, circuitCounter:int):
 
 
 def readArguments():
+    ''' readArguments
+    
+        Upon invocation this function reads the command line arguments and stores them in variables. The function returns the following variables: 
+        - inputXMLFilePath: String representing the file path to the original xml-file of the metabolic network, which is used for the generation of the stoichiometric matrix S and the corresponding dictionaries mapping metabolite and reaction identifiers to integer indices and vice versa.
+        - inputPickleFile: String representing the file path to the input pickle file, which contains all the necessary data from partitionNetwork.py
+        - circuitBound: Integer representing the maximum number of MR-edges contained in a CS equivalence classes corresponding to an elementary circuit.
+        - checkNonMetzler: Boolean value indicating whether to check also CS equivalence classes with non-Metzler matrices for autocatalysis or not. If False, only CS equivalence classes with Metzler matrices are checked for autocatalysis.
+        - noThreads: Integer representing the number of threads (Mac) or processes (Linux) to use for parallel processing. Only used if parallelBool is True.
+        - equviClassBound: Integer representing the maximum number of MR-edges contained in a largewr CS equivalence class. 
+        - fluffleBool: Boolean value indicating whether to also enumerate fluffle equivalence classes or not. If True, also fluffle equivalence classes are enumerated.
+        - coreBool: Boolean value indicating whether to only identify cores or all autocatalytic CS equivalence classes. If True, only cores are identified. If False, all CS equivalence classes with autocatalytic CS matrices with irreducible Metzler part are identified.
+        - parallelBool: Boolean value indicating whether to parallel processing should be enforced for processing of elementary circutis and assembly of larger CS equivalence classes.
+        - species: String representing the currently analyzed species, which is used for the description of the tqdm progress bar.
+        - outputPath: String representing the file path to the output directory in which all collected data is ought to be stored.
+
+        Returns:
+            - inputXMLFilePath
+            - inputPickleFile
+            - circuitBound
+            - checkNonMetzler
+            - noThreads
+            - equviClassBound
+            - fluffleBool
+            - coreBool
+            - parallelBool
+            - species
+            - outputPath
+            as described above.
+        '''
     inputBool = False
     xmlBool = False
     circuitBool = False
@@ -1601,7 +1861,31 @@ def readArguments():
 #############################
 
 
-def writeDataToListsAndDicts(parameters, aM, nAM, nMAC, nMnAC):
+def writeDataToListsAndDicts(parameters:dict, aM:list, nAM:list, nMAC:list, nMnAC:list):
+    ''' writeDataToListsAndDicts
+    Upon invocation this function writes the data obtained from the analysis of CS equivalence classes into the corresponding entries of the parameters dictionary
+    
+    Parameters:
+        
+        :param parameters: The dictionary containing the parameters.
+        :type parameters: dict
+
+        :param aM: List with CS equivalence classes and corresponding autocatalytic Metzler CS matrices (equivalently Hurwitz-unstable).
+        :type aM: list
+
+        :param nAM: List with CS equivalence classes and corresponding non-autocatalytic Metzler CS matrices.
+        :type nAM: list
+
+        :param nMAC: List with CS equivalence classes and corresponding non-Metzler autocatalytic CS matrices.
+        :type nMAC: list
+
+        :param nMnAC: List with CS equivalence classes and corresponding non-Metzler non-autocatalytic CS matrices.
+        :type nMnAC: list
+    
+        Returns:
+            - None, but the function updates the parameters dictionary by writing the data obtained from the analysis of CS equivalence classes into the corresponding entries of the parameters dictionary.
+    '''
+    
     # 1. Metzler
     parameters["autocatalyticMetzlerUnstableCycles"] += aM
     parameters["nonAutocatalyticMetzlerCycles"] += nAM
@@ -1615,6 +1899,17 @@ def writeDataToListsAndDicts(parameters, aM, nAM, nMAC, nMnAC):
 
 
 def writeDictionaryFromStoichiometricMatrix(S:np.matrix):
+    ''' writeDictionaryFromStoichiometricMatrix
+        Upon invocation this function writes the stoichiometric matrix S into a dictionary, where the keys are tuples of the form (i,j) representing the row and column indices of the corresponding entry in the stoichiometric matrix S and the values are the corresponding entries of the stoichiometric matrix S. The function returns the generated dictionary.
+        
+        Parameters
+        ----------
+        :param S: Stoichiometric matrix S
+        :type S: np.matrix
+
+        Returns:
+            - SDict: Dictionary where the keys are tuples of the form (i,j) representing the row and column indices of the corresponding entry in the stoichiometric matrix S and the values are the corresponding entries of the stoichiometric matrix S.
+        '''
     SDict = {}
     for i in range(np.shape(S)[0]):
         for j in range(np.shape(S)[1]):
@@ -1625,6 +1920,22 @@ def writeDictionaryFromStoichiometricMatrix(S:np.matrix):
 
 
 def writeStoichiometricMatrixOutput(parameters:dict, path:str):
+    ''' writeStoichiometricMatrixOutput
+        Upon invocation this function writes the stoichiometric matrix S into a text file, where each line corresponds to a row of the stoichiometric matrix S and the entries are separated by spaces. The function does not return anything but writes the stoichiometric matrix S into a text file at the specified path. Was implemented for comparison with Gagrani et al., but is not used in the current version of the code.
+        
+        Parameters
+        ----------
+        
+        :param parameters: The dictionary containing the parameters, which also contains the stoichiometric matrix S under the key "StoichiometricMatrix".
+        :type parameters: dict
+
+        :param path: String representing the file path to the output text file in which the stoichiometric matrix S is ought to be stored.
+        :type path: str
+
+        Returns:
+            - None, but the function writes the stoichiometric matrix S into a text file at the specified path.
+        '''
+
     S = parameters["StoichiometricMatrix"]
     with open(path, "w") as file:
         for i in range(sp.shape(S)[0]):
@@ -1650,6 +1961,22 @@ def writeStoichiometricMatrixOutput(parameters:dict, path:str):
 
 
 def analyzeElementaryCircuitsCore(c:list):
+    ''' analyzeElementaryCircuitsCore
+        Upon invocation this function determines the CS equivalence class of a given elementary circuit c, computes the corresponding CS matrix, determines if it is Metzler or not and determines its spectral properties. The function returns the following variables:
+        
+        Parameters
+        ----------
+        
+        :param c: List of vertices representing an elementary circuit, where the vertices are ordered as follows: metabolite, reaction, metabolite, reaction.
+        :type c: list
+        
+        Returns:
+            - remove: Boolean value indicating whether the currently analyzed elementary circuit should be discarded from further analysis, i.e. if it contains a duplicate of an intersecting metabolite that was considered before and is now present in _in and _out version.
+            - c: The input elementary circuit, which is returned for further processing if remove is False.
+            - mrEdgeSet: Set of MR-edges contained in the given elementary circuit
+            - unstable: Boolean value indicating whether the CS matrix corresponding to the given elementary circuit is Hurwitz-unstable or not. Only defined if remove is False.
+            - metzler: Boolean value indicating whether the CS matrix corresponding to the given elementary circuit is Metzler or not. Only defined if remove is False.
+    '''
     # Compute stochastic matrix and check metzler a
     mrEdgeSet = getEquivalenceClass(c)
     remove = determineDuplicates(c)
@@ -1665,6 +1992,29 @@ def analyzeElementaryCircuitsCore(c:list):
 
 
 def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
+    ''' assembleCores
+
+        Upon invocation this function assembles larger CS equivalence classes, however, with the aim to identify only autocatalytic cores. It is the version for enumerating autocatalytic cores of assemebleLargerEquivalenceClasses(). Done in parallel or not depending on the users choice. 
+        
+        Parameters
+        ----------
+
+        :param parameters: The dictionary containing the parameters, which also contains the global variables and data structures necessary for the assembly of larger CS equivalence classes.
+        :type parameters: dict
+
+        :param Q: Deque containing the CS equivalence classes that are queued for assembly. 
+        :type Q: deque
+
+        :param E: Dictionary mapping CS equivalence classes to their properties, which also contains the global variables and data structures necessary for the assembly of larger CS equivalence classes. Key: frozenset of MR-edges representing a CS equivalence class, value: dictionary containing the properties of the corresponding CS equivalence class.
+        :type E: dict
+
+        :param speedCores: Set of candidates for autocatalytic cores that have been identified.
+        :type speedCores: set
+
+        Returns:
+            - None, but the function updates the global variables and data structures necessary for the assembly of larger CS equivalence classes by assembling larger CS equivalence classes and identifying autocatalytic cores among them. 
+
+        '''
     cutoff = parameters["cutoffLargerCycles"]
     while True:
         if len(speedCores)>1e4:
@@ -1737,6 +2087,49 @@ def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
 
 
 def callAssembleCythonCores(equivClass:frozenset, equivClassValues:dict, cutoff:int):
+    ''' callAssembleCythonCores
+
+        Version of callAssembleCython() to detect autocatalytic cores. The only difference is that this function calls assembleCythonCores() instead of assembleCython() and that the global variables and data structures used in assembleCythonCores() are those corresponding to the assembly of cores, which are also used in the parallelized version of assembleCores().
+
+        Parameters
+    ----------
+
+    1. Global 
+
+    :param elemE: Storing CS equivalence classes for elementary circuits as keys with additional information on the equivalenc class in a dictionary as value. 
+    :type elemE: dict
+
+    :param M: Dictionary storing the CS equivlance classes containing a particular MR-edge. Key: One single MR-edge, value: Set of CS equivalence classes containing this MR-edge. 
+    :type M: dict
+
+    :param circuitIdMrEdgeDict: Dictionary storing the MR-edges corresponding to a certain elementary circuit. Key: int (elementary circuit identifier), value: frozenset of MR-edges of the key.
+    :type circuitIdMrEdgeDict: dict
+
+    :param bigS: Stoichiometric matrix S of the original metabolic network as a numpy array.
+    :type bigS: np.array
+
+    :param mID: Dictionary mapping metabolite identifiers to integer indices corresponding to the row indices of the stoichiometric matrix S. Key: metabolite identifier, value: integer index corresponding to the row index of the stoichiometric matrix S.
+    :type mID: dict
+
+    :param rID: Dictionary mapping reaction identifiers to integer indices corresponding to the column indices of the stoichiometric matrix S. Key: reaction identifier, value: integer index corresponding to the column index of the stoichiometric matrix S.
+    :type rID: dict
+
+    2. Local
+
+    :param equivClass: Frozenset representing the currently analyzed equivalence class.
+    :type equivClass: frozenset
+
+    :param equivClassValues: Dictionary storing the information on the currently analyzed equivalence class. Key: "MR", "RM", "Predecessors", "Leaf", "Autocatalytic", "Metzler", "Update", "Visited", "Core", values: corresponding values
+    :type equivClassValues: dict
+
+    :param cutoff: Maximum length of CS equivalence classes that are assembled.
+    :type cutoff: int
+
+    Returns:
+        - equivClass: The input equivClass, which is returned for further processing.
+        - newEquivClasses: Dictionary storing the new equivalence classes that are assembled from the currently analyzed equivalence class and all overlapping CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+        - change: Dictionary storing the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel(). Keys: frozensets of MR-edges, value: Dictionary with different information and datastructures that are updated by the assembly of the currently analyzed equivalence class with all overlapping CS equivalence classes. 
+    '''
     global elemE, M, circuitIdMrEdgeDict, bigS, mID, rID
     newEquivClasses, change = assembleCythonCores(equivClass, equivClassValues, elemE, M, circuitIdMrEdgeDict, cutoff, bigS, mID, rID)
     return equivClass, newEquivClasses, change
@@ -1745,39 +2138,50 @@ def callAssembleCythonCores(equivClass:frozenset, equivClassValues:dict, cutoff:
 
 
 def checkEquivalenceClassCore(c, eqClass, autocatalytic):
-    """
-    Classify elementary circuits into equivalence classes according their 
-    vertices and edges.
+    """ checkEquivalenceClassCore
 
-    On invocation, this function determines information about the vertices 
-    and edges of elementary circuits given on the list queue. Importantly,
-    elementary circuits vertex and edge-sets (E and E1: only metabolite -> reaction edges) serve 
-    as keys and elementary circuits are stored according to equivalence classes
-    invoked by these properteis in different dictionaries.
+    Version of checkEquivalenceClass for detecting autocartalytic cores. The only difference is that this function uses the global variables and data structures corresponding to the assembly of cores, which are also used in the parallelized version of assembleCores(). Upon invocation, this function determines information about the vertices 
+    and edges of elementary circuits given on the list queue. Importantly, elementary circuits vertex and edge-sets (E and E1: only metabolite -> reaction edges) serve 
+    as keys and elementary circuits are stored according to equivalence classes invoked by these properteis in different dictionaries.
     
     Parameters
     ----------
-    Q : list
-        Contains all elementary circuits enumerated by the Johnsons-Algorithm in 
-        def(analysePartitionTree).
-
-    E : dict 
-        Key: (frozen sets) of equivalence classes composed of MR-edges
-        Value: tuple(metabolites, reactions)
-
-    M : dict
-        Key: One MR-edge
-        Value: Set of elementary circuits containing this particular MR-edge
-
-    cycleIDDict : dict
-        Key: Integer (subsequently termed cycle-identifier)
-        Value: Elementary circuit
     
-    circuitIdMrEdgeDict : dict
-        Key: cycle-identifier
-        Value: Set of MR-edges
+    1. Global
+    
+        :param E: Dictionary designated to store all CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+        :type E : dict 
 
+        :param Q: Contains all elementary circuits enumerated by the Johnsons-Algorithm from def(analysePartitionTree).
+        :type Q: list
+    
+        :param M: Dictionary storing the CS equivlance classes containing a particular MR-edge. Key: One single MR-edge, value: Set of CS equivalence classes containing this MR-edge. 
+        :type M: dict  
+
+        :param circuitIdDict: Dictionary mapping cycle identifiers to elementary circuits. Key: int (cycle identifier), value: elementary circuit
+        :type cycleIDDict: dict
+
+        :param circuitIdMrEdgeDict: Dictionary mapping cycle identifiers to the set of MR-edges contained in the corresponding elementary circuit. Key: int (cycle identifier), value: frozenset of MR-edges contained in the corresponding elementary circuit
+        :type circuitIdMrEdgeDict: dict
+
+        :param speedCores: Set of candidates for autocatalytic cores that have been identified.
+        :type speedCores: set
+
+    2. Local
+
+        :param c: List of vertices representing an elementary circuit.
+        :type c: list
+
+        :param eqClass: Set of MR-edges contained in the elementary circuit represented by c.
+        :type eqClass: set
+
+        :param autocatalytic: Boolean value indicating whether the CS matrix corresponding to the elementary circuit represented by c is autocatalytic or not.
+        :type autocatalytic: bool
+
+    Returns:
+        - Boolean value indicating whether the equivalence class of the currently analyzed elementary circuit has already been added to the global variable E or not. If it has not been added, the function adds the equivalence class to E and updates the global variables M, circuitIdDict, circuitIdMrEdgeDict with the information on the currently analyzed elementary circuit and its equivalence class. If it has already been added, the function returns False and does not update any global variable.
     """
+    
     # 0. Read Variables
     global E                                                                        # \mathcal{E} im paper
     global Q 
