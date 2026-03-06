@@ -82,6 +82,7 @@ def analyzeCycles(G:nx.Graph, analyzeDict:dict, overlapDict:dict, childrensDict:
     # 0.2 assign values
     globalSubN = subN                                                                                   # Set th global variable globalSubN to the currently analyzed subnetwork, required for parallelization
     circuitCounter = 0
+    thousands = 1
     if analyzeDict[G] == True:                                                                          # So, if you have to analyze the network
         if G in leaves:                                                                                 # Determine if it is a leaf
             if len(E)>0:
@@ -424,6 +425,39 @@ def analysePartitionTree(partitionTree:nx.DiGraph, siblings:dict, leaves:set, uR
 
 
 def callAssembleCython(equivClass:frozenset, equivClassValues:dict, cutoff:int):
+    ''' CallAssembleCython
+
+    Upon invocation this function calls the cython function assembleCython() to assemble larger CS equivalence classes. The cython function is required to speed up the assembly of larger CS equivalence classes, which is the most time consuming part of the algorithm. The function returns the new equivalence classes and a dicitonary that records the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel().
+
+    Parameters
+    ----------
+
+    1. Global 
+
+    :param elemE: Storing CS equivalence classes for elementary circuits as keys with additional information on the equivalenc class in a dictionary as value. 
+    :type elemE: dict
+
+    :param M: Dictionary storing the CS equivlance classes containing a particular MR-edge. Key: One single MR-edge, value: Set of CS equivalence classes containing this MR-edge. 
+    :type M: dict
+
+    :param circuitIdMrEdgeDict: Dictionary storing the MR-edges corresponding to a certain elementary circuit. Key: int (elementary circuit identifier), value: frozenset of MR-edges of the key.
+    :type circuitIdMrEdgeDict: dict
+
+    2. Local
+
+    :param equivClass: Frozenset representing the currently analyzed equivalence class.
+    :type equivClass: frozenset
+
+    :param equivClassValues: Dictionary storing the information on the currently analyzed equivalence class. Key: "MR", "RM", "Predecessors", "Leaf", "Autocatalytic", "Metzler", "Update", "Visited", "Core", values: corresponding values
+    :type equivClassValues: dict
+
+    :param cutoff: Maximum length of CS equivalence classes that are assembled.
+    :type cutoff: int
+
+    Returns:
+        - newEquivClasses: Dictionary storing the new equivalence classes that are assembled from the currently analyzed equivalence class and all overlapping CS equivalence classes. Keys: frozensets of MR-edges, value: dictionary with different information and datastructures. As an example: {"MR": mr, "RM": rm, "Predecessors": set(), "Leaf": True, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}. mr and rm are again dictionaries specifying the correspondence between metabolites and reactions for metabolite-to-reaction and reaction-to-metabolite edges, respectively.
+        - change: Dictionary storing the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel(). Keys: frozensets of MR-edges, value: Dictionary with different information and datastructures that are updated by the assembly of the currently analyzed equivalence class with all overlapping CS equivalence classes. 
+    '''
     global elemE, M, circuitIdMrEdgeDict
     newEquivClasses, change = assembleCython(equivClass, equivClassValues,  elemE, M, circuitIdMrEdgeDict, cutoff)
     return newEquivClasses, change
@@ -431,21 +465,24 @@ def callAssembleCython(equivClass:frozenset, equivClassValues:dict, cutoff:int):
 #############################
 
 
-def assemble(equivClass:frozenset, equivClassValues:dict, cutoff:int):
-    global elemE
-    intersecEquivClasses, changeE = getIntersectingEquivClassesParallel(equivClass)
-    newEquivClasses = {}
-    for interEqCl in intersecEquivClasses:
-        newEquivClass = equivClass | interEqCl
-        if len(newEquivClass)<=cutoff:
-            newFrozen = frozenset(newEquivClass)
-            interEquivClassValues = elemE[interEqCl]
-            plausible, newMR = checkMatch(equivClassValues, interEquivClassValues)
-            if plausible:
-                newEquivClasses[newFrozen] = {"MR":newMR, "RM": 0, "Predecessors": {equivClass, interEqCl}, "Leaf": False, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}
-    return newEquivClasses, changeE
-#############################
-############################# 
+# def assemble(equivClass:frozenset, equivClassValues:dict, cutoff:int):
+#     '''Assemble
+#         Upon invocation this function assembles larger CS equivalence classes from the currently analyzed equivalence class and all overlapping CS equivalence classes. The function is required to speed up the assembly of larger CS equivalence classes, which is the most time consuming part of the algorithm. The function returns the new equivalence classes and a dicitonary that records the changes in already existing equivalence classes for later use in assembleLargerEquivClassesParallel().
+#     '''
+#     global elemE
+#     intersecEquivClasses, changeE = getIntersectingEquivClassesParallel(equivClass)
+#     newEquivClasses = {}
+#     for interEqCl in intersecEquivClasses:
+#         newEquivClass = equivClass | interEqCl
+#         if len(newEquivClass)<=cutoff:
+#             newFrozen = frozenset(newEquivClass)
+#             interEquivClassValues = elemE[interEqCl]
+#             plausible, newMR = checkMatch(equivClassValues, interEquivClassValues)
+#             if plausible:
+#                 newEquivClasses[newFrozen] = {"MR":newMR, "RM": 0, "Predecessors": {equivClass, interEqCl}, "Leaf": False, "Autocatalytic": False, "Metzler": True, "Update": False, "Visited": False, "Core": False}
+#     return newEquivClasses, changeE
+# #############################
+# ############################# 
 
 
 def assembleLargerEquivClassesParallel(parameters:dict, Q: deque, E:dict, equivClassLengthDict:dict):
