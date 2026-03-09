@@ -2016,44 +2016,50 @@ def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
 
         '''
     cutoff = parameters["cutoffLargerCycles"]
+    print(len(speedCores))
     while True:
-        if len(speedCores)>1e4:
+        if len(speedCores)>1e1:
             maxVal = min(int(2e12/len(Q)), len(Q))
-            with concurrent.futures.ProcessPoolExecutor(max_workers=noThreads) as executor:
-                for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCythonCores, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = False):
-                    Q.popleft()
-                    try:
-                        equivClass, newEquivClasses, change  = f.result()
-                        #Subset relationships
-                        for c, cValue in change:
-                            eValue = E[c]
-                            eValue["Predecessors"].update(cValue["Predecessors"])
-                            if "Core" in cValue:
-                                eValue["Core"] = cValue["Core"]
-                            if "Leaf" in cValue:
-                                eValue["Leaf"]= cValue["Leaf"]
-                        for newEquiv, newValues in newEquivClasses.items():
-                            newFrozen = frozenset(newEquiv)
-                            if newFrozen in E:
-                                eValue = E[newFrozen]
-                                eValue
-                                if newValues["Leaf"]==False:
-                                    eValue["Leaf"]==False
-                                if newValues["Core"]==False:
-                                    eValue["Core"]==False
-                                    speedCores.discard(newFrozen)
+            if sys.platform.startswith("linux"):
+                executor = concurrent.futures.ProcessPoolExecutor(max_workers=noThreads)
+            elif sys.platform == "darwin":
+                executor = concurrent.futures.ThreadPoolExecutor(max_workers=noThreads)
+            else:
+                executor = concurrent.futures.ProcessPoolExecutor(max_workers=noThreads)
+            for f in tqdm(concurrent.futures.as_completed(executor.submit(callAssembleCythonCores, Q[i], E[Q[i]], cutoff) for i in range(maxVal)), total=maxVal, leave = False):
+                Q.popleft()
+                try:
+                    equivClass, newEquivClasses, change  = f.result()
+                    #Subset relationships
+                    for c, cValue in change:
+                        eValue = E[c]
+                        eValue["Predecessors"].update(cValue["Predecessors"])
+                        if "Core" in cValue:
+                            eValue["Core"] = cValue["Core"]
+                        if "Leaf" in cValue:
+                            eValue["Leaf"]= cValue["Leaf"]
+                    for newEquiv, newValues in newEquivClasses.items():
+                        newFrozen = frozenset(newEquiv)
+                        if newFrozen in E:
+                            eValue = E[newFrozen]
+                            eValue
+                            if newValues["Leaf"]==False:
+                                eValue["Leaf"]==False
+                            if newValues["Core"]==False:
+                                eValue["Core"]==False
+                                speedCores.discard(newFrozen)
+                        else:
+                            E[newFrozen]=newValues
+                            if newValues["Autocatalytic"]==False:
+                                if len(newEquiv)<cutoff:
+                                    Q.append(newFrozen)
                             else:
-                                E[newFrozen]=newValues
-                                if newValues["Autocatalytic"]==False:
-                                    if len(newEquiv)<cutoff:
-                                        Q.append(newFrozen)
-                                else:
-                                    speedCores.add(newFrozen)
-                        # New cores
-                        
-                    except Exception as exc:
-                        print('%r generated an exception: %s', exc)
-                        print(traceback.format_exc())
+                                speedCores.add(newFrozen)
+                    # New cores
+                    
+                except Exception as exc:
+                    print('%r generated an exception: %s', exc)
+                    print(traceback.format_exc())
         else:
             equivClass = Q.popleft()
             intersecEquivClasses= getIntersectingEquivClassesCores(equivClass, E)
@@ -2510,6 +2516,7 @@ if not os.path.exists(cycleDataPath+species):
     os.makedirs(cycleDataPath+species)
 
 treeCounter = int(inputPickleFile.split("partitionTree")[1].split(".pkl")[0])
+
 # writeStoichiometricMatrixOutput(parameters, allCircuitsPath+species +"/"+"stoichiometricMatrix"+str(treeCounter)+".txt")
 outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(treeCounter) + ".pkl"
 
