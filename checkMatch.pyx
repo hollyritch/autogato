@@ -194,10 +194,11 @@ def getIntersectingEquivClassesParallelCython(frozenset equivClass, dict M, dict
 #                               Cores                                     #
 # ------------------------------------------------------------------------#
 
+
 def assembleCythonCores(frozenset equivClass, dict equivClassValues, dict elemE, dict M, dict circuitIdMrEdgeDict, int cutoff, S, dict mID, dict rID):
     '''assembleCythonCores
 
-    Upon invocation this function assembles new equivalence classes from a given class by finding intersecting equivalence classes and checking whether the MR relationship is consistent with the new class. This function is the version designated for autocatalytic cores only instead of finding all CS equivalence classes with corresponding autocatalytic CS matrix with irreducible Metzler part.
+    Upon invocation this function assembles new equivalence classes from a given class by finding intersecting equivalence classes and checking whether the MR relationship is consistent with the new class. This function is the version of assembleCython designated for autocatalytic cores only instead of finding all CS equivalence classes with corresponding autocatalytic CS matrix with irreducible Metzler part.
 
     Parameters
     ----------
@@ -375,8 +376,6 @@ def determineStabilityCython(T:np.matrix):
     cdef object sM
     cdef object lamda 
     
-    unstable = determineAutocatalycityLP(T)
-
     if k>=3:
         try:
             sM = sc.sparse.csr_matrix(T)
@@ -406,21 +405,29 @@ def determineStabilityCython(T:np.matrix):
 
 
 def getIntersectingEquivClassesParallelCythonCores(frozenset equivClass, dict equivClassValues, dict M, dict circuitIdMrEdgeDict, dict elemE):
-    '''Determine the those equivalence classes (sets of MR-edges) that intersect with the current cycle of interest.
-    
+    '''getIntersectingEquivClassesParallelCythonCores
+
+        Upon invocation this function determines those equivalence classes (sets of MR-edges) that intersect with the current cycle of interest. Version of getIntersectingEquivClassesParallel for autocatalytic cores only instead of finding all CS equivalence classes with corresponding autocatalytic CS matrix with irreducible Metzler part.
+
     Parameters
-    ----------
+    ----------  
+        :param equivClass: Set of MR-edges of the current cycle to check.
+        :type equivClass: frozenset
 
-    equivClass : set
-        Set of MR-edges of the current cycle to check 
-    
-        circuitIdMrEdgeDict : dictionary
-            Key: cycle identifier (e.g. ckey)
-            Value: set of metabolite-reaction edges 
+        :param M: Dictionary mapping each MR-edge to the set of circuits containing it.
+        :type M: dict
 
-        M : dictionary
-            Key: frozenset of metabolite-reaction (MR) edges
-            Value: Set of cycles corresponding exhibiting these MR-edges
+        :param circuitIdMrEdgeDict: Dictionary mapping each circuit identifier to the set of MR-edges contained in this circuit.
+        :type circuitIdMrEdgeDict: dict
+
+    Returns
+    -------
+
+        :return intersecEquivClasses: List of equivalence classes intersecting with the current class.
+        :rtype intersecEquivClasses: list
+
+        :return changeE: Dictionary of equivalence classes whose values have been changed due to the assembly of new equivalence classes
+        :rtype changeE: dict
     '''
     
     cdef list intersecEquivClasses = []
