@@ -75,7 +75,7 @@ Again you have multiple options:
 
 ## 3.3 Output
 
-The output can be found in the pickle files, NOT in the allCycles.txt files. I will remove this feature, it was implemented originally for analysis purposes, but saving all elementary circuits/all fluffles is infeasible, even if writing them on the hard drive.
+The output can be found in the pickle files, e.g., partitionTree0.pkl, partitionTree1.pkl, etc. BUT NOT in the allCycles.txt files. I will remove this feature. It was originally implemented for analysis, but saving all elementary circuits/all fluffles isn't feasible, even if we write them to disk.
 
 ## 3.4 Test usage
 
