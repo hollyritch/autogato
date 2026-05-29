@@ -940,9 +940,10 @@ def computeSubstochasticMatrixForSetOfMREdges(parameters:dict, newEquivClass:set
             subS[i][j] = S[mIDRow, rIDCol]
             if i != j and subS[i][j]<0:
                 metzler = False
-            if i==j:
-                if subS[i][j]>=0:
-                    sys.exit("ERRRRRRORR, CS matrix is not a CS matrix")
+            if len(subS)>1:
+                if i==j:
+                    if subS[i][j]>0:
+                        sys.exit("ERRRRRRORR, CS matrix is not a CS matrix")
     return subS, metzler
 #############################
 #############################
