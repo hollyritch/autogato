@@ -169,17 +169,18 @@ for i in tqdm(range(len(wCCList)), desc="Weakly connected components"):
                 s, Q, nodes = partitionComputations.computePartitioning(reactionNetwork)
                 if Q<=0:                                              # If Q == 0 or smaller don't partition
                     leaves.add(uRN)
-                    continue
-                partitionComputations.continuePartitioning(s, nodes, uRN, partitionTree, cutOff, siblings, leaves, reactionNetwork, noThreads)
+                else:
+                    partitionComputations.continuePartitioning(s, nodes, uRN, partitionTree, cutOff, siblings, leaves, reactionNetwork, noThreads)
 
                 partitionTreePath = "./PickleFiles/" + outputPickleFiles+ "/partitionTree"+str(treeCounter) + ".pkl"
                 if not os.path.exists("./PickleFiles"):
                     os.makedirs("./PickleFiles")
                 if not os.path.exists("./PickleFiles/"+outputPickleFiles):
                     os.makedirs("./PickleFiles/"+outputPickleFiles)
-                
                 with open(partitionTreePath, "wb") as file:
                     pickle.dump((parameters, partitionTree, siblings, leaves, uRN, usefulNetwork), file)
+                    file.flush()
+                    os.fsync(file.fileno())
                     treeCounter +=1
-                    file.close()
 
+                
