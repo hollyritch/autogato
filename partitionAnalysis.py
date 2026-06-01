@@ -2017,7 +2017,6 @@ def assembleCores(parameters:dict, Q:deque, E:dict, speedCores:set):
 
         '''
     cutoff = parameters["cutoffLargerCycles"]
-    print(len(speedCores))
     while True:
         if len(speedCores)>1e1:
             maxVal = min(int(2e12/len(Q)), len(Q))

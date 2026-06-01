@@ -342,7 +342,7 @@ def determineAutocatalycityLP(S:np.matrix):
     cdef cnp.ndarray c = np.zeros((1, k), dtype=float)
     cdef list bounds = []
 
-    print("Determining autocatalyticity via LP")
+    
     b = np.zeros((k,1))    
     c = np.ones((1,k))
     for i in range(k):
