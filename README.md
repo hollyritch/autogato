@@ -1,3 +1,7 @@
+# 0. Contact
+
+Upon requests, I added now some help for analysing your generated data. If you need anything, don't hesitate to contact me via richard@bioinf.uni-leipzig.de. Many functions that could help in the analysis of your data are already implemented as part of the package, so I can easily extract them and add them to the analysis.py file if necessary so that you can easily use them without too much effort.
+
 # 1. General
 
 Autogato is a python package designed to compute irreducible autocatalytic subsystems in metabolic networks. It consists of the following modules:
@@ -75,7 +79,14 @@ Again you have multiple options:
 
 ## 3.3 Output
 
-The output can be found in the pickle files, e.g., partitionTree0.pkl, partitionTree1.pkl, etc. BUT NOT in the allCycles.txt files. I will remove this feature. It was originally implemented for analysis, but saving all elementary circuits/all fluffles isn't feasible, even if we write them to disk.
+The output can be found in the pickle files, e.g., partitionTree0.pkl, partitionTree1.pkl, etc. 
+
+I provided now an analysis.py file that you can use to analyse your generated data:
+  - First, it contains the command on how to load the data from the pickle file. The parameters dictionary contains all the data you need. The keys are indicative for the data-structures they contain.
+  - Second, it contains two functions that helps you analyse the data:
+      - computeSubstochasticMatrixForSetOfMREdges(parameters:dict, newEquivClass:set): This functions translates a set of MR-edges, e.g., representing the autocatalytic subgraph into a CS matrix.
+      - determineAutocatalycityNonMetzler(S:np.matrix): Once the submatrix is generated you can use this function to solve an LP that returns you True and flow vector v>0 for which Av>0 or False and a 0
+        vector if the matrix is not autocatalytic.
 
 ## 3.4 Test usage
 
