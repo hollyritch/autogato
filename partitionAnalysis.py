@@ -2520,8 +2520,6 @@ treeCounter = int(inputPickleFile.split("partitionTree")[1].split(".pkl")[0])
 # writeStoichiometricMatrixOutput(parameters, allCircuitsPath+species +"/"+"stoichiometricMatrix"+str(treeCounter)+".txt")
 outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(treeCounter) + ".pkl"
 
-file = open(cycleDataPath + species +"/allCycles"+ str(treeCounter) +".txt", "w")
-file.close()
 analysePartitionTree(partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound)
 parameters["cycleLengthDict"] = cycleLengthDict
 totalTime = time.time()-timeStamp
