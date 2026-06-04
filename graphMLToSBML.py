@@ -85,56 +85,10 @@ def addReactions(model:libsbml, G:nx.DiGraph):
 ####################
 ####################
 
-G = nx.DiGraph()
+graphMLPath = sys.argv[1]
+outputPath = sys.argv[2]
 
-metabolitePath = sys.argv[1]
-reactionPath = sys.argv[2]
-outputPath = sys.argv[3]
-formulaSpeciesDict = {}
-
-with open(metabolitePath, "r") as file:
-    line = file.readline().strip()
-    while True:
-        if line == "":
-            break
-        id, formula = line.split(" ")
-        newID = "M_" + id
-        G.add_node(newID)
-        G.nodes[newID]["Formula"] = formula
-        G.nodes[newID]["Type"] = "Species"
-        G.nodes[newID]["Name"] = newID
-        formulaSpeciesDict[formula]=newID
-        line = file.readline().strip()
-
-with open(reactionPath, "r") as file:
-    line = file.readline().strip()
-    while True:
-        if line == "":
-            break
-        id, reactionSmile = line.split(" ")        
-        newID = "R_" + id
-        lhs, rhs = reactionSmile.split("<=>")
-        reactants = lhs.split("|")
-        products = rhs.split("|")
-        G.add_node(newID)
-        for reac in reactants:
-            reacID = formulaSpeciesDict[reac]
-            if (reacID, newID) in G.edges():
-                G.edges[(reacID, newID)]["Stoichiometry"] +=1
-            else:
-                G.add_edge(reacID, newID)
-                G.edges[(reacID, newID)]["Stoichiometry"] =1
-        for prod in products:
-            prodID = formulaSpeciesDict[prod]
-            if (newID, prodID) in G.edges():
-                G.edges[(newID, prodID)]["Stoichiometry"] +=1
-            else:
-                G.add_edge(newID, prodID)
-                G.edges[(newID, prodID)]["Stoichiometry"] =1        
-        G.nodes[newID]["Type"] = "Reaction"
-        G.nodes[newID]["Name"] = newID
-        line = file.readline().strip()
-
+G = nx.read_graphml(graphMLPath)
 
 ##################################################################################################################################################################
 ##########                                                          Main                                                                                ##########
