@@ -1309,10 +1309,10 @@ def generateStoichiometricMatrix(parameters:dict, model:libsbml.Model):
             '''TODO(Change this  to)'''
             for e in educts:
                 if metabolite == e.getSpecies():
-                    S[i][j] = - metabolicNetwork.edges[metaboliteID, reactionID]["Stoichiometry"]
+                    S[i][j] -= metabolicNetwork.edges[metaboliteID, reactionID]["Stoichiometry"]
             for p in products:
                 if metabolite == p.getSpecies():
-                    S[i][j] = metabolicNetwork.edges[reactionID, metaboliteID]["Stoichiometry"]
+                    S[i][j] += metabolicNetwork.edges[reactionID, metaboliteID]["Stoichiometry"]
     return S
 #############################
 #############################
@@ -2519,6 +2519,7 @@ treeCounter = int(inputPickleFile.split("partitionTree")[1].split(".pkl")[0])
 
 # writeStoichiometricMatrixOutput(parameters, allCircuitsPath+species +"/"+"stoichiometricMatrix"+str(treeCounter)+".txt")
 outputPickleFilePath = cycleDataPath + species + "/partitionTreeData" + str(treeCounter) + ".pkl"
+
 
 analysePartitionTree(partitionTree, siblings, leaves, uRN, usefulNetwork, circuitBound)
 parameters["cycleLengthDict"] = cycleLengthDict
